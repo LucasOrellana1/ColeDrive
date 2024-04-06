@@ -1,0 +1,7 @@
+{
+  "name": "ColeDrive",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
