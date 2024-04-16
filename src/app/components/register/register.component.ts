@@ -20,7 +20,7 @@ export class RegisterComponent {
 
   errorMessage: string | null = null;
   
-  form = this.fb.nonNullable.group(
+  baseform = this.fb.nonNullable.group(
     {
       username: ['', Validators.required],
       email: ['', Validators.required],
@@ -28,17 +28,29 @@ export class RegisterComponent {
 
     }
   )
-    onSubmit(): void {
-      console.log("Register")
-      const rawForm = this.form.getRawValue();
-      this.authService.register(rawForm.email, rawForm.username,rawForm.password)
-      .subscribe({
-        next:() => {this.router.navigateByUrl('/')},
-        error: (error) => {
-          this.errorMessage = error.code
-          console.log(this.errorMessage)
-        }
-        }
-      )
+  familyForm = this.fb.nonNullable.group(
+    {
+      rut: ['', Validators.required],
+      fNames: ['', Validators.required],
+      lNames: ['', Validators.required],
+      bDate: ['', Validators.required],
+      childs: ['', Validators.required],
     }
+  )
+
+
+
+  onSubmit(): void {
+    console.log("Register")
+    const rawForm = this.baseform.getRawValue();
+    this.authService.register(rawForm.email, rawForm.username,rawForm.password)
+    .subscribe({
+      next:() => {this.router.navigateByUrl('/')},
+      error: (error) => {
+        this.errorMessage = error.code
+        console.log(this.errorMessage)
+      }
+      }
+    )
+  }
 }

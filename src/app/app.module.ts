@@ -10,6 +10,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 
 @NgModule({
@@ -22,7 +23,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     "apiKey":"AIzaSyB-aW5LdHD25uCau_TdMHYVtJDeY0y9YV8",
     "authDomain":"coledrive-afdf5.firebaseapp.com",
     "messagingSenderId":"927471545441"})), 
-    provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), ReactiveFormsModule, FormsModule],
+    provideAuth(() => getAuth()), provideFirestore(() => getFirestore(), 
+    provideStorage(() => getStorage()),
+  ), ReactiveFormsModule, FormsModule],
 
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
