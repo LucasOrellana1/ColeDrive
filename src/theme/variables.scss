@@ -4,11 +4,7 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-<<<<<<< HEAD
   --ion-color-primary: #fff238;
-=======
-  --ion-color-primary: #3880ff;
->>>>>>> e601e3474df400c0304f5eb07089c82fde3b060d
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -80,15 +76,12 @@
   --ion-color-light-tint: #f5f6f9;
 }
 
-<<<<<<< HEAD
 .toolbar-buttons {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-=======
->>>>>>> e601e3474df400c0304f5eb07089c82fde3b060d
 @media (prefers-color-scheme: dark) {
   /*
    * Dark Colors
@@ -96,11 +89,7 @@
    */
 
   body {
-<<<<<<< HEAD
     --ion-color-primary: #4eac6a;
-=======
-    --ion-color-primary: #428cff;
->>>>>>> e601e3474df400c0304f5eb07089c82fde3b060d
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #ffffff;
     --ion-color-primary-contrast-rgb: 255,255,255;
@@ -170,11 +159,7 @@
    */
 
   .ios body {
-<<<<<<< HEAD
     --ion-background-color: #feffff;
-=======
-    --ion-background-color: #000000;
->>>>>>> e601e3474df400c0304f5eb07089c82fde3b060d
     --ion-background-color-rgb: 0,0,0;
 
     --ion-text-color: #ffffff;
@@ -218,11 +203,7 @@
    */
 
   .md body {
-<<<<<<< HEAD
     --ion-background-color: #ffffff;
-=======
-    --ion-background-color: #121212;
->>>>>>> e601e3474df400c0304f5eb07089c82fde3b060d
     --ion-background-color-rgb: 18,18,18;
 
     --ion-text-color: #ffffff;

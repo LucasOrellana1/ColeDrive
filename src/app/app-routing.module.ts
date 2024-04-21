@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-<<<<<<< HEAD
 
 const routes: Routes = [
   {
@@ -29,17 +28,6 @@ const routes: Routes = [
     path: 'formulario-conductor',
     loadChildren: () => import('./pages/formulario-conductor/formulario-conductor.module').then( m => m.FormularioConductorPageModule)
   },
-=======
-import { RegisterComponent } from './components/register/register.component';
-
-const routes: Routes = [
-
-  {
-    path: '',
-    component: RegisterComponent
-  },
-
->>>>>>> e601e3474df400c0304f5eb07089c82fde3b060d
 ];
 
 @NgModule({
