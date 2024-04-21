@@ -33,7 +33,7 @@ export class FormularioConductorPage implements OnInit {
   constructor(private fb: FormBuilder, private alertController: AlertController) {}
 
   ngOnInit() {
-    // No es necesario inicializar aquí ya que se hace en la declaración
+    
   }
 
   passwordMatchValidator(frm: FormGroup) {
