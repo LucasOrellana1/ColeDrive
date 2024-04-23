@@ -24,8 +24,7 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
     "apiKey":"AIzaSyB-aW5LdHD25uCau_TdMHYVtJDeY0y9YV8",
     "authDomain":"coledrive-afdf5.firebaseapp.com",
     "messagingSenderId":"927471545441"})), 
-    provideAuth(() => getAuth()), provideFirestore(() => getFirestore(), 
-    provideStorage(() => getStorage()),
+    provideAuth(() => getAuth()), provideFirestore(() => getFirestore(),
   ), ReactiveFormsModule, FormsModule],
 
 

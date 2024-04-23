@@ -11,7 +11,6 @@ const routes: Routes = [
     redirectTo: 'inicio',
     pathMatch: 'full'
   },
-  
   {
     path: 'registro',
     loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
