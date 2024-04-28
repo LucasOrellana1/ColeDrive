@@ -26,7 +26,11 @@ const routes: Routes = [
   {
     path: 'formulario-conductor',
     loadChildren: () => import('./pages/formulario-conductor/formulario-conductor.module').then( m => m.FormularioConductorPageModule)
+  },  {
+    path: 'ocr',
+    loadChildren: () => import('./pages/ocr/ocr.module').then( m => m.OcrPageModule)
   },
+
 ];
 
 @NgModule({
