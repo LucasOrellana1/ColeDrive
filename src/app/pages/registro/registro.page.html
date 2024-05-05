@@ -46,6 +46,10 @@
           <ion-input formControlName="direccion" type="text"></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label position="floating">RUT</ion-label> <!-- Agregar campo RUT -->
+          <ion-input formControlName="rut" type="text"></ion-input> <!-- Agregar campo RUT -->
+        </ion-item>
+        <ion-item>
           <ion-label position="floating">Número de Hijos</ion-label>
           <ion-select formControlName="numHijos" (ionChange)="updateHijos()">
             <ion-select-option *ngFor="let n of [1,2,3,4,5]">{{ n }}</ion-select-option>

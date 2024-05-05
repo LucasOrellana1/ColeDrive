@@ -24,6 +24,7 @@ export class RegistroPage{
     confirmPassword: ['', Validators.required],
     telefono: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     direccion: ['', Validators.required],
+    rut: ['', ], //Campo rut agregado//
     numHijos: [0, [Validators.required, Validators.min(1)]],
     hijosArray: this.fb.array([])
   }, { validator: this.passwordMatchValidator });
@@ -68,6 +69,7 @@ export class RegistroPage{
       password: this.formularioRegistro.value.password,
       telefono: this.formularioRegistro.value.telefono,
       direccion: this.formularioRegistro.value.direccion,
+      rut: this.formularioRegistro.value.rut,//Campo Rut Agregado//
       numeroHijos: this.formularioRegistro.value.numHijos,
       hijos: this.hijosArray.value
     };
