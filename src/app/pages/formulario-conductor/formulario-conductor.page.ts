@@ -13,7 +13,7 @@ import{
   templateUrl: './formulario-conductor.page.html',
   styleUrls: ['./formulario-conductor.page.scss'],
 })
-export class FormularioConductorPage implements OnInit {
+export class FormularioConductorPage {
 
   // Inicialización directa de formularioRegistro en la declaración
   formularioRegistro: FormGroup = this.fb.group({
@@ -32,9 +32,7 @@ export class FormularioConductorPage implements OnInit {
 
   constructor(private fb: FormBuilder, private alertController: AlertController) {}
 
-  ngOnInit() {
-    
-  }
+
 
   passwordMatchValidator(frm: FormGroup) {
     return frm.controls['passwordConductor'].value === frm.controls['confirmPasswordConductor'].value ? null : { 'mismatch': true };
@@ -54,9 +52,9 @@ export class FormularioConductorPage implements OnInit {
     }
 
     var datosConductor = {
+      rutConductor: f.rutConductor,
       nombreConductor: f.nombreConductor,
       apellidoConductor: f.apellidoConductor,
-      rutConductor: f.rutConductor,
       emailConductor: f.emailConductor,
       patenteVehiculo: f.patenteVehiculo,
       marcaVehiculo: f.marcaVehiculo,
