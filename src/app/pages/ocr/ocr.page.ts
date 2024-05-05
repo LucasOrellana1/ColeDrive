@@ -43,13 +43,31 @@ export class OcrPage {
 
       // Extract RUTs from the recognized text using regular expressions
       const rutRegex = /(\d{1,2}\.\d{3}\.\d{3}-[0-9Kk])/g;
+      const numDocRegex = /(\d{3}\.\d{3}\.\d{3})/g;
+      const nameRegex = /\b[A-Z][a-z]+(?: [A-Z][a-z]+)?\b/g;
+
       const extractedRuts = ret.data.text.match(rutRegex);
+      const numDocumento = ret.data.text.match(numDocRegex);
+      const extractedNames = ret.data.text.match(nameRegex);
 
       if (extractedRuts) {
-        console.log("Extracted RUTs:", extractedRuts);
+        console.log("RUT Detectado:", extractedRuts);
 
       } else {
-        console.log("No RUTs found in the recognized text");
+        console.log("No se detectaron Ruts");
+      }
+
+      if (numDocumento) {
+        console.log("NumDoc Detectado:", numDocumento);
+      } else {
+        console.log("No se detectaron NumDocs");
+      }
+
+      if (extractedNames) {
+        console.log("Nombres Detectados:", extractedNames);
+
+      } else {
+        console.log("No se detectaron Nombres");
       }
 
     } catch (error) {
