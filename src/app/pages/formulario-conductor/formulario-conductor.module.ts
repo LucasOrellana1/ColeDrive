@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormularioConductorPageRoutingModule } from './formulario-conductor-routing.module';
 
 import { FormularioConductorPage } from './formulario-conductor.page';
+import { OcrPage } from '../ocr/ocr.page';
 
 @NgModule({
   imports: [
@@ -14,8 +15,9 @@ import { FormularioConductorPage } from './formulario-conductor.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    FormularioConductorPageRoutingModule
+    FormularioConductorPageRoutingModule,
   ],
-  declarations: [FormularioConductorPage]
+  declarations: [FormularioConductorPage],
+  providers:[OcrPage]
 })
 export class FormularioConductorPageModule {}

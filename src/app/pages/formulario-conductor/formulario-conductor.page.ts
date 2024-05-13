@@ -7,11 +7,13 @@ import{
   FormArray
  }from '@angular/forms';
  import { AlertController } from '@ionic/angular';
+ import { OcrPage } from '../ocr/ocr.page';
 
 @Component({
   selector: 'app-formulario-conductor',
   templateUrl: './formulario-conductor.page.html',
   styleUrls: ['./formulario-conductor.page.scss'],
+  
 })
 export class FormularioConductorPage {
 
@@ -30,7 +32,7 @@ export class FormularioConductorPage {
     rutAsistente: ['', Validators.required]
   }, { validator: this.passwordMatchValidator });
 
-  constructor(private fb: FormBuilder, private alertController: AlertController) {}
+  constructor(private fb: FormBuilder, private alertController: AlertController, private ocr: OcrPage) {}
 
 
 
@@ -74,5 +76,9 @@ export class FormularioConductorPage {
       buttons: ['Aceptar']
     });
     await successAlert.present();
+  }
+
+  async scanCarnet() {
+    await this.ocr.recognizeImageCarnet(); // Call the method from the injected service
   }
 }

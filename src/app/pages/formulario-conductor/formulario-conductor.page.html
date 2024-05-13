@@ -16,6 +16,10 @@
       </ion-card-header>
       <ion-card-content>
         <ion-item>
+          <ion-text position="floating">Escaner Carnet de Identidad</ion-text>
+          <ion-button slot="end" (click)="scanCarnet()">Escanear</ion-button>
+        </ion-item>
+        <ion-item>
           <ion-label position="floating">Nombre</ion-label>
           <ion-input formControlName="nombreConductor" type="text"></ion-input>
         </ion-item>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { createWorker, Worker } from 'tesseract.js';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { validateRut, cleanRut } from 'rutlib';
 @Component({
   selector: 'app-ocr',
   templateUrl: './ocr.page.html',
@@ -19,7 +20,7 @@ export class OcrPage {
   }
 
 
-  async recognizeImage() {
+  async recognizeImageCarnet() {
     if (!this.worker) {
       console.error("Worker aun no está cargado");
       return;
@@ -44,35 +45,50 @@ export class OcrPage {
       // Extract RUTs from the recognized text using regular expressions
       const rutRegex = /(\d{1,2}\.\d{3}\.\d{3}-[0-9Kk])/g;
       const numDocRegex = /(\d{3}\.\d{3}\.\d{3})/g;
-      const nameRegex = /\b[A-Z][a-z]+(?: [A-Z][a-z]+)?\b/g;
+      const nameRegex = /\n([A-ZÁÉÍÓÚÜ\s-]+(?:\n[A-ZÁÉÍÓÚÜ\s-]+)*)(?=\n)/g;
 
       const extractedRuts = ret.data.text.match(rutRegex);
       const numDocumento = ret.data.text.match(numDocRegex);
       const extractedNames = ret.data.text.match(nameRegex);
 
       if (extractedRuts) {
-        console.log("RUT Detectado:", extractedRuts);
-
+        const rutLimpio = cleanRut(JSON.stringify(extractedRuts));
+        const valido = validateRut(rutLimpio);
+        if(valido === true){
+          console.log("RUT Detectado:", extractedRuts, "\nAgregado a Storage.");
+          localStorage.setItem('RutCarnet', JSON.stringify(extractedRuts));
+          const getRutCarnet = JSON.parse(localStorage.getItem('RutCarnet'));
+        } else{
+          console.log("RUT Detectado no es valido:", extractedRuts);
+        }
       } else {
         console.log("No se detectaron Ruts");
-      }
+      };
 
       if (numDocumento) {
-        console.log("NumDoc Detectado:", numDocumento);
-      } else {
+        console.log("NumDoc Detectado:", numDocumento, "\nAgregado a Storage.");
+        localStorage.setItem('NumDocCarnet', JSON.stringify(numDocumento));
+        const getNumDocCarnet = JSON.parse(localStorage.getItem('NumDocCarnet'));
+      }else {
         console.log("No se detectaron NumDocs");
-      }
+      };
 
       if (extractedNames) {
-        console.log("Nombres Detectados:", extractedNames);
-
-      } else {
+        const cleanedNames = extractedNames.map(name =>
+          name.replace(
+            /^(\n+)|(\n{2,}.*)|(\n)/g,
+            (match, p1, p2, p3) =>
+              p1 ? '' : p2 ? '' : ' '
+          )
+        );
+        console.log("Nombres Detectados:", cleanedNames, "\nAgregado a Storage.");
+        localStorage.setItem('NombresCarnet', JSON.stringify(cleanedNames));
+        const getNombresDocCarnet = JSON.parse(localStorage.getItem('NombresCarnet'));
+      }else {
         console.log("No se detectaron Nombres");
-      }
-
+      };
     } catch (error) {
       console.error("Error al reconocer:", error);
-
     } finally {
       if (this.worker) {
         await this.worker.terminate();
@@ -80,8 +96,8 @@ export class OcrPage {
         console.log('--');
         this.loadWorker();
       }
-    }
-  }
+    };
+  };
 
   // selectedFile: File;
 
