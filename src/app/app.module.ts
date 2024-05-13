@@ -13,10 +13,11 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, provideFirebaseApp(() => 
+  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), AppRoutingModule, provideFirebaseApp(() => 
     
     initializeApp({"projectId":"coledrive-afdf5",
     "appId":"1:927471545441:web:9bb13129337d09b4f8ce20",
