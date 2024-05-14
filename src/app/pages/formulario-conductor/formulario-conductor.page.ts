@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import{
+import {
   FormGroup,
   FormControl,
   Validators,
   FormBuilder,
   FormArray,
-  AbstractControlOptions 
- }from '@angular/forms';
- import { AlertController } from '@ionic/angular';
- import { OcrPage } from '../ocr/ocr.page';
- import { RequestAPIService } from 'src/app/services/requestAPI.service';
+  AbstractControlOptions
+} from '@angular/forms';
+import { AlertController } from '@ionic/angular';
+import { OcrPage } from '../ocr/ocr.page';
+import { RequestAPIService } from 'src/app/services/requestAPI.service';
 
 @Component({
   selector: 'app-formulario-conductor',
   templateUrl: './formulario-conductor.page.html',
   styleUrls: ['./formulario-conductor.page.scss'],
-  
+
 })
 export class FormularioConductorPage {
-  
-  constructor(private fb: FormBuilder, private alertController: AlertController, private ocr: OcrPage, private RequestApi: RequestAPIService) {}
+
+  constructor(private fb: FormBuilder, private alertController: AlertController, private ocr: OcrPage, private RequestApi: RequestAPIService) { }
 
   // Inicialización directa de formularioRegistro en la declaración
   formularioRegistro: FormGroup = this.fb.group({
@@ -69,7 +69,12 @@ export class FormularioConductorPage {
     };
 
     localStorage.setItem('datosConductor', JSON.stringify(datosConductor));
-    this.validar(f.patenteVehiculo);
+    await this.validar(f.patenteVehiculo);
+
+    if (localStorage.getItem('datosConductor.patente') === localStorage.getItem('RespuestaApi.Patente') &&
+      localStorage.getItem('datosConductor.marca') === localStorage.getItem('RespuestaApi.Marca')) {
+      console.log("patente y marca validadas")
+    };
 
     this.formularioRegistro.reset();
 
@@ -85,16 +90,22 @@ export class FormularioConductorPage {
     await this.ocr.recognizeImageCarnet(); // Call the method from the injected service
   };
 
-  validar(patente: string): void {
+  async validar(patente: string): Promise<boolean> {
     this.RequestApi.buscarPatente(patente).subscribe(
       (resultado) => {
         console.log(resultado);
-        // Handle the response data as needed
+        const patenteResponse = resultado.Patente;
+        // quitar todo despues del -
+        const patenteFormateada = patenteResponse.replace(/-\d+$/, "");
+        localStorage.setItem('RespuestaApi', JSON.stringify({ ...resultado, Patente: patenteFormateada }));
+        return true;
       },
       (error) => {
         console.error('Error al buscar la patente:', error);
+        return false;
         // Handle errors
       }
     );
+    return false;
   };
 }
