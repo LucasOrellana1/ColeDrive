@@ -9,16 +9,13 @@ import { ProfileService } from './profile.service';
   providedIn: 'root'
 })
 
-
 export class authService {
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth)
   
   constructor(private profService: ProfileService){}
-//
 
-
-registerFamilia(email: string, username: string, password: string){
+register(email: string, username: string, password: string){
   const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password)
   .then(response => updateProfile(response.user, {displayName:username}));
   
@@ -33,7 +30,8 @@ async registerDriver(conductor: Conductor, email: string, username: string, pass
       this.profService.createDriver(conductor, uid)
       return promise
   }).catch((error) =>{
-      console.log(error) 
+      console.log("eRROR" , error) 
+      
       return error
   })
 }

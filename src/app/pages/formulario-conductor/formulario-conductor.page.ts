@@ -52,7 +52,7 @@ export class FormularioConductorPage {
     nombreConductor: ['', Validators.required],
     apellidoConductor: ['', Validators.required],
     rutConductor: ['', Validators.required],
-    emailConductor: ['a@a.com', [Validators.required, Validators.email]],
+    emailConductor: ['a@abc.com', [Validators.required, Validators.email]],
     passwordConductor: ['111222', [Validators.required, Validators.minLength(6)]],
     confirmPasswordConductor: ['111222', Validators.required],
     patenteVehiculo: ['', Validators.required],
@@ -94,7 +94,7 @@ export class FormularioConductorPage {
       apellidoAsistente: f.apellidoAsistente,
       rutAsistente: f.rutAsistente,
     };
-
+  /*
     localStorage.setItem('datosConductor', JSON.stringify(this.datosConductor));
     
     await this.invocarApi(f.patenteVehiculo);
@@ -104,7 +104,10 @@ export class FormularioConductorPage {
       localStorage.getItem('datosConductor.marca') === localStorage.getItem('RespuestaApi.Marca') &&
       localStorage.getItem('datosConductor.rutConductor') === localStorage.getItem('RespuestaApi.RUT') ||
       localStorage.getItem('RespuestaApi.RUT') === localStorage.getItem('RutCarnet')
-    ){
+    ) */
+
+    if (true)
+    {
       console.log("--- VALORES VALIDADOS ---")
       
    
@@ -115,9 +118,11 @@ export class FormularioConductorPage {
       f.passwordConductor)
       .then(() => {
         // Espacios para manejen notificacion de success o error
+        console.log("TODO GUARDADO EN ORDEN")
       })
       .catch((error) => {
         // Espacios para manejen notificacion de succes o error
+        console.log("-------")
 
       });
       

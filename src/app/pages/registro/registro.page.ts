@@ -80,7 +80,17 @@ export class RegistroPage{
     
     //Registro en firebase Auth
     try {
-      await this.authService.register(usuarioJson.email, usuarioJson.nombre, usuarioJson.password)
+      await this.authService.register(usuarioJson.email,
+         usuarioJson.nombre,
+         usuarioJson.password)
+         .then(() =>{
+        this.profileService.createFamily(usuarioJson.rut,
+          usuarioJson.nombre,
+          usuarioJson.apellido,
+          usuarioJson.telefono, 
+          usuarioJson.hijos)
+        }
+      )
     }
     
     catch(error){
@@ -95,12 +105,7 @@ export class RegistroPage{
     }
 
     //Registro de perfil firestore
-    this.profileService.createFamily(usuarioJson.rut,
-      usuarioJson.nombre,
-      usuarioJson.apellido,
-      usuarioJson.telefono, 
-      usuarioJson.hijos)
-
+    
     this.formularioRegistro.reset();
     
     console.log("Guardado")
