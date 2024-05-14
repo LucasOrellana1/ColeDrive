@@ -10,6 +10,8 @@ import {
 import { AlertController } from '@ionic/angular';
 import { OcrPage } from '../ocr/ocr.page';
 import { RequestAPIService } from 'src/app/services/requestAPI.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { Conductor } from 'src/app/services/user.interface';
 
 @Component({
   selector: 'app-formulario-conductor',
@@ -18,8 +20,27 @@ import { RequestAPIService } from 'src/app/services/requestAPI.service';
 
 })
 export class FormularioConductorPage {
+  datosConductor: Conductor
 
-  constructor(private fb: FormBuilder, private alertController: AlertController, private ocr: OcrPage, private RequestApi: RequestAPIService) { }
+  constructor(
+      private fb: FormBuilder,
+      private alertController: AlertController,
+      private ocr: OcrPage,
+      private RequestApi: RequestAPIService,
+      private profService: ProfileService,
+    ) {
+      this.datosConductor = {
+        rutConductor: '',
+        nombreConductor: '',
+        apellidoConductor: '',
+        emailConductor: '',
+        patenteVehiculo: '',
+        marcaVehiculo: '',
+        nombreAsistente: '',
+        apellidoAsistente: '',
+        rutAsistente: '',
+      }; 
+    }
 
   // Inicialización directa de formularioRegistro en la declaración
   formularioRegistro: FormGroup = this.fb.group({
@@ -56,7 +77,7 @@ export class FormularioConductorPage {
       return;
     }
 
-    var datosConductor = {
+    this.datosConductor = {
       rutConductor: f.rutConductor,
       nombreConductor: f.nombreConductor,
       apellidoConductor: f.apellidoConductor,
@@ -68,22 +89,27 @@ export class FormularioConductorPage {
       rutAsistente: f.rutAsistente,
     };
 
-    localStorage.setItem('datosConductor', JSON.stringify(datosConductor));
+    localStorage.setItem('datosConductor', JSON.stringify(this.datosConductor));
     await this.validar(f.patenteVehiculo);
 
-    if (localStorage.getItem('datosConductor.patente') === localStorage.getItem('RespuestaApi.Patente') &&
-      localStorage.getItem('datosConductor.marca') === localStorage.getItem('RespuestaApi.Marca')) {
-      console.log("patente y marca validadas")
-    };
-
+    if (
+      localStorage.getItem('datosConductor.patente') === localStorage.getItem('RespuestaApi.Patente') &&
+      localStorage.getItem('datosConductor.marca') === localStorage.getItem('RespuestaApi.Marca') &&
+      localStorage.getItem('datosConductor.rutConductor') === localStorage.getItem('RespuestaApi.RUT') ||
+      localStorage.getItem('RespuestaApi.RUT') === localStorage.getItem('RutCarnet')
+    ){
+      console.log("--- VALORES VALIDADOS ---")
+      const successAlert = await this.alertController.create({
+        header: 'Registro Exitoso',
+        message: 'El conductor ha sido registrado correctamente.',
+        buttons: ['Aceptar']
+      });
+      await successAlert.present();
+    }else {
+      console.log("--- TA MALO XAO PEJCAO ---")
+    }
     this.formularioRegistro.reset();
-
-    const successAlert = await this.alertController.create({
-      header: 'Registro Exitoso',
-      message: 'El conductor ha sido registrado correctamente.',
-      buttons: ['Aceptar']
-    });
-    await successAlert.present();
+    
   };
 
   async scanCarnet() {

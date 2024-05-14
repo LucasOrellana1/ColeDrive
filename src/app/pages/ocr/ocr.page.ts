@@ -54,12 +54,13 @@ export class OcrPage {
       if (extractedRuts) {
         const rutLimpio = cleanRut(JSON.stringify(extractedRuts));
         const valido = validateRut(rutLimpio);
+        const rutFormateado = rutLimpio.slice(0, -1) + '-' + rutLimpio.slice(-1);
         if(valido === true){
-          console.log("RUT Detectado:", extractedRuts, "\nAgregado a Storage.");
-          localStorage.setItem('RutCarnet', JSON.stringify(extractedRuts));
+          console.log("RUT Detectado:", rutFormateado, "\nAgregado a Storage.");
+          localStorage.setItem('RutCarnet', JSON.stringify(rutFormateado));
           const getRutCarnet = JSON.parse(localStorage.getItem('RutCarnet'));
         } else{
-          console.log("RUT Detectado no es valido:", extractedRuts);
+          console.log("RUT Detectado no es valido:", rutFormateado);
         }
       } else {
         console.log("No se detectaron Ruts");
