@@ -95,7 +95,7 @@ export class RegistroPage{
     }
 
     //Registro de perfil firestore
-    this.profileService.createFamily(usuarioJson.telefono,
+    this.profileService.createFamily(usuarioJson.rut,
       usuarioJson.nombre,
       usuarioJson.apellido,
       usuarioJson.telefono, 
