@@ -52,14 +52,15 @@ export class FormularioConductorPage {
     nombreConductor: ['', Validators.required],
     apellidoConductor: ['', Validators.required],
     rutConductor: ['', Validators.required],
-    emailConductor: ['a@a.com', [Validators.required, Validators.email]],
-    passwordConductor: ['111222', [Validators.required, Validators.minLength(6)]],
-    confirmPasswordConductor: ['111222', Validators.required],
+    emailConductor: ['', [Validators.required, Validators.email]],
+    passwordConductor: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPasswordConductor: ['', Validators.required],
     patenteVehiculo: ['', Validators.required],
     marcaVehiculo: ['', Validators.required],
     nombreAsistente: ['', Validators.required],
     apellidoAsistente: ['', Validators.required],
-    rutAsistente: ['', Validators.required]
+    rutAsistente: ['', Validators.required],
+    telefonoConductor: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
   }, { validators: this.passwordMatchValidator } as AbstractControlOptions);
 
   passwordMatchValidator(frm: FormGroup) {

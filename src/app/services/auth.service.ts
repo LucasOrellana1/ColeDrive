@@ -18,7 +18,7 @@ export class authService {
 //
 
 
-registerFamilia(email: string, username: string, password: string){
+register(email: string, username: string, password: string){
   const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password)
   .then(response => updateProfile(response.user, {displayName:username}));
   
