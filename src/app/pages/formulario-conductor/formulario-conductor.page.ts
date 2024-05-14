@@ -31,16 +31,19 @@ export class FormularioConductorPage {
       private profService: ProfileService,
       private auth: authService
     ) {
+      
       this.datosConductor = {
         rutConductor: '',
         nombreConductor: '',
         apellidoConductor: '',
         emailConductor: '',
+        telefonoConductor:'',
         patenteVehiculo: '',
         marcaVehiculo: '',
         nombreAsistente: '',
         apellidoAsistente: '',
         rutAsistente: '',
+
       }; 
     }
 
@@ -84,6 +87,7 @@ export class FormularioConductorPage {
       nombreConductor: f.nombreConductor,
       apellidoConductor: f.apellidoConductor,
       emailConductor: f.emailConductor,
+      telefonoConductor: f.telefonoConductor,
       patenteVehiculo: f.patenteVehiculo,
       marcaVehiculo: f.marcaVehiculo,
       nombreAsistente: f.nombreAsistente,
@@ -103,20 +107,26 @@ export class FormularioConductorPage {
     ){
       console.log("--- VALORES VALIDADOS ---")
       
-   // Llmama funcion para crear conductor en DB.
-   this.profService.createDriver(this.datosConductor)
-   this.auth.register(this.datosConductor.emailConductor, 
-     this.datosConductor.nombreConductor, f.passwordConductor)
+   
+    // Llmama funcion para crear conductor en DB.
+    this.auth.registerDriver(this.datosConductor, 
+      this.datosConductor.emailConductor,
+      this.datosConductor.nombreConductor, 
+      f.passwordConductor)
+      .then(() => {
+        // Espacios para manejen notificacion de success o error
+      })
+      .catch((error) => {
+        // Espacios para manejen notificacion de succes o error
 
-      // Llmama funcion para crear conductor en DB.
-      this.profService.createDriver(this.datosConductor)
-      
-      const successAlert = await this.alertController.create({
-        header: 'Registro Exitoso',
-        message: 'El conductor ha sido registrado correctamente.',
-        buttons: ['Aceptar']
       });
-      await successAlert.present();
+      
+    const successAlert = await this.alertController.create({
+      header: 'Registro Exitoso',
+      message: 'El conductor ha sido registrado correctamente.',
+      buttons: ['Aceptar']
+    });
+    await successAlert.present();
     
     }else {
       console.log("--- TA MALO XAO PESCAO ---")

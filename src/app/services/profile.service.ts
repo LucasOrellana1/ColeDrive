@@ -35,24 +35,23 @@ export class ProfileService {
 
 
   // FUNCIONES RELACIONADAS A CONDUCTORES  
-  async createDriver(datosConductor: Conductor)
-    
+  async createDriver(cData: Conductor, id: string)
     {
       //Crea la referencia a la colección familias de FB (tabla)
       const driverCollection = collection(this.firestore,'Conductores');
 
       const newDriver = {
         //Datos generales
-        Rut: datosConductor.rutConductor,
-        Nombre: datosConductor.nombreConductor,
-        Apellido: datosConductor.apellidoConductor,
-        Email: datosConductor.emailConductor,
+        Rut: cData.rutConductor,
+        Nombre: cData.nombreConductor,
+        Apellido: cData.apellidoConductor,
+        Email: cData.emailConductor,
         
-        PatenteVehiculo: datosConductor.patenteVehiculo,
-        marcaVehiculo: datosConductor.marcaVehiculo,
-        nombreAsistente: datosConductor.nombreAsistente,
-        apellidoAsistente: datosConductor.apellidoAsistente,
-        rutAsistente: datosConductor.rutAsistente,
+        PatenteVehiculo: cData.patenteVehiculo,
+        marcaVehiculo: cData.marcaVehiculo,
+        nombreAsistente: cData.nombreAsistente,
+        apellidoAsistente: cData.apellidoAsistente,
+        rutAsistente: cData.rutAsistente,
         
         // Datos para validacion por parte de colegio
         activado: false,
@@ -64,10 +63,10 @@ export class ProfileService {
       };
 
       //Creo referencia a un conductor especifica, de manera que se cree o reemplaze.
-      const myDocRef = doc(driverCollection, datosConductor.rutConductor)
+      const myDocRef = doc(driverCollection, id)
       const newDocRef = await setDoc(myDocRef, newDriver);
       
-      console.log('Nuevo conductor añadido con ID' , datosConductor.rutConductor)
+      console.log('Nuevo conductor añadido con ID' , id)
     }
 
     //FUNCIONES RELACIONADAS A COLEGIOS:
