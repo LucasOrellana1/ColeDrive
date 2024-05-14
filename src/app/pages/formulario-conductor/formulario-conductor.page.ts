@@ -12,6 +12,7 @@ import { OcrPage } from '../ocr/ocr.page';
 import { RequestAPIService } from 'src/app/services/requestAPI.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Conductor } from 'src/app/services/user.interface';
+import { authService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-formulario-conductor',
@@ -28,6 +29,7 @@ export class FormularioConductorPage {
       private ocr: OcrPage,
       private RequestApi: RequestAPIService,
       private profService: ProfileService,
+      private auth: authService
     ) {
       this.datosConductor = {
         rutConductor: '',
@@ -47,7 +49,7 @@ export class FormularioConductorPage {
     nombreConductor: ['', Validators.required],
     apellidoConductor: ['', Validators.required],
     rutConductor: ['', Validators.required],
-    emailConductor: ['a@a.a', [Validators.required, Validators.email]],
+    emailConductor: ['a@a.com', [Validators.required, Validators.email]],
     passwordConductor: ['111222', [Validators.required, Validators.minLength(6)]],
     confirmPasswordConductor: ['111222', Validators.required],
     patenteVehiculo: ['', Validators.required],
@@ -90,7 +92,8 @@ export class FormularioConductorPage {
     };
 
     localStorage.setItem('datosConductor', JSON.stringify(this.datosConductor));
-    await this.validar(f.patenteVehiculo);
+    
+    await this.invocarApi(f.patenteVehiculo);
 
     if (
       localStorage.getItem('datosConductor.patente') === localStorage.getItem('RespuestaApi.Patente') &&
@@ -99,14 +102,24 @@ export class FormularioConductorPage {
       localStorage.getItem('RespuestaApi.RUT') === localStorage.getItem('RutCarnet')
     ){
       console.log("--- VALORES VALIDADOS ---")
+      
+   // Llmama funcion para crear conductor en DB.
+   this.profService.createDriver(this.datosConductor)
+   this.auth.register(this.datosConductor.emailConductor, 
+     this.datosConductor.nombreConductor, f.passwordConductor)
+
+      // Llmama funcion para crear conductor en DB.
+      this.profService.createDriver(this.datosConductor)
+      
       const successAlert = await this.alertController.create({
         header: 'Registro Exitoso',
         message: 'El conductor ha sido registrado correctamente.',
         buttons: ['Aceptar']
       });
       await successAlert.present();
+    
     }else {
-      console.log("--- TA MALO XAO PEJCAO ---")
+      console.log("--- TA MALO XAO PESCAO ---")
     }
     this.formularioRegistro.reset();
     
@@ -116,7 +129,7 @@ export class FormularioConductorPage {
     await this.ocr.recognizeImageCarnet(); // Call the method from the injected service
   };
 
-  async validar(patente: string): Promise<boolean> {
+  async invocarApi(patente: string): Promise<boolean> {
     this.RequestApi.buscarPatente(patente).subscribe(
       (resultado) => {
         console.log(resultado);
