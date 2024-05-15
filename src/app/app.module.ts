@@ -14,6 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 
 import {HttpClientModule} from '@angular/common/http';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +31,7 @@ import {HttpClientModule} from '@angular/common/http';
   ), ReactiveFormsModule, FormsModule],
 
 
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AngularFireAuth, AngularFirestore],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

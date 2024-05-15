@@ -105,6 +105,7 @@ export class FormularioConductorPage {
         localStorage.getItem('RespuestaApi.RUT') === localStorage.getItem('RutCarnet')) {
         console.log("--- VALORES VALIDADOS ---")
         // Llmama funcion para crear conductor en DB.
+        
         try{
           await this.auth.registerDriver(this.datosConductor, 
             this.datosConductor.emailConductor,
@@ -122,7 +123,7 @@ export class FormularioConductorPage {
           const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
           await errorAlert.present();
         }
-        
+
       } else {
         const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
         await errorAlert.present();

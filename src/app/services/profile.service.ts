@@ -1,15 +1,22 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { CollectionReference, addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { Observable, finalize, from } from 'rxjs';
+import { Observable, finalize, from, switchMap } from 'rxjs';
 import { Conductor, Familia } from './user.interface';
+
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
-
-  firestore = inject(Firestore)
+constructor(
+  private firestore: Firestore,
+  //private fire: AngularFirestore, private afAuth: AngularFireAuth
+  ){}
+  
+    
 
   //FUNCIONES RELACIONADAS A FAMILIAS:
   async createFamily(fData: Familia, id: string)
@@ -93,12 +100,29 @@ export class ProfileService {
           })
         }
       }
-        
+/*         
+
+
+      getUserData(uid: string): Observable<any> {
+        return this.firestore1.collection('users').doc(uid).valueChanges();
+      }
+    
+    
+      getCurrentUser(): Observable<any> {
+        return this.auth.authState.pipe(
+          switchMap(user => {
+            if (user) {
+              return this.getUserData(user.uid);
+            } else {
+              return [null];
+            }
+          })
+        );
+      }
+    }
+     */
 
 
 
 
-
-
-
-}
+  }

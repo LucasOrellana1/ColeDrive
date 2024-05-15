@@ -13,12 +13,12 @@ import { Familia } from 'src/app/services/user.interface';
 export class RegistroPage{
   
   authService = inject(authService)
-  profileService = inject(ProfileService)
   fData: Familia
 
   constructor(private fb: FormBuilder, 
     private alertController: AlertController,
-    private auth: authService
+    private auth: authService,
+    private profileSerive : ProfileService
       ) {
     }
   // Inicialización directa en la declaración
