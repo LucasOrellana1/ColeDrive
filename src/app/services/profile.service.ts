@@ -13,7 +13,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class ProfileService {
 constructor(
   private firestore: Firestore,
-  //private fire: AngularFirestore, private afAuth: AngularFireAuth
+  private fire: AngularFirestore, private afAuth: AngularFireAuth
   ){}
   
     
