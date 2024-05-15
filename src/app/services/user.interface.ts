@@ -25,3 +25,16 @@ export interface Conductor{
     tipoCuenta? : 2
 
 }
+
+export interface Familia{
+  nombre: string,
+  apellido: string,
+  email: string,
+
+  telefono: string,
+  direccion: string,
+  rut: string,//Campo Rut Agregado//
+  numeroHijos: string,
+  hijos: Array<string>,
+  tipoCuent? : 1
+}

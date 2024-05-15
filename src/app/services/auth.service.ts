@@ -2,7 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, user } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { Observable, from } from 'rxjs';
-import { Conductor, UserInterface } from './user.interface';
+import { Conductor, Familia, UserInterface } from './user.interface';
 import { ProfileService } from './profile.service';
 
 @Injectable({
@@ -22,16 +22,28 @@ register(email: string, username: string, password: string){
   return promise
 }
 
+async registerFamily(fData: Familia, email: string, username: string, password: string){
+  await createUserWithEmailAndPassword(this.firebaseAuth, email, password)
+  .then(response => {
+      updateProfile(response.user, {displayName:username})
+      const uid = response.user.uid 
+      this.profService.createFamily(fData, uid)
+      
+  }).catch((error) => {
+      console.log("Error" , error) 
+      
+      throw error
+  })
+}
+
 async registerDriver(conductor: Conductor, email: string, username: string, password: string){
-  const promise = await createUserWithEmailAndPassword(this.firebaseAuth, email, password)
+  await createUserWithEmailAndPassword(this.firebaseAuth, email, password)
   .then(response => {
       updateProfile(response.user, {displayName:username})
       const uid = response.user.uid 
       this.profService.createDriver(conductor, uid)
-      return promise
   }).catch((error) => {
       console.log("Error" , error) 
-      
       throw error
   })
 }

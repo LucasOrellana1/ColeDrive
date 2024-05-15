@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { authService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { Familia } from 'src/app/services/user.interface';
 
 @Component({
   selector: 'app-registro',
@@ -13,8 +14,13 @@ export class RegistroPage{
   
   authService = inject(authService)
   profileService = inject(ProfileService)
+  fData: Familia
 
-
+  constructor(private fb: FormBuilder, 
+    private alertController: AlertController,
+    private auth: authService
+      ) {
+    }
   // Inicialización directa en la declaración
   formularioRegistro: FormGroup = this.fb.group({
     nombre: ['', Validators.required],
@@ -29,7 +35,7 @@ export class RegistroPage{
     hijosArray: this.fb.array([])
   }, { validator: this.passwordMatchValidator });
 
-  constructor(private fb: FormBuilder, private alertController: AlertController) {}
+ 
 
 
   passwordMatchValidator(frm: FormGroup) {
@@ -62,11 +68,10 @@ export class RegistroPage{
       return;
     }
 
-    let usuarioJson = {
+    let fData = {
       nombre: this.formularioRegistro.value.nombre,
       apellido: this.formularioRegistro.value.apellido,
       email: this.formularioRegistro.value.email,
-      password: this.formularioRegistro.value.password,
       telefono: this.formularioRegistro.value.telefono,
       direccion: this.formularioRegistro.value.direccion,
       rut: this.formularioRegistro.value.rut,//Campo Rut Agregado//
@@ -74,12 +79,27 @@ export class RegistroPage{
       hijos: this.hijosArray.value
     };
 
-    let usuarioString = JSON.stringify(usuarioJson);
+    let usuarioString = JSON.stringify(fData);
 
     localStorage.setItem('usuario', usuarioString);
     
+    this.auth.registerFamily(fData, fData.email,
+       fData.nombre,
+       this.formularioRegistro.value.password)
+      .then(() => {
+        // Espacios para manejen notificacion de success o error
+        console.log("TODO GUARDADO EN ORDEN")
+        
+      })
+      .catch((error) => {
+        // Espacios para manejen notificacion de succes o error
+        console.log("--- TA MALO XAO PESCAO ---")
+
+      });
+
+
     //Registro en firebase Auth
-    try {
+    /* try {
       await this.authService.register(usuarioJson.email,
          usuarioJson.nombre,
          usuarioJson.password)
@@ -102,7 +122,9 @@ export class RegistroPage{
       });
       await alert.present();
       return;
-    }
+    } */
+
+
 
     //Registro de perfil firestore
     

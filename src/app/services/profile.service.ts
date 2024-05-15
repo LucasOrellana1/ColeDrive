@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { CollectionReference, addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { Observable, finalize, from } from 'rxjs';
-import { Conductor } from './user.interface';
+import { Conductor, Familia } from './user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +12,25 @@ export class ProfileService {
   firestore = inject(Firestore)
 
   //FUNCIONES RELACIONADAS A FAMILIAS:
-  async createFamily(rut :string, fNames: string, lNames: string, 
-    telefono: string, hijos: {[key: string]: any})
+  async createFamily(fData: Familia, id: string)
     {
       //Crea la referencia a la colección familias de FB (tabla)
       const familyCollection = collection(this.firestore,'Familias');
       const newFamily = {
-        Rut : rut,
-        Nombres: fNames,
-        Apellidos: lNames,
-        Telefono: telefono,
-        Hijos : hijos, 
+        Rut : fData.rut,
+        Nombres: fData.nombre,
+        Apellidos: fData.apellido,
+        Email: fData.email,
+        Telefono: fData.telefono,
+        Hijos : fData.hijos, 
         tipoCuenta: 1
       }
     
       //Creo referencia a una familia especifica, de manera que se cree o reemplaze.
-      const myDocRef = doc(familyCollection, rut)
+      const myDocRef = doc(familyCollection, id)
       await setDoc(myDocRef, newFamily);
       
-      console.log('Nueva familia agregada con rut: ', rut)
+      console.log('Nueva familia agregada con id: ', id)
     }
 
 
