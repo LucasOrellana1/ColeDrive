@@ -106,35 +106,34 @@ export class FormularioConductorPage {
 
     if (true)
     {
-      console.log("--- VALORES VALIDADOS ---")
+        console.log("--- VALORES VALIDADOS ---")
       
    
-    // Llmama funcion para crear conductor en DB.
-    this.auth.registerDriver(this.datosConductor, 
-      this.datosConductor.emailConductor,
-      this.datosConductor.nombreConductor, 
-      f.passwordConductor)
-      .then(async () => {
-        // Espacios para manejen notificacion de success o error
-        console.log("TODO GUARDADO EN ORDEN")
-        const successAlert = await this.presentAlert('Registro Exitoso', 'El conductor ha sido registrado correctamente.');
-        await successAlert.present();
-      })
-      .catch(async (error) => {
-        // Espacios para manejen notificacion de succes o error
+      // Llmama funcion para crear conductor en DB.
+
+      try{
+        await this.auth.registerDriver(this.datosConductor, 
+          this.datosConductor.emailConductor,
+          this.datosConductor.nombreConductor, 
+          f.passwordConductor)
+
+          console.log("TODO GUARDADO EN ORDEN")
+          const successAlert = await this.presentAlert('Registro Exitoso', 'El conductor ha sido registrado correctamente.');
+          await successAlert.present();
+          this.formularioRegistro.reset();
+
+      }
+      catch{
         console.log("--- TA MALO XAO PESCAO ---")
         const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
         await errorAlert.present();
-      });
-      
-      
-    
+      }
+
     }else {
       const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
       await errorAlert.present();
       console.log("--- TA MALO XAO PESCAO ---")
     }
-    this.formularioRegistro.reset();
     
   };
 

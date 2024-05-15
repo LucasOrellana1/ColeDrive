@@ -83,53 +83,21 @@ export class RegistroPage{
 
     localStorage.setItem('usuario', usuarioString);
     
-    this.auth.registerFamily(fData, fData.email,
-       fData.nombre,
-       this.formularioRegistro.value.password)
-      .then(() => {
-        // Espacios para manejen notificacion de success o error
+    try{
+      await this.auth.registerFamily(fData, fData.email,
+        fData.nombre,
+        this.formularioRegistro.value.password)
+
         console.log("TODO GUARDADO EN ORDEN")
-        
-      })
-      .catch((error) => {
-        // Espacios para manejen notificacion de succes o error
-        console.log("--- TA MALO XAO PESCAO ---")
-
-      });
+        this.formularioRegistro.reset();
 
 
-    //Registro en firebase Auth
-    /* try {
-      await this.authService.register(usuarioJson.email,
-         usuarioJson.nombre,
-         usuarioJson.password)
-         .then(() =>{
-        this.profileService.createFamily(usuarioJson.rut,
-          usuarioJson.nombre,
-          usuarioJson.apellido,
-          usuarioJson.telefono, 
-          usuarioJson.hijos)
-        }
-      )
     }
+    catch{
+      console.log("--- TA MALO XAO PESCAO ---")
+    }
+ 
     
-    catch(error){
-      console.error(error)
-      const alert = await this.alertController.create({
-        header: 'Email invalido',
-        message: 'Revisa que el email este correctamente escrito',
-        buttons: ['Aceptar']
-      });
-      await alert.present();
-      return;
-    } */
 
-
-
-    //Registro de perfil firestore
-    
-    this.formularioRegistro.reset();
-    
-    console.log("Guardado")
   }
 }
