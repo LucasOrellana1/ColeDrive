@@ -71,12 +71,9 @@ export class FormularioConductorPage {
     var f = this.formularioRegistro.value;
 
     if (this.formularioRegistro.invalid) {
-      const alert = await this.alertController.create({
-        header: 'Datos Incompletos',
-        message: 'Debes completar todos los campos requeridos.',
-        buttons: ['Aceptar']
-      });
+      const alert = await this.presentAlert('Datos Incompletos', 'Debes completar todos los campos requeridos.');
       await alert.present();
+      console.log("--- TA MALO XAO PESCAO ---");
       console.log(this.formularioRegistro.value)
       console.log('Form Valid:', this.formularioRegistro.valid);
       console.log('Form Errors:', this.formularioRegistro.errors);
@@ -122,14 +119,12 @@ export class FormularioConductorPage {
 
       });
       
-    const successAlert = await this.alertController.create({
-      header: 'Registro Exitoso',
-      message: 'El conductor ha sido registrado correctamente.',
-      buttons: ['Aceptar']
-    });
-    await successAlert.present();
+      const successAlert = await this.presentAlert('Registro Exitoso', 'El conductor ha sido registrado correctamente.');
+      await successAlert.present();
     
     }else {
+      const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
+      await errorAlert.present();
       console.log("--- TA MALO XAO PESCAO ---")
     }
     this.formularioRegistro.reset();
@@ -158,4 +153,13 @@ export class FormularioConductorPage {
     );
     return false;
   };
+  async presentAlert(header: string, message: string): Promise<HTMLIonAlertElement> {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Aceptar']
+    });
+  
+    return alert;
+  }
 }
