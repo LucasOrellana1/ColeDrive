@@ -13,7 +13,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class ProfileService {
 constructor(
   private firestore: Firestore,
-  private fire: AngularFirestore, private afAuth: AngularFireAuth
+  private fire: AngularFirestore, private auth: AngularFireAuth
   ){}
   
     
@@ -100,11 +100,11 @@ constructor(
           })
         }
       }
-/*         
+      
 
 
       getUserData(uid: string): Observable<any> {
-        return this.firestore1.collection('users').doc(uid).valueChanges();
+        return this.fire.collection('users').doc(uid).valueChanges();
       }
     
     
@@ -120,9 +120,3 @@ constructor(
         );
       }
     }
-     */
-
-
-
-
-  }
