@@ -24,28 +24,28 @@ export class FormularioConductorPage {
   datosConductor: Conductor
 
   constructor(
-      private fb: FormBuilder,
-      private alertController: AlertController,
-      private ocr: OcrPage,
-      private RequestApi: RequestAPIService,
-      private profService: ProfileService,
-      private auth: authService
-    ) {
-      
-      this.datosConductor = {
-        rutConductor: '',
-        nombreConductor: '',
-        apellidoConductor: '',
-        emailConductor: '',
-        telefonoConductor:'',
-        patenteVehiculo: '',
-        marcaVehiculo: '',
-        nombreAsistente: '',
-        apellidoAsistente: '',
-        rutAsistente: '',
+    private fb: FormBuilder,
+    private alertController: AlertController,
+    private ocr: OcrPage,
+    private RequestApi: RequestAPIService,
+    private profService: ProfileService,
+    private auth: authService
+  ) {
 
-      }; 
-    }
+    this.datosConductor = {
+      rutConductor: '',
+      nombreConductor: '',
+      apellidoConductor: '',
+      emailConductor: '',
+      telefonoConductor: '',
+      patenteVehiculo: '',
+      marcaVehiculo: '',
+      nombreAsistente: '',
+      apellidoAsistente: '',
+      rutAsistente: '',
+
+    };
+  }
 
   // Inicialización directa de formularioRegistro en la declaración
   formularioRegistro: FormGroup = this.fb.group({
@@ -70,16 +70,6 @@ export class FormularioConductorPage {
   async guardar() {
     var f = this.formularioRegistro.value;
 
-    if (this.formularioRegistro.invalid) {
-      const alert = await this.presentAlert('Datos Incompletos', 'Debes completar todos los campos requeridos.');
-      await alert.present();
-      console.log("--- TA MALO XAO PESCAO ---");
-      console.log(this.formularioRegistro.value)
-      console.log('Form Valid:', this.formularioRegistro.valid);
-      console.log('Form Errors:', this.formularioRegistro.errors);
-      return;
-    }
-
     this.datosConductor = {
       rutConductor: f.rutConductor,
       nombreConductor: f.nombreConductor,
@@ -92,49 +82,58 @@ export class FormularioConductorPage {
       apellidoAsistente: f.apellidoAsistente,
       rutAsistente: f.rutAsistente,
     };
-  /*
+
+    if (this.formularioRegistro.invalid) {
+      const alert = await this.presentAlert('Datos Incompletos', 'Debes completar todos los campos requeridos.');
+      await alert.present();
+      console.log("--- TA MALO XAO PESCAO ---");
+      console.log(this.formularioRegistro.value)
+      console.log('Form Valid:', this.formularioRegistro.valid);
+      console.log('Form Errors:', this.formularioRegistro.errors);
+      return;
+    };
+
     localStorage.setItem('datosConductor', JSON.stringify(this.datosConductor));
-    
-    await this.invocarApi(f.patenteVehiculo);
 
-    if (
-      localStorage.getItem('datosConductor.patente') === localStorage.getItem('RespuestaApi.Patente') &&
-      localStorage.getItem('datosConductor.marca') === localStorage.getItem('RespuestaApi.Marca') &&
-      localStorage.getItem('datosConductor.rutConductor') === localStorage.getItem('RespuestaApi.RUT') ||
-      localStorage.getItem('RespuestaApi.RUT') === localStorage.getItem('RutCarnet')
-    ) */
+    const valorApi = await this.invocarApi(f.patenteVehiculo);
 
-    if (true)
-    {
+    if (valorApi === true) {
+
+      if (localStorage.getItem('datosConductor.patente') === localStorage.getItem('RespuestaApi.Patente') &&
+        localStorage.getItem('datosConductor.marca') === localStorage.getItem('RespuestaApi.Marca') &&
+        localStorage.getItem('datosConductor.rutConductor') === localStorage.getItem('RespuestaApi.RUT') ||
+        localStorage.getItem('RespuestaApi.RUT') === localStorage.getItem('RutCarnet')) {
         console.log("--- VALORES VALIDADOS ---")
-      
-   
-      // Llmama funcion para crear conductor en DB.
-
-      try{
-        await this.auth.registerDriver(this.datosConductor, 
+        // Llmama funcion para crear conductor en DB.
+        this.auth.registerDriver(this.datosConductor,
           this.datosConductor.emailConductor,
-          this.datosConductor.nombreConductor, 
+          this.datosConductor.nombreConductor,
           f.passwordConductor)
-
-          console.log("TODO GUARDADO EN ORDEN")
-          const successAlert = await this.presentAlert('Registro Exitoso', 'El conductor ha sido registrado correctamente.');
-          await successAlert.present();
-          this.formularioRegistro.reset();
-
-      }
-      catch{
-        console.log("--- TA MALO XAO PESCAO ---")
+          .then(async () => {
+            // Espacios para manejen notificacion de success o error
+            console.log("TODO GUARDADO EN ORDEN")
+            const successAlert = await this.presentAlert('Registro Exitoso', 'El conductor ha sido registrado correctamente.');
+            await successAlert.present();
+          })
+          .catch(async (error) => {
+            // Espacios para manejen notificacion de succes o error
+            console.log("--- TA MALO XAO PESCAO ---")
+            const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
+            await errorAlert.present();
+            console.error(error);
+          });
+      } else {
         const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
         await errorAlert.present();
-      }
-
-    }else {
-      const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
+        console.log("--- TA MALO XAO PESCAO ---")
+      };
+    } else {
+      const errorAlert = await this.presentAlert('Error en request', 'La API retorna falso');
       await errorAlert.present();
       console.log("--- TA MALO XAO PESCAO ---")
-    }
-    
+    };
+    this.formularioRegistro.reset();
+
   };
 
   async scanCarnet() {
@@ -142,31 +141,27 @@ export class FormularioConductorPage {
   };
 
   async invocarApi(patente: string): Promise<boolean> {
-    this.RequestApi.buscarPatente(patente).subscribe(
-      (resultado) => {
-        console.log(resultado);
-        const patenteResponse = resultado.Patente;
-        // quitar todo despues del -
-        const patenteFormateada = patenteResponse.replace(/-\d+$/, "");
-        localStorage.setItem('RespuestaApi', JSON.stringify({ ...resultado, Patente: patenteFormateada }));
-        return true;
-      },
-      (error) => {
-        console.error('Error al buscar la patente:', error);
-        return false;
-        // Handle errors
-      }
-    );
-    return false;
+    try {
+      const resultado = await this.RequestApi.buscarPatente(patente).toPromise();
+      console.log(resultado);
+      const patenteResponse = resultado.Patente;
+      // quitar todo después del -
+      const patenteFormateada = patenteResponse.replace(/-\d+$/, "");
+      localStorage.setItem('RespuestaApi', JSON.stringify({ ...resultado, Patente: patenteFormateada }));
+      return true;
+    } catch (error) {
+      console.error('Error al buscar la patente:', error);
+      return false;
+    }
   };
-  
+
   async presentAlert(header: string, message: string): Promise<HTMLIonAlertElement> {
     const alert = await this.alertController.create({
       header: header,
       message: message,
       buttons: ['Aceptar']
     });
-  
+
     return alert;
-  }
+  };
 }
