@@ -29,10 +29,10 @@ async registerDriver(conductor: Conductor, email: string, username: string, pass
       const uid = response.user.uid 
       this.profService.createDriver(conductor, uid)
       return promise
-  }).catch((error) =>{
-      console.log("eRROR" , error) 
+  }).catch((error) => {
+      console.log("Error" , error) 
       
-      return error
+      throw error
   })
 }
 

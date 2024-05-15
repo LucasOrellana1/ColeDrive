@@ -120,10 +120,11 @@ export class FormularioConductorPage {
       .then(() => {
         // Espacios para manejen notificacion de success o error
         console.log("TODO GUARDADO EN ORDEN")
+        
       })
       .catch((error) => {
         // Espacios para manejen notificacion de succes o error
-        console.log("-------")
+        console.log("--- TA MALO XAO PESCAO ---")
 
       });
       
