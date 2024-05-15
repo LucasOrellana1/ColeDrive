@@ -61,11 +61,9 @@ export class ProfileService {
         tipoCuenta : 2
 
       };
-
       //Creo referencia a un conductor especifica, de manera que se cree o reemplaze.
       const myDocRef = doc(driverCollection, id)
       const newDocRef = await setDoc(myDocRef, newDriver);
-      
       console.log('Nuevo conductor añadido con ID' , id)
     }
 
