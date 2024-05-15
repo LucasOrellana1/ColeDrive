@@ -114,19 +114,20 @@ export class FormularioConductorPage {
       this.datosConductor.emailConductor,
       this.datosConductor.nombreConductor, 
       f.passwordConductor)
-      .then(() => {
+      .then(async () => {
         // Espacios para manejen notificacion de success o error
         console.log("TODO GUARDADO EN ORDEN")
-        
+        const successAlert = await this.presentAlert('Registro Exitoso', 'El conductor ha sido registrado correctamente.');
+        await successAlert.present();
       })
-      .catch((error) => {
+      .catch(async (error) => {
         // Espacios para manejen notificacion de succes o error
         console.log("--- TA MALO XAO PESCAO ---")
-
+        const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
+        await errorAlert.present();
       });
       
-      const successAlert = await this.presentAlert('Registro Exitoso', 'El conductor ha sido registrado correctamente.');
-      await successAlert.present();
+      
     
     }else {
       const errorAlert = await this.presentAlert('Error de Registro', 'Hubo un error durante el registro.');
@@ -159,6 +160,7 @@ export class FormularioConductorPage {
     );
     return false;
   };
+  
   async presentAlert(header: string, message: string): Promise<HTMLIonAlertElement> {
     const alert = await this.alertController.create({
       header: header,
