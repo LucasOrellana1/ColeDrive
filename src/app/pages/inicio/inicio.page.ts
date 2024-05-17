@@ -11,12 +11,14 @@ import { authService } from 'src/app/services/auth.service';
 })
 export class InicioPage {
   
-  authService = inject(authService)
   formularioLogin: FormGroup;
   router =  inject(Router)
   
-  constructor(public fb: FormBuilder, public alertController: AlertController) {
-    this.formularioLogin = this.fb.group({
+  constructor(public fb: FormBuilder, 
+    public alertController: AlertController,
+    private authService: authService) {
+    
+      this.formularioLogin = this.fb.group({
       correo: ['', Validators.required],  // Asegúrate de que en el HTML también esté como 'correo' para el formControlName.
       password: ['', Validators.required]
     });

@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { InicioPageRoutingModule } from './inicio-routing.module';
 
 import { InicioPage } from './inicio.page';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import { InicioPage } from './inicio.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    InicioPageRoutingModule
+    InicioPageRoutingModule,
+    AngularFireModule,
+    AngularFirestoreModule
   ],
   declarations: [InicioPage]
 })

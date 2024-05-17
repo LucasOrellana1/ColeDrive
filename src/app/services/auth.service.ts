@@ -1,7 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, user } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { Observable, from } from 'rxjs';
 import { Conductor, Familia, UserInterface } from './user.interface';
 import { ProfileService } from './profile.service';
 
@@ -10,10 +9,11 @@ import { ProfileService } from './profile.service';
 })
 
 export class authService {
-  firebaseAuth = inject(Auth);
-  user$ = user(this.firebaseAuth)
+
   
-  constructor(private profService: ProfileService){}
+  constructor(private profService: ProfileService, 
+    
+    private firebaseAuth : Auth){}
 
 register(email: string, username: string, password: string){
   const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password)
@@ -46,7 +46,7 @@ async registerDriver(conductor: Conductor, email: string, username: string, pass
       console.log("Error" , error) 
       throw error
   })
-}
+  }
 
   login(email:string, password: string){
     // la funcion final vacia es para que ts no caiga
@@ -56,3 +56,4 @@ async registerDriver(conductor: Conductor, email: string, username: string, pass
   }
 
 }
+  
