@@ -138,7 +138,7 @@ export class FormularioConductorPage {
   };
 
   async scanCarnet() {
-    await this.ocr.recognizeImageCarnet(); // Call the method from the injected service
+    await this.ocr.recognizeImageCarnet(); // Call the method from the injected service >:C
   };
 
   async invocarApi(patente: string): Promise<boolean> {
