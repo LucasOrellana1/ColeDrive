@@ -26,7 +26,7 @@ export class familyGuard implements CanActivate {
         // limitando el codigo solo a recibir la primera data enviada por el observable
         take(1),
         map(user => {
-          if (user && user.tipoCuenta === 1) {
+          if (user && user.tipoCuenta == 1) {
             return true;
           } else {
             this.router.navigate(['/login']);

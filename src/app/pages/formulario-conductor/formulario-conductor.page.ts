@@ -33,16 +33,17 @@ export class FormularioConductorPage {
   ) {
 
     this.datosConductor = {
-      rutConductor: '',
-      nombreConductor: '',
-      apellidoConductor: '',
-      emailConductor: '',
-      telefonoConductor: '',
+      rut: '',
+      nombre: '',
+      apellido: '',
+      email: '',
+      telefono: '',
       patenteVehiculo: '',
       marcaVehiculo: '',
       nombreAsistente: '',
       apellidoAsistente: '',
       rutAsistente: '',
+      tipoCuenta : 2
 
     };
   }
@@ -71,11 +72,11 @@ export class FormularioConductorPage {
     var f = this.formularioRegistro.value;
 
     this.datosConductor = {
-      rutConductor: f.rutConductor,
-      nombreConductor: f.nombreConductor,
-      apellidoConductor: f.apellidoConductor,
-      emailConductor: f.emailConductor,
-      telefonoConductor: f.telefonoConductor,
+      rut: f.rutConductor,
+      nombre: f.nombreConductor,
+      apellido: f.apellidoConductor,
+      email: f.emailConductor,
+      telefono: f.telefonoConductor,
       patenteVehiculo: f.patenteVehiculo,
       marcaVehiculo: f.marcaVehiculo,
       nombreAsistente: f.nombreAsistente,
@@ -108,8 +109,6 @@ export class FormularioConductorPage {
         
         try{
           await this.auth.registerDriver(this.datosConductor, 
-            this.datosConductor.emailConductor,
-            this.datosConductor.nombreConductor, 
             f.passwordConductor)
   
             console.log("TODO GUARDADO EN ORDEN")

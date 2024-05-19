@@ -3,25 +3,48 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { authService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { Familia } from 'src/app/services/user.interface';
+import { Colegio, Familia } from 'src/app/services/user.interface';
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.page.html',
   styleUrls: ['./registro.page.scss'],
 })
-export class RegistroPage{
+export class RegistroPage implements OnInit{
   
+ 
   authService = inject(authService)
   fData: Familia
+  lista1: any
 
   constructor(private fb: FormBuilder, 
     private alertController: AlertController,
     private auth: authService,
-    private profileSerive : ProfileService
+    private profileService : ProfileService
       ) {
     }
-  // Inicialización directa en la declaración
+  
+  // No quitar OnInit
+  ngOnInit() {
+   /*  console.log("asdasd")
+    const colegioDeEjemplo: Colegio = {
+      nombre: "Colegio ABC",
+      email: "info@colegioabc.com",
+      telefono: "123-456-7890",
+      direccion: "Calle Falsa 123",
+      comuna: "Comuna Ejemplo",
+      tipoCuenta: 3  // Este campo es opcional, pero lo incluimos para que sea más completo
+    };
+
+    this.auth.registerSchool(colegioDeEjemplo, 'asdasd' ) */
+    
+    const lista = this.profileService.getSchoolList().subscribe(data => {
+      this.lista1 = data
+    })      
+  
+  }
+
+    // Inicialización directa en la declaración
   formularioRegistro: FormGroup = this.fb.group({
     nombre: ['', Validators.required],
     apellido: ['', Validators.required],
@@ -76,7 +99,8 @@ export class RegistroPage{
       direccion: this.formularioRegistro.value.direccion,
       rut: this.formularioRegistro.value.rut,//Campo Rut Agregado//
       numeroHijos: this.formularioRegistro.value.numHijos,
-      hijos: this.hijosArray.value
+      hijos: this.hijosArray.value,
+      tipoCuenta : 1
     };
 
     let usuarioString = JSON.stringify(fData);
@@ -90,14 +114,9 @@ export class RegistroPage{
 
         console.log("TODO GUARDADO EN ORDEN")
         this.formularioRegistro.reset();
-
-
     }
     catch{
       console.log("--- TA MALO XAO PESCAO ---")
     }
- 
-    
-
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, user } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { Conductor, Familia, UserInterface } from './user.interface';
+import { Colegio, Conductor, Familia} from './user.interface';
 import { ProfileService } from './profile.service';
 
 @Injectable({
@@ -27,7 +27,7 @@ async registerFamily(fData: Familia, email: string, username: string, password: 
   .then(response => {
       updateProfile(response.user, {displayName:username})
       const uid = response.user.uid 
-      this.profService.createFamily(fData, uid)
+      this.profService.createUser(fData, uid)
       
   }).catch((error) => {
       console.log("Error" , error) 
@@ -36,17 +36,30 @@ async registerFamily(fData: Familia, email: string, username: string, password: 
   })
 }
 
-async registerDriver(conductor: Conductor, email: string, username: string, password: string){
-  await createUserWithEmailAndPassword(this.firebaseAuth, email, password)
+async registerDriver(conductor: Conductor, password: string){
+  await createUserWithEmailAndPassword(this.firebaseAuth, conductor.email, password)
   .then(response => {
-      updateProfile(response.user, {displayName:username})
+      updateProfile(response.user, {displayName:conductor.nombre})
       const uid = response.user.uid 
-      this.profService.createDriver(conductor, uid)
+      this.profService.createUser(conductor, uid)
   }).catch((error) => {
       console.log("Error" , error) 
       throw error
   })
   }
+
+  async registerSchool(sData: Colegio, password: string){
+      await createUserWithEmailAndPassword(this.firebaseAuth, sData.email, password)
+    .then(response => {
+        updateProfile(response.user, {displayName:sData.nombre})
+        const uid = response.user.uid 
+        this.profService.createUser(sData, uid)
+      }).catch((error) => {
+        console.log("Error" , error) 
+        throw error
+    })
+    }
+    
 
   login(email:string, password: string){
     // la funcion final vacia es para que ts no caiga

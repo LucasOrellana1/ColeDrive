@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import { CollectionReference, addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { Observable, finalize, from, switchMap } from 'rxjs';
-import { Conductor, Familia } from './user.interface';
+import { Observable, finalize, from, map, switchMap, take } from 'rxjs';
+import { Colegio, Conductor, Familia } from './user.interface';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -17,106 +17,104 @@ constructor(
   ){}
   
     
+// Simplificación en una sola funcion y tabla usuarios
+  createUser(
+    data: Familia | Colegio | Conductor,
+    uid: string
+  )
+  {
+    this.fire.collection('Usuarios').doc(uid).set(data);
+    console.log("Nuevo usuario registrado: " , data.tipoCuenta, " ", uid)
+  }
+
+  // Uid llegare de getCurrentUser()
+  async updateUser(
+    uid: string,
+    data: Familia | Colegio | Conductor)
+  {
+    return this.fire.collection('Usuarios').doc(uid).set(data);
+  }
+  
+   //  Funciones de obtención de datos
+  
+   getUserData(uid: string): Observable<any> {
+    return this.fire.collection('Usuarios').doc(uid).valueChanges();
+  }
+
+  getCurrentUser(): Observable<any> {
+    return this.auth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.getUserData(user.uid);
+        } else {
+          return [null];
+        }
+      })
+    );
+  } 
 
   //FUNCIONES RELACIONADAS A FAMILIAS:
-  async createFamily(fData: Familia, id: string)
-    {
-      //Crea la referencia a la colección familias de FB (tabla)
-      const familyCollection = collection(this.firestore,'Familias');
-      const newFamily = {
-        Rut : fData.rut,
-        Nombres: fData.nombre,
-        Apellidos: fData.apellido,
-        Email: fData.email,
-        Telefono: fData.telefono,
-        Hijos : fData.hijos, 
-        tipoCuenta: 1
-      }
+   
+
+
+  //FUNCIONES RELACIONADAS A COLEGIOS:
     
-      //Creo referencia a una familia especifica, de manera que se cree o reemplaze.
-      const myDocRef = doc(familyCollection, id)
-      await setDoc(myDocRef, newFamily);
-      
-      console.log('Nueva familia agregada con id: ', id)
-    }
+/*   async createSchool(sData: Colegio, id: string){
+    const schoolCollection = collection(this.firestore,'Ususarios');
+    const myDocRef = doc(schoolCollection, id)
+    const newDocRef = await setDoc(myDocRef, sData);
+    console.log('Nuevo colegio añadido con ID' , id)
+  }
+ */
 
-
-  // FUNCIONES RELACIONADAS A CONDUCTORES  
-  async createDriver(cData: Conductor, id: string)
-    {
-      //Crea la referencia a la colección familias de FB (tabla)
-      const driverCollection = collection(this.firestore,'Conductores');
-
-      const newDriver = {
-        //Datos generales
-        Rut: cData.rutConductor,
-        Nombre: cData.nombreConductor,
-        Apellido: cData.apellidoConductor,
-        Email: cData.emailConductor,
-        
-        PatenteVehiculo: cData.patenteVehiculo,
-        marcaVehiculo: cData.marcaVehiculo,
-        nombreAsistente: cData.nombreAsistente,
-        apellidoAsistente: cData.apellidoAsistente,
-        rutAsistente: cData.rutAsistente,
-        
-        // Datos para validacion por parte de colegio
-        activado: false,
-        colegioId: null,
-
-        //Valor utilizado para establecer el GUARD
-        tipoCuenta : 2
-
-      };
-      //Creo referencia a un conductor especifica, de manera que se cree o reemplaze.
-      const myDocRef = doc(driverCollection, id)
-      const newDocRef = await setDoc(myDocRef, newDriver);
-      console.log('Nuevo conductor añadido con ID' , id)
-    }
-
-    //FUNCIONES RELACIONADAS A COLEGIOS:
-    
-    async activateDriver(conductorId: string, colegioId: string){
-
-      //Se cre ala referencia al documento especifico:
-      const driverRef = doc(this.firestore, "Conductores", conductorId)
-      const docSnaphot = await getDoc(driverRef);
-      const data = docSnaphot.data()
-      
-       if (docSnaphot.exists() && data["activado"] === false) {
-        console.log("Document data:", docSnaphot.data());
-        //Se actualizan los cambios relacionados a la validación
-          await setDoc(driverRef, 
-            { 
-              activado: true,
-              colegioId: colegioId
+  async changeStateDriver(conductorId: string, colegioId: string){      
+    this.getUserData(conductorId).subscribe(
+      data => {
+        if (data && data.activado == false){
+          this.fire.collection('Usuarios').doc(conductorId).update(
+            {
+              activado: true
+            })}
+        else {
+          this.fire.collection('Usuarios').doc(conductorId).update(
+            {
+              activado: false
             })
-        }  
-        else{
-          await setDoc(driverRef, 
-            { 
-              activado: false,
-              colegioId: null
-          })
-        }
-      }
+        }})}
+
+
+  
+  // Query: trae el listado de conductores postulados para activar
+  getDriverListAct(comuna: string, colegioId: string){
+    this.fire.collection('Usuarios', ref => 
+      ref.where('tipoCuenta', '==', 2)
+      .where('comuna', '==', comuna)
+      .where('colegio', '==', colegioId)
+      ).valueChanges().subscribe(data => {
+        return data
+      });
       
+  }
 
+  // Query: trae el listado de conductores disponibles (activados)
 
-      getUserData(uid: string): Observable<any> {
-        return this.fire.collection('users').doc(uid).valueChanges();
-      }
-    
-    
-      getCurrentUser(): Observable<any> {
-        return this.auth.authState.pipe(
-          switchMap(user => {
-            if (user) {
-              return this.getUserData(user.uid);
-            } else {
-              return [null];
-            }
-          })
-        );
-      }
-    }
+  getDriverListDisp(comuna:string, colegioId:string){
+    this.fire.collection('Usuarios', ref => 
+      ref.where('tipoCuenta', '==', 2)
+      .where('comuna', '==', comuna)
+      .where('colegio', '==', colegioId)
+      .where('activado', '==', true)
+      ).valueChanges().subscribe(data => {
+        return data
+      });
+  }
+
+  //Query: Listado de colegios
+  getSchoolList():Observable<any>{
+    return this.fire.collection('Usuarios', ref =>
+      ref.where('tipoCuenta', '==', 3)
+    ).valueChanges()
+  }
+}
+  
+
