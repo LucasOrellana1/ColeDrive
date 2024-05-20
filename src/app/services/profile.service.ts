@@ -35,12 +35,13 @@ constructor(
     return this.fire.collection('Usuarios').doc(uid).set(data);
   }
   
-   //  Funciones de obtención de datos
-  
+
+   //  Funciones de obtención de datos de usuario
    getUserData(uid: string): Observable<any> {
     return this.fire.collection('Usuarios').doc(uid).valueChanges();
   }
 
+  // Obtiene un observable con los datos de la sesión actual
   getCurrentUser(): Observable<any> {
     return this.auth.authState.pipe(
       switchMap(user => {
@@ -53,19 +54,7 @@ constructor(
     );
   } 
 
-  //FUNCIONES RELACIONADAS A FAMILIAS:
-   
-
-
-  //FUNCIONES RELACIONADAS A COLEGIOS:
-    
-/*   async createSchool(sData: Colegio, id: string){
-    const schoolCollection = collection(this.firestore,'Ususarios');
-    const myDocRef = doc(schoolCollection, id)
-    const newDocRef = await setDoc(myDocRef, sData);
-    console.log('Nuevo colegio añadido con ID' , id)
-  }
- */
+  // Funcion para activar o desactivar conductor (Colegio)
 
   async changeStateDriver(conductorId: string, colegioId: string){      
     this.getUserData(conductorId).subscribe(
@@ -83,8 +72,7 @@ constructor(
         }})}
 
 
-  
-  // Query: trae el listado de conductores postulados para activar
+  // Query: trae el listado de conductores postulados para activar (Colegio)
   getDriverListAct(comuna: string, colegioId: string){
     this.fire.collection('Usuarios', ref => 
       ref.where('tipoCuenta', '==', 2)
@@ -96,8 +84,17 @@ constructor(
       
   }
 
-  // Query: trae el listado de conductores disponibles (activados)
+ // Postular a colegio (Boton para seleccionar el colegio / Conductor ) 
+ selectSchool(conductorId:string, colegioId:string){
+  this.fire.collection('Usuarios').doc(conductorId).update(
+    {
+      colegioId: colegioId
+    })
+  }
 
+  // Query: trae el listado de conductores disponibles 
+  //(activados / vista familias)
+ 
   getDriverListDisp(comuna:string, colegioId:string){
     this.fire.collection('Usuarios', ref => 
       ref.where('tipoCuenta', '==', 2)
@@ -109,7 +106,7 @@ constructor(
       });
   }
 
-  //Query: Listado de colegios
+  //Query: Listado de colegios (Conductor)
   getSchoolList():Observable<any>{
     return this.fire.collection('Usuarios', ref =>
       ref.where('tipoCuenta', '==', 3)
