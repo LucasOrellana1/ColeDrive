@@ -43,6 +43,7 @@ export class FormularioConductorPage {
       nombreAsistente: '',
       apellidoAsistente: '',
       rutAsistente: '',
+      comuna: '', // Nuevo campo comuna
       tipoCuenta : 2
 
     };
@@ -61,6 +62,7 @@ export class FormularioConductorPage {
     nombreAsistente: ['', Validators.required],
     apellidoAsistente: ['', Validators.required],
     rutAsistente: ['', Validators.required],
+    comuna: ['', Validators.required], // Nuevo campo comuna
     telefonoConductor: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
   }, { validators: this.passwordMatchValidator } as AbstractControlOptions);
 
@@ -82,6 +84,7 @@ export class FormularioConductorPage {
       nombreAsistente: f.nombreAsistente,
       apellidoAsistente: f.apellidoAsistente,
       rutAsistente: f.rutAsistente,
+      comuna: f.comuna,
     };
 
     if (this.formularioRegistro.invalid) {

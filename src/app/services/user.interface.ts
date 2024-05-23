@@ -6,6 +6,7 @@ export interface Conductor{
   apellido: string,
   email: string,
   telefono: string,
+  comuna: String,
   
   patenteVehiculo: string,
   marcaVehiculo: string,
@@ -26,6 +27,8 @@ export interface Familia{
   nombre: string,
   apellido: string,
   email: string,
+  colegio: string,
+  comuna: string,
 
   telefono: string,
   direccion: string,

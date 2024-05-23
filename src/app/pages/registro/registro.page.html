@@ -1,11 +1,4 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Registro Tutores</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="Unete a Nosotros"></app-header>
 
 <ion-content>
   <ion-card>
@@ -67,6 +60,23 @@
             </ion-item>
           </div>
         </div>
+        <!-- Nuevo selector para Comuna -->
+        <ion-item>
+          <ion-label position="floating">Comuna</ion-label>
+          <ion-select formControlName="comuna">
+            <ion-select-option value="maipu">Maipú</ion-select-option>
+            <ion-select-option value="penaflor">Peñaflor</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <!-- Nuevo selector para Colegio -->
+        <ion-item>
+          <ion-label position="floating">Colegio</ion-label>
+          <ion-select formControlName="colegio">
+            <ion-select-option value="colegio1">Colegio 1</ion-select-option>
+            <ion-select-option value="colegio2">Colegio 2</ion-select-option>
+            <ion-select-option value="colegio3">Colegio 3</ion-select-option>
+          </ion-select>
+        </ion-item>
       </form>
       <br>
       <ion-button expand="block" type="submit" (click)="Guardar()">

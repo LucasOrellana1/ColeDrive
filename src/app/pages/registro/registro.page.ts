@@ -55,6 +55,8 @@ export class RegistroPage implements OnInit{
     direccion: ['', Validators.required],
     rut: ['', ], //Campo rut agregado//
     numHijos: [0, [Validators.required, Validators.min(1)]],
+    comuna: ['', Validators.required], // Nuevo campo comuna
+    colegio: ['', Validators.required], // Nuevo campo colegio
     hijosArray: this.fb.array([])
   }, { validator: this.passwordMatchValidator });
 
@@ -100,6 +102,8 @@ export class RegistroPage implements OnInit{
       rut: this.formularioRegistro.value.rut,//Campo Rut Agregado//
       numeroHijos: this.formularioRegistro.value.numHijos,
       hijos: this.hijosArray.value,
+      comuna: this.formularioRegistro.value.comuna, // Nuevo campo comuna
+      colegio: this.formularioRegistro.value.colegio, // Nuevo campo colegio
       tipoCuenta : 1
     };
 

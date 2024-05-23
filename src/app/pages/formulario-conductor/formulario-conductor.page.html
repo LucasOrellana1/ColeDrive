@@ -1,11 +1,4 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Registro del Conductor</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="Formulario Conductor"></app-header>
 
 <ion-content>
   <form [formGroup]="formularioRegistro">
@@ -26,6 +19,14 @@
         <ion-item>
           <ion-label position="floating">Apellido</ion-label>
           <ion-input formControlName="apellidoConductor" type="text"></ion-input>
+        </ion-item>
+        <!-- Nuevo selector para Comuna -->
+        <ion-item>
+          <ion-label position="floating">Comuna</ion-label>
+          <ion-select formControlName="comuna">
+            <ion-select-option value="maipu">Maipú</ion-select-option>
+            <ion-select-option value="penaflor">Peñaflor</ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-item>
           <ion-label position="floating">RUT</ion-label>

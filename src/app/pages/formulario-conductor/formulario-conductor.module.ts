@@ -9,6 +9,7 @@ import { FormularioConductorPage } from './formulario-conductor.page';
 
 import { OcrPage } from '../ocr/ocr.page';
 import { Conductor } from 'src/app/services/user.interface';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { Conductor } from 'src/app/services/user.interface';
     IonicModule,
     ReactiveFormsModule,
     FormularioConductorPageRoutingModule,
+    SharedModule
   ],
   declarations: [FormularioConductorPage],
   providers: [OcrPage]

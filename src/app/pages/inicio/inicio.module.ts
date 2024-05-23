@@ -9,6 +9,7 @@ import { InicioPageRoutingModule } from './inicio-routing.module';
 import { InicioPage } from './inicio.page';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { AngularFireModule } from '@angular/fire/compat';
     IonicModule,
     InicioPageRoutingModule,
     AngularFireModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    SharedModule
   ],
   declarations: [InicioPage]
 })
