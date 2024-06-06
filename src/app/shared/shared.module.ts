@@ -5,6 +5,8 @@ import { ListaConductoresComponent } from './components/lista-conductores/lista-
 import { ListaPasajerosComponent } from './components/lista-pasajeros/lista-pasajeros.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { IonicModule } from '@ionic/angular';
+import { ListaPasajerosDosComponent } from './components/lista-pasajeros-dos/lista-pasajeros-dos.component';
+
 
 
 
@@ -13,11 +15,15 @@ import { IonicModule } from '@ionic/angular';
     HeaderComponent,
     ListaConductoresComponent,
     ListaPasajerosComponent,
+    ListaPasajerosDosComponent,
+    
     LogoComponent],
   exports: [
     HeaderComponent,
     ListaConductoresComponent,
     ListaPasajerosComponent,
+    ListaPasajerosDosComponent,
+    
     LogoComponent],
   imports: [
     CommonModule,

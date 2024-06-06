@@ -1,9 +1,40 @@
 <app-header title="Perfil Usuario"></app-header>
 
-<ion-content [fullscreen]="true">
-  
-</ion-content>
+<ion-content>
+  <div *ngIf="userData; else loadingData">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title class="card-title-styling">{{ userData.nombre }} {{ userData.apellido }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="user-info"><strong>Email:</strong> {{ userData.email }}</p>
+        <p class="user-info"><strong>Teléfono:</strong> {{ userData.telefono }}</p>
+        <p class="user-info"><strong>Dirección:</strong> {{ userData.direccion }}</p>
+        <p class="user-info"><strong>RUT:</strong> {{ userData.rut }}</p>
+        <p class="user-info"><strong>Comuna:</strong> {{ userData.comuna }}</p>
+        <p class="user-info"><strong>Colegio:</strong> {{ userData.colegio }}</p>
 
-<ion-button (click)="signOut()" expand="block" fill="clear" shape="round">
-  Cerrar sesión
-</ion-button>
+        <div *ngIf="userData.hijos && userData.hijos.length" class="children-section">
+          <h2 >Hijos:</h2>
+          <ion-list>
+            <ion-item *ngFor="let hijo of userData.hijos">
+              <p class="child-info"><strong>Nombre:</strong> {{ hijo.nombreHijo }} Curso: {{ hijo.cursoHijo }}</p>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-button (click)="signOut()" expand="block" mode="ios" class="submit">
+      Cerrar sesión
+      <ion-icon slot="end" name="log-out-outline"></ion-icon>
+    </ion-button>
+  </div>
+  <ng-template #loadingData>
+    <ion-card class="loading-card">
+      <ion-card-content>
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>Cargando datos del usuario...</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ion-content>

@@ -6,7 +6,7 @@ export interface Conductor{
   apellido: string,
   email: string,
   telefono: string,
-  comuna: String,
+  comuna: String, //campo comuna agreegado
   
   patenteVehiculo: string,
   marcaVehiculo: string,
@@ -27,8 +27,8 @@ export interface Familia{
   nombre: string,
   apellido: string,
   email: string,
-  colegio: string,
-  comuna: string,
+  colegio: string,//campo colegio agreegado
+  comuna: string,//campo comuna agreegado
 
   telefono: string,
   direccion: string,

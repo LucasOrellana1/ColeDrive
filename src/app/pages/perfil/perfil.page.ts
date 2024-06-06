@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { ProfileService } from 'src/app/services/profile.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-perfil',
@@ -10,7 +12,20 @@ import { Router } from '@angular/router';
 export class PerfilPage{
 
   firebaseAuth = inject(Auth);
-  router =  inject(Router)
+  router =  inject(Router);
+  profileService = inject(ProfileService);
+
+  user$: Observable<any>;
+  userData: any;
+
+  
+  ngOnInit() {
+    this.user$ = this.profileService.getCurrentUser();
+    this.user$.subscribe(data => {
+      this.userData = data;
+      console.log(this.userData);
+    });
+  }
 
   async signOut() {
     try {

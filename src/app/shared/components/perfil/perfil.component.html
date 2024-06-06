@@ -1,0 +1,24 @@
+<div *ngIf="userData$ | async as user; else loading">
+  <h1>Perfil de Usuario</h1>
+  <p><strong>Nombre:</strong> {{ user.nombre }}</p>
+  <p><strong>Apellido:</strong> {{ user.apellido }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <p><strong>Teléfono:</strong> {{ user.telefono }}</p>
+  <p><strong>Dirección:</strong> {{ user.direccion }}</p>
+  <p><strong>RUT:</strong> {{ user.rut }}</p>
+  <p><strong>Comuna:</strong> {{ user.comuna }}</p>
+  <p><strong>Colegio:</strong> {{ user.colegio }}</p>
+  <p><strong>Número de Hijos:</strong> {{ user.numeroHijos }}</p>
+  <div *ngIf="user.hijos && user.hijos.length">
+    <h2>Hijos:</h2>
+    <ul>
+      <li *ngFor="let hijo of user.hijos">
+        <p><strong>Nombre:</strong> {{ hijo.nombreHijo }}</p>
+        <p><strong>Curso:</strong> {{ hijo.cursoHijo }}</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<ng-template #loading>
+  <p>Cargando...</p>
+</ng-template>
