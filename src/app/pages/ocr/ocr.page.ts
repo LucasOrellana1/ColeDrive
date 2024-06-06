@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { createWorker, Worker } from 'tesseract.js';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { ModalController } from '@ionic/angular';
+import { ResultadoScanComponent } from 'src/app/shared/components/resultado-scan/resultado-scan.component';
 import { validateRut, cleanRut } from 'rutlib';
+import { FormGroup } from '@angular/forms';
+
 @Component({
   selector: 'app-ocr',
   templateUrl: './ocr.page.html',
@@ -10,7 +14,7 @@ import { validateRut, cleanRut } from 'rutlib';
 export class OcrPage {
   worker: Worker;
 
-  constructor() {
+  constructor(private modalController: ModalController) {
     this.loadWorker();
   }
 
@@ -34,15 +38,13 @@ export class OcrPage {
         source: CameraSource.Camera,
       });
 
-      // Convert the photo to a blob
       const response = await fetch(photo.webPath!);
       const blob = await response.blob();
 
-      // Recognize the image
       const ret = await this.worker.recognize(blob);
       console.log(ret.data.text);
 
-      // Extract RUTs from the recognized text using regular expressions
+      // Extract detected values
       const rutRegex = /(\d{1,2}\.\d{3}\.\d{3}-[0-9Kk])/g;
       const numDocRegex = /(\d{3}\.\d{3}\.\d{3})/g;
       const nameRegex = /\n([A-ZÁÉÍÓÚÜ\s-]+(?:\n[A-ZÁÉÍÓÚÜ\s-]+)*)(?=\n)/g;
@@ -51,31 +53,31 @@ export class OcrPage {
       const numDocumento = ret.data.text.match(numDocRegex);
       const extractedNames = ret.data.text.match(nameRegex);
 
+      let rutFormateado = '';
       if (extractedRuts) {
         const rutLimpio = cleanRut(JSON.stringify(extractedRuts));
         const valido = validateRut(rutLimpio);
-        const rutFormateado = rutLimpio.slice(0, -1) + '-' + rutLimpio.slice(-1);
-        if(valido === true){
+        rutFormateado = rutLimpio.slice(0, -1) + '-' + rutLimpio.slice(-1);
+        if (valido) {
           console.log("RUT Detectado:", rutFormateado, "\nAgregado a Storage.");
-          localStorage.setItem('RutCarnet', JSON.stringify(rutFormateado));
-          const getRutCarnet = JSON.parse(localStorage.getItem('RutCarnet'));
-        } else{
+          localStorage.setItem('RutCarnet', (rutFormateado));
+        } else {
           console.log("RUT Detectado no es valido:", rutFormateado);
         }
       } else {
         console.log("No se detectaron Ruts");
-      };
+      }
 
       if (numDocumento) {
         console.log("NumDoc Detectado:", numDocumento, "\nAgregado a Storage.");
         localStorage.setItem('NumDocCarnet', JSON.stringify(numDocumento));
-        const getNumDocCarnet = JSON.parse(localStorage.getItem('NumDocCarnet'));
-      }else {
+      } else {
         console.log("No se detectaron NumDocs");
       };
 
+      let cleanedNames: string[] = [];
       if (extractedNames) {
-        const cleanedNames = extractedNames.map(name =>
+        cleanedNames = extractedNames.map(name =>
           name.replace(
             /^(\n+)|(\n{2,}.*)|(\n)/g,
             (match, p1, p2, p3) =>
@@ -84,10 +86,11 @@ export class OcrPage {
         );
         console.log("Nombres Detectados:", cleanedNames, "\nAgregado a Storage.");
         localStorage.setItem('NombresCarnet', JSON.stringify(cleanedNames));
-        const getNombresDocCarnet = JSON.parse(localStorage.getItem('NombresCarnet'));
-      }else {
+      } else {
         console.log("No se detectaron Nombres");
-      };
+      }
+
+      await this.presentModal(rutFormateado, numDocumento, cleanedNames);
     } catch (error) {
       console.error("Error al reconocer:", error);
     } finally {
@@ -97,33 +100,18 @@ export class OcrPage {
         console.log('--');
         this.loadWorker();
       }
-    };
-  };
+    }
+  }
 
-  // selectedFile: File;
-
-  // seleccionarPDF(event: any) {
-  //   this.selectedFile = event.target.files[0]; // Store the selected file in the selectedFile property
-  // }
-
-  // async recognizePdf(selectedFile) {
-  //   if (!this.worker) {
-  //     console.error("Worker not loaded");
-  //     return;
-  //   }
-
-  //   try {
-  //     const ret = await this.worker.recognize(selectedFile);
-  //     console.log(ret.data.text);
-  //   } catch (error) {
-  //     console.error("Error recognizing PDF:", error);
-  //   } finally {
-  //     if (this.worker) {
-  //       await this.worker.terminate();
-  //       console.log('Worker terminated');
-  //       console.log('--');
-  //       this.loadWorker();
-  //     }
-  //   }
-  // }
+  async presentModal(rut: string, numDoc: string[], names: string[]) {
+    const modal = await this.modalController.create({
+      component: ResultadoScanComponent,
+      componentProps: {
+        rut: rut ? rut : 'No encontrado',
+        numDoc: numDoc && numDoc.length > 0 ? numDoc[0] : 'No encontrado',
+        names: names ? names : 'No encontrado',
+      }
+    });
+    return await modal.present();
+  }
 }

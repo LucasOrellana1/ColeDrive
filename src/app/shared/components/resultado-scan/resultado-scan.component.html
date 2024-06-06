@@ -1,0 +1,18 @@
+<app-header title="Resultados Escaner">
+  <ion-buttons slot="end">
+    <ion-button (click)="dismiss()">Cerrar</ion-button>
+  </ion-buttons>
+</app-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngIf="rut">RUT: {{ rut }}</ion-item>
+    <ion-item *ngIf="numDoc">Numero de Documento: {{ numDoc }}</ion-item>
+    <ion-item *ngIf="names && names.length">
+      Nombres:
+      <ul>
+        <li *ngFor="let name of names">{{ name }}</li>
+      </ul>
+    </ion-item>
+  </ion-list>
+</ion-content>

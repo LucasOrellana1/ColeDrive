@@ -142,8 +142,17 @@ export class FormularioConductorPage {
 
   async scanCarnet() {
     await this.ocr.recognizeImageCarnet(); // Call the method from the injected service >:C
-  };
+    const nombresCarnet = localStorage.getItem('NombresCarnet');
+    const nombresArray = nombresCarnet ? JSON.parse(nombresCarnet) : [];
+    const nombreConductorExtraido = nombresArray.length > 0 ? nombresArray[0] : '';
 
+    this.formularioRegistro.patchValue({
+      rutConductor: localStorage.getItem('RutCarnet') || '', // Set Rut or an empty string if not found
+      nombreConductor: nombreConductorExtraido || 'error', // Set Nombre or an empty string if not found
+      // Set other form fields as needed
+    });
+  };
+  
   async invocarApi(patente: string): Promise<boolean> {
     try {
       const resultado = await this.RequestApi.buscarPatente(patente).toPromise();
