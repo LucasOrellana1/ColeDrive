@@ -1,3 +1,15 @@
-<p>
-  
-</p>
+<app-header title="Lista Hijos Coledrive" backButton="/perfil"></app-header>
+
+
+<ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterHijos()" placeholder="Buscar..."></ion-searchbar>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let hijo of filteredHijosList">
+            <ion-label>
+                <h2>{{ hijo.nombreHijo }} {{ hijo.cursoHijo }}</h2>
+                <p>{{ hijo.familiaNombre }} {{ hijo.familiaApellido }}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

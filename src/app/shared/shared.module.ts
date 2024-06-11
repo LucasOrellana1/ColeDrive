@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { HeaderComponent } from './components/header/header.component';
@@ -28,7 +29,9 @@ import { ResultadoScanComponent } from './components/resultado-scan/resultado-sc
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    FormsModule,  // Asegúrate de importar FormsModule
+    ReactiveFormsModule  // Asegúrate de importar ReactiveFormsModule
   ]
 })
 export class SharedModule { }

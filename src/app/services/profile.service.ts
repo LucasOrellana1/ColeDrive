@@ -53,6 +53,27 @@ constructor(
       })
     );
   } 
+  // Funcion para para obtener la lista de todos los hijos registrados
+  getHijosList(): Observable<any[]> {
+    return this.fire.collection('Usuarios', ref => ref.where('tipoCuenta', '==', 1))
+      .valueChanges()
+      .pipe(
+        map((familias: any[]) => {
+          let hijosList: any[] = [];
+          familias.forEach(familia => {
+            if (familia.hijos) {
+              hijosList = hijosList.concat(familia.hijos.map((hijo: any) => ({
+                ...hijo,
+                familiaNombre: familia.nombre,
+                familiaApellido: familia.apellido
+              })));
+            }
+          });
+          return hijosList;
+        })
+      );
+  }
+
 
   // Funcion para activar o desactivar conductor (Colegio)
 
