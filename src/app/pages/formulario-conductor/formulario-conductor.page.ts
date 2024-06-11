@@ -13,6 +13,7 @@ import { RequestAPIService } from 'src/app/services/requestAPI.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Conductor } from 'src/app/services/user.interface';
 import { authService } from 'src/app/services/auth.service';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-formulario-conductor',

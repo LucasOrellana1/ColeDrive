@@ -1,17 +1,22 @@
-import { Component, OnInit,Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent  implements OnInit {
+export class HeaderComponent implements OnInit {
 
   @Input() title!: String;
-  @Input() backButton!: string; 
+  @Input() backButton!: string;
+  @Input() showCloseButton: boolean = false;
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
-  ngOnInit() {}
+  close() {
+    this.modalController.dismiss();
+  }
+  ngOnInit() { }
 
 }
