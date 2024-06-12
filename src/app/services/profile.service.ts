@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, arrayUnion } from '@angular/fire/firestore';
 import { CollectionReference, addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { Observable, finalize, from, map, switchMap, take } from 'rxjs';
-import { Colegio, Conductor, Familia } from './user.interface';
+import { Colegio, Conductor, Familia, FacturaServicios } from './user.interface';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -10,14 +10,16 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProfileService {
-  constructor(
-    private firestore: Firestore,
-    private fire: AngularFirestore, private auth: AngularFireAuth
-  ) { }
-
-
-  // Simplificación en una sola funcion y tabla usuarios
+constructor(
+  private firestore: Firestore,
+  private fire: AngularFirestore, private auth: AngularFireAuth
+  ){}
+  
+  factura: FacturaServicios
+    
+// Simplificación en una sola funcion y tabla usuarios
   createUser(
     data: Familia | Colegio | Conductor,
     uid: string
@@ -120,12 +122,13 @@ export class ProfileService {
 
   }
 
-  // Postular a colegio (Boton para seleccionar el colegio / Conductor ) 
-  selectSchool(conductorId: string, colegioId: string) {
-    this.fire.collection('Usuarios').doc(conductorId).update(
-      {
-        colegioId: colegioId
-      })
+ // Postular a colegio (Boton para seleccionar el colegio / Conductor ) 
+ // REVISAR SI ACTUALIZA SI NO CAMBIAR GET POR SET
+ selectSchool(conductorId:string, colegioId:string){
+  this.fire.collection('Usuarios').doc(conductorId).set(
+    {
+      colegioId: colegioId
+    })
   }
 
   // Query: trae el listado de conductores disponibles 
@@ -148,6 +151,74 @@ export class ProfileService {
       ref.where('tipoCuenta', '==', 3)
     ).valueChanges()
   }
+
+  // ================ Agendado y pago =================
+
+  async saveBill(familiaId:string, conductorId: string, nombre:string, rutFamilia:string){
+    let today = new Date()
+    let prox_mont = new Date(today.setMonth(today.getMonth() + 1))
+    try{
+      await this.fire.collection('Facturas').doc(familiaId).set({
+        facturas: arrayUnion(
+          this.factura = {
+            proveedor: {
+              nombre: 'ColeDrive',
+              direccion: 'Av. SiempreViva 742',
+              identificacion_fiscal: '42.297.827-3',
+              telefono: '9 9565 1999',
+              correo_electronico: 'coledrive@gmail.com',
+            },
+            cliente : {
+              nombre:nombre,
+              identificacion_fiscal: rutFamilia,
+            },
+            factura : {
+              fecha_emision: today,
+              fecha_vencimiento: prox_mont
+            },
+            descripcion: 'Pago servicio de transporte escolar.',
+            total: 'Por definir'
+          }
+        )}, {merge:true});
+      
+      console.log("Factura guardada")
+      }
+      catch(error){
+        console.log("ERROR: ", error)
+      }
+  }
+  
+  
+  async scheduleService(familiaId:string, conductorId: string, hijo:string){
+    try{
+    await this.fire.collection('Agenda').doc(conductorId).set({
+      viajes: arrayUnion({
+        familiaId: familiaId,
+        hijo: hijo
+      })}, {merge:true});
+    
+    console.log("Viaje a agregado a conductor: ", conductorId)
+    }
+    catch(error){
+      console.log("ERROR: ", error)
+    }
+  }
+
+  // Retorna el [] de viajes de un conductor
+  // ESTRUCTURA [{familiaId,hijo}]
+  getSchedule(conductorId: string){
+    this.fire.collection('Agenda').doc(conductorId)
+      .valueChanges().subscribe(data => {
+        console.log(data)
+        return data
+      });
+  }
+
+
+  updateVal(conductorId:string){
+    
+  }
+
+
 }
-
-
+  

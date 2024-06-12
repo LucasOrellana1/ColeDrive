@@ -47,3 +47,27 @@ export interface Colegio{
   comuna: string,
   tipoCuenta? : 3
 }
+
+
+export interface FacturaServicios {
+  proveedor: {
+    nombre: 'ColeDrive';
+    direccion: 'Av. SiempreViva 742';
+    identificacion_fiscal: '42.297.827-3';
+    telefono: '9 9565 1999';
+    correo_electronico: 'coledrive@gmail.com';
+  };
+
+  cliente: {
+    nombre: string;
+    identificacion_fiscal: string;
+  };
+
+  factura: {
+    numero?: '*';
+    fecha_emision: Date;
+    fecha_vencimiento: Date;
+  };
+  descripcion?: 'Pago servicio de transporte escolar.',
+  total?: 'Por definir'
+}
