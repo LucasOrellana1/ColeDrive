@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { authService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { Colegio, Familia } from 'src/app/services/user.interface';
+import { Colegio, Conductor, Familia } from 'src/app/services/user.interface';
 
 @Component({
   selector: 'app-registro',
@@ -26,22 +26,9 @@ export class RegistroPage implements OnInit{
   
   // No quitar OnInit
   ngOnInit() {
-   /*  console.log("asdasd")
-    const colegioDeEjemplo: Colegio = {
-      nombre: "Colegio ABC",
-      email: "info@colegioabc.com",
-      telefono: "123-456-7890",
-      direccion: "Calle Falsa 123",
-      comuna: "Comuna Ejemplo",
-      tipoCuenta: 3  // Este campo es opcional, pero lo incluimos para que sea más completo
-    };
-
-    this.auth.registerSchool(colegioDeEjemplo, 'asdasd' ) */
-    
-    const lista = this.profileService.getSchoolList().subscribe(data => {
-      this.lista1 = data
-    })      
-  
+    //this.profileService.scheduleService('123','abc','abcqwe')
+    //this.profileService.saveBill('11111','22222','Orellana','111111')
+    this.profileService.getSchedule('321')
   }
 
     // Inicialización directa en la declaración
