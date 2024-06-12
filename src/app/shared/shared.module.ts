@@ -9,6 +9,7 @@ import { ListaPasajerosComponent } from './components/lista-pasajeros/lista-pasa
 import { ListaPasajerosDosComponent } from './components/lista-pasajeros-dos/lista-pasajeros-dos.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { ResultadoScanComponent } from './components/resultado-scan/resultado-scan.component'; // Import the component
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ResultadoScanComponent } from './components/resultado-scan/resultado-sc
     ListaPasajerosComponent,
     ListaPasajerosDosComponent,
     LogoComponent,
-    ResultadoScanComponent // Declare the component
+    ResultadoScanComponent, // Declare the component
+    MenuComponent
   ],
   exports: [
     HeaderComponent,
@@ -25,7 +27,8 @@ import { ResultadoScanComponent } from './components/resultado-scan/resultado-sc
     ListaPasajerosComponent,
     ListaPasajerosDosComponent,
     LogoComponent,
-    ResultadoScanComponent // Export the component
+    ResultadoScanComponent, // Export the component
+    MenuComponent
   ],
   imports: [
     CommonModule,
