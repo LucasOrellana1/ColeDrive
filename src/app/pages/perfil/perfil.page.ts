@@ -17,6 +17,7 @@ export class PerfilPage{
 
   user$: Observable<any>;
   userData: any;
+  userType: number | null = null;
 
   
   ngOnInit() {

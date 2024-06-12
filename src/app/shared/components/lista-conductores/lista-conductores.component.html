@@ -1,3 +1,16 @@
-<p>
-  lista-conductores works!
-</p>
+<app-header title="Lista Conductores" backButton="/perfil"></app-header>
+
+<ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterConductores()" placeholder="Buscar..."></ion-searchbar>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let conductor of filteredConductoresList">
+            <ion-label>
+                <h2>{{ conductor.nombreCompleto }}</h2>
+                <p>Patente: {{ conductor.patenteVehiculo }}</p>
+                <p>Marca: {{ conductor.marcaVehiculo }}</p>
+                <p>Asistente: {{ conductor.nombreAsistente }} {{ conductor.apellidoAsistente }}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>
