@@ -25,13 +25,11 @@
             </ion-list>
           </div>
         </ng-container>
-
+        
         <ng-template #conductorTemplate>
-          <p class="user-info"><strong>Vehículo:</strong> {{ userData.marcaVehiculo }} - {{ userData.patenteVehiculo }}
-          </p>
-          <p class="user-info"><strong>Nombre del Asistente:</strong> {{ userData.nombreAsistente }} {{
-            userData.apellidoAsistente }}</p>
-          <p class="user-info"><strong>Email del Asistente:</strong> {{ userData.email}}</p>
+          <p class="user-info"><strong>Vehículo:</strong> {{ userData.marcaVehiculo }} - {{ userData.patenteVehiculo }}</p>
+          <p class="user-info"><strong>Nombre del Asistente:</strong> {{ userData.nombreAsistente }} {{ userData.apellidoAsistente }}</p>
+          <p class="user-info"><strong>Email del Asistente:</strong> {{ userData.email }}</p>
           <p class="user-info"><strong>Teléfono del Asistente:</strong> {{ userData.telefono}}</p>
         </ng-template>
       </ion-card-content>
