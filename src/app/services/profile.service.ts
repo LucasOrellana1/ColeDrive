@@ -214,7 +214,7 @@ constructor(
       });
   }
 
-  async addComments(conductorId:string, familiaNombre: string, comentario:string){
+  async addComments(conductorId:string, puntuacion: number, familiaNombre: string, comentario:string){
     const date = new Date();
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -222,29 +222,32 @@ constructor(
     const formattedDate = `${day}/${month}/${year}`;
     
     this.fire.collection('Usuarios').doc(conductorId).set({
-      valoracion: arrayUnion({
+      comentarios: arrayUnion({
         Nombre: familiaNombre,
         Comentario: comentario,
+        Estrellas: puntuacion,
         Fecha: formattedDate
       })
     }, {merge:true})
     console.log("Comentario añadido")
   }
   
-  async getComments(conductorId: string){
-    console.log(2)
-    this.fire.collection('Usuarios').doc(conductorId).get().pipe(
-      map((conductor: any) => {
-        console.log(conductor)
-        console.log(conductor.valoracion)
-        return conductor.valoracion ? conductor.data().valoracion : null;
+  // Devuelve un observable con el listado de comentarios.
+  getComments(conductorId: string): Observable<any> {
+    return this.fire.collection('Usuarios').doc(conductorId).get().pipe(
+      map((doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+          console.log(data)
+          return data;
+        } else {
+          console.log('El documento no existe');
+          return null;
+        }
       })
-    )
+    );
   }
 
-  async addStar(conductorId:string, star: number){
-    
-  }
 
     
 }

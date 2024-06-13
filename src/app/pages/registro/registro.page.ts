@@ -40,7 +40,9 @@ export class RegistroPage implements OnInit{
     this.authService.registerParentCenter(this.cdata, '123456') */
 
     //this.profileService.addComments('QnasgDL34uhsc4QMue3vNGhwSZ62', 'Ana maria', 'AAAAA', )
-    this.profileService.getComments('QnasgDL34uhsc4QMue3vNGhwSZ62')
+    this.profileService.getComments('QnasgDL34uhsc4QMue3vNGhwSZ62').subscribe(data =>
+      console.log(data)
+    )
 
   }
   //--------------------------------------------------------------------------------------------------------------------------//
