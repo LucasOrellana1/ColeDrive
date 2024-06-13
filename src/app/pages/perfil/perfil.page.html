@@ -9,19 +9,29 @@
       <ion-card-content>
         <p class="user-info"><strong>Email:</strong> {{ userData.email }}</p>
         <p class="user-info"><strong>Teléfono:</strong> {{ userData.telefono }}</p>
-        <p class="user-info"><strong>Dirección:</strong> {{ userData.direccion }}</p>
         <p class="user-info"><strong>RUT:</strong> {{ userData.rut }}</p>
         <p class="user-info"><strong>Comuna:</strong> {{ userData.comuna }}</p>
-        <p class="user-info"><strong>Colegio:</strong> {{ userData.colegio }}</p>
 
-        <div *ngIf="userData.hijos && userData.hijos.length" class="children-section">
-          <h2 >Hijos:</h2>
-          <ion-list>
-            <ion-item *ngFor="let hijo of userData.hijos">
-              <p class="child-info"><strong>Nombre:</strong> {{ hijo.nombreHijo }} <br>Curso: {{ hijo.cursoHijo }}</p>
-            </ion-item>
-          </ion-list>
-        </div>
+        <ng-container *ngIf="userType === 1; else conductorTemplate">
+          <p class="user-info"><strong>Dirección:</strong> {{ userData.direccion }}</p>
+          <p class="user-info"><strong>Colegio:</strong> {{ userData.colegio }}</p>
+
+          <div *ngIf="userData.hijos && userData.hijos.length" class="children-section">
+            <h2>Hijos:</h2>
+            <ion-list>
+              <ion-item *ngFor="let hijo of userData.hijos">
+                <p class="child-info"><strong>Nombre:</strong> {{ hijo.nombreHijo }} <br>Curso: {{ hijo.cursoHijo }}</p>
+              </ion-item>
+            </ion-list>
+          </div>
+        </ng-container>
+        
+        <ng-template #conductorTemplate>
+          <p class="user-info"><strong>Vehículo:</strong> {{ userData.marcaVehiculo }} <br> <strong>Patente:</strong>{{ userData.patenteVehiculo }}</p>
+          <p class="user-info"><strong>Nombre del Asistente:</strong> {{ userData.nombreAsistente }} {{ userData.apellidoAsistente }}</p>
+          <p class="user-info"><strong>Email del Asistente:</strong> {{ userData.email }}</p>
+          <p class="user-info"><strong>Teléfono del Asistente:</strong> {{ userData.telefono}}</p>
+        </ng-template>
       </ion-card-content>
     </ion-card>
     <ion-button (click)="signOut()" expand="block" mode="ios" class="submit">

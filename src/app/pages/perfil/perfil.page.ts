@@ -17,6 +17,7 @@ export class PerfilPage{
 
   user$: Observable<any>;
   userData: any;
+  userType: number | null = null;
 
   
   ngOnInit() {
@@ -24,6 +25,13 @@ export class PerfilPage{
     this.user$.subscribe(data => {
       this.userData = data;
       console.log(this.userData);
+      
+    });
+
+    this.profileService.getCurrentUser().subscribe(user => {
+      if (user) {
+        this.userType = user.tipoCuenta;
+      }
     });
   }
 

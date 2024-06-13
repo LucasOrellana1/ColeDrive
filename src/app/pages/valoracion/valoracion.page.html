@@ -1,0 +1,23 @@
+<app-header title="Califica tu Viaje"></app-header>
+
+
+
+<ion-content>
+  <div class="rating-container">
+    <h2>Valorar el servicio</h2>
+    <div class="stars">
+      <ion-icon name="{{ hoveredStar >= 1 || ratedStar >= 1 ? 'star' : 'star-outline' }}" (mouseenter)="hoveredStar = 1"
+        (mouseleave)="resetHoveredStar()" (click)="rateService(1)"></ion-icon>
+      <ion-icon name="{{ hoveredStar >= 2 || ratedStar >= 2 ? 'star' : 'star-outline' }}" (mouseenter)="hoveredStar = 2"
+        (mouseleave)="resetHoveredStar()" (click)="rateService(2)"></ion-icon>
+      <ion-icon name="{{ hoveredStar >= 3 || ratedStar >= 3 ? 'star' : 'star-outline' }}" (mouseenter)="hoveredStar = 3"
+        (mouseleave)="resetHoveredStar()" (click)="rateService(3)"></ion-icon>
+      <ion-icon name="{{ hoveredStar >= 4 || ratedStar >= 4 ? 'star' : 'star-outline' }}" (mouseenter)="hoveredStar = 4"
+        (mouseleave)="resetHoveredStar()" (click)="rateService(4)"></ion-icon>
+      <ion-icon name="{{ hoveredStar >= 5 || ratedStar >= 5 ? 'star' : 'star-outline' }}" (mouseenter)="hoveredStar = 5"
+        (mouseleave)="resetHoveredStar()" (click)="rateService(5)"></ion-icon>
+    </div>
+    <textarea rows="4" placeholder="Escribe tu comentario aquí"></textarea>
+    <ion-button expand="block" color="primary" click="submitRating()">Enviar</ion-button>
+  </div>
+</ion-content>

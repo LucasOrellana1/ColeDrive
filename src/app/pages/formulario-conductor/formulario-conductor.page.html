@@ -30,11 +30,19 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">RUT</ion-label>
-          <ion-input formControlName="rutConductor" type="text"></ion-input>
+          <ion-input 
+          formControlName="rutConductor" 
+          type="text"
+          maxlength="10" 
+          />
         </ion-item>
+        <div
+          *ngIf="formularioRegistro.get('rutConductor').hasError('invalidRut') && formularioRegistro.get('rutConductor').touched">
+          Debe seguir el formato correcto y ser un rut valido. [12345678-9]
+        </div>
         <ion-item>
           <ion-label position="floating">Correo</ion-label>
-          <ion-input formControlName="emailConductor" type="email"></ion-input>
+          <ion-input formControlName="emailConductor" type="email"/>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Contraseña</ion-label>
@@ -69,8 +77,16 @@
       <ion-card-content>
         <ion-item>
           <ion-label position="floating">Patente</ion-label>
-          <ion-input formControlName="patenteVehiculo" type="text"></ion-input>
+          <ion-input 
+          formControlName="patenteVehiculo" 
+          type="text"
+          maxlength="6" 
+          />
         </ion-item>
+        <div
+          *ngIf="formularioRegistro.get('patenteVehiculo').hasError('invalidPatente') && formularioRegistro.get('patenteVehiculo').touched">
+          Patente inválida. Debe ser 4 letras seguidas de 2 números o 4 números seguidos de 2 letras.
+        </div>
         <ion-item>
           <ion-label position="floating">Marca</ion-label>
           <ion-input formControlName="marcaVehiculo" type="text"></ion-input>
@@ -114,8 +130,16 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">RUT</ion-label>
-          <ion-input formControlName="rutAsistente" type="text"></ion-input>
+          <ion-input 
+          formControlName="rutAsistente"
+          type="text"
+          maxlength="10" 
+          />
         </ion-item>
+        <div
+          *ngIf="formularioRegistro.get('rutAsistente').hasError('invalidRut') && formularioRegistro.get('rutAsistente').touched">
+          Debe seguir el formato correcto y ser un rut valido. [12345678-9]
+        </div>
             <!-- Botón para Papel de Antecedentes del Asistente -->
         <ion-item>
           <ion-label>Certificado de Antecedentes</ion-label>
