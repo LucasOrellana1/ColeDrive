@@ -40,8 +40,16 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">RUT</ion-label> <!-- Agregar campo RUT -->
-          <ion-input formControlName="rut" type="text"></ion-input> <!-- Agregar campo RUT -->
+          <ion-input 
+          formControlName="rut" 
+          type="text"
+          maxlength="6" 
+          />
         </ion-item>
+        <div
+          *ngIf="formularioRegistro.get('rut').hasError('invalidRut') && formularioRegistro.get('rut').touched">
+          Debe seguir el formato correcto y ser un rut valido. [12345678-9]
+        </div>
         <ion-item>
           <ion-label position="floating">Número de Hijos</ion-label>
           <ion-select formControlName="numHijos" (ionChange)="updateHijos()">

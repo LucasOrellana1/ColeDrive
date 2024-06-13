@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { authService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -30,6 +30,53 @@ export class RegistroPage implements OnInit{
     //this.profileService.saveBill('11111','22222','Orellana','111111')
     this.profileService.getSchedule('321')
   }
+  //--------------------------------------------------------------------------------------------------------------------------//
+  validarRut(rut: string): boolean {
+    const rutSinGuion = rut.replace("-", "");
+    const rutSinDigitoVerificador = rutSinGuion.slice(0, -1);
+    const digitoVerificador = rutSinGuion.slice(-1).toUpperCase();
+    let factor = 2;
+    let suma = 0;
+
+    for (let i = rutSinDigitoVerificador.length - 1; i >= 0; i--) {
+      suma += factor * parseInt(rutSinDigitoVerificador[i]);
+      factor = factor === 7 ? 2 : factor + 1;
+    }
+
+    let digitoCalculado: string | number = 11 - (suma % 11);
+    if (digitoCalculado === 11) {
+      digitoCalculado = "0";
+    } else if (digitoCalculado === 10) {
+      digitoCalculado = "K";
+    } else {
+      digitoCalculado = digitoCalculado.toString();
+    }
+
+    return digitoCalculado === digitoVerificador;
+  }
+
+  formatRut(rut: string): string {
+    const cleanedRut = rut.replace(/[^\dkK]/g, '').slice(0, 9);
+
+    if (cleanedRut.length > 1) {
+      const formattedRut = cleanedRut.slice(0, cleanedRut.length - 1) + '-' + cleanedRut.slice(-1);
+      return formattedRut;
+    }
+
+    return cleanedRut;
+  }
+
+  rutValidator = (control: FormControl) => {
+    const rut = control.value;
+    const regex = /^[0-9]{8}-[0-9kK]$/i; // Regex for 8 digits, a dash '-', and then another digit
+
+    if (!regex.test(rut)) {
+      return { invalidRut: true };
+    }
+
+    return this.validarRut(rut) ? null : { invalidRut: true };
+  }
+
 
     // Inicialización directa en la declaración
   formularioRegistro: FormGroup = this.fb.group({
@@ -40,7 +87,7 @@ export class RegistroPage implements OnInit{
     confirmPassword: ['', Validators.required],
     telefono: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     direccion: ['', Validators.required],
-    rut: ['', ], //Campo rut agregado//
+    rut: ['', Validators.required, this.rutValidator], //Campo rut agregado//
     numHijos: [0, [Validators.required, Validators.min(1)]],
     comuna: ['', Validators.required], // Nuevo campo comuna
     colegio: ['', Validators.required], // Nuevo campo colegio
@@ -110,4 +157,14 @@ export class RegistroPage implements OnInit{
       console.log("--- TA MALO XAO PESCAO ---")
     }
   }
+
+  async presentAlert(header: string, message: string): Promise<HTMLIonAlertElement> {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Aceptar']
+    });
+
+    return alert;
+  };
 }
