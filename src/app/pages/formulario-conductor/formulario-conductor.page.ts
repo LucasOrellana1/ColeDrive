@@ -29,20 +29,7 @@ export class FormularioConductorPage {
     private profService: ProfileService,
     private auth: authService
   ) {
-    this.datosConductor = {
-      rut: '',
-      nombre: '',
-      apellido: '',
-      email: '',
-      telefono: '',
-      patenteVehiculo: '',
-      marcaVehiculo: '',
-      nombreAsistente: '',
-      apellidoAsistente: '',
-      rutAsistente: '',
-      comuna: '', // Nuevo campo comuna
-      tipoCuenta: 2
-    };
+
   }
 
   //--------------------------------------------------------------------------------------------------------------------------//
