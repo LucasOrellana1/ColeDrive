@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, arrayUnion } from '@angular/fire/firestore';
 import { CollectionReference, addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { Observable, finalize, from, map, switchMap, take } from 'rxjs';
-import { Colegio, Conductor, Familia, FacturaServicios } from './user.interface';
+import { Colegio, Conductor, Familia, FacturaServicios, CentroPadres } from './user.interface';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -21,7 +21,7 @@ constructor(
     
 // Simplificación en una sola funcion y tabla usuarios
   createUser(
-    data: Familia | Colegio | Conductor,
+    data: Familia | Colegio | Conductor | CentroPadres,
     uid: string
   )
   {
@@ -199,11 +199,40 @@ constructor(
       });
   }
 
+  async addComments(conductorId:string, familiaNombre: string, comentario:string){
+    const date = new Date();
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    
+    this.fire.collection('Usuarios').doc(conductorId).set({
+      valoracion: arrayUnion({
+        Nombre: familiaNombre,
+        Comentario: comentario,
+        Fecha: formattedDate
+      })
+    }, {merge:true})
+    console.log("Comentario añadido")
+  }
+  
+  async getComments(conductorId: string){
+    console.log(2)
+    this.fire.collection('Usuarios').doc(conductorId).get().pipe(
+      map((conductor: any) => {
+        console.log(conductor)
+        console.log(conductor.valoracion)
+        return conductor.valoracion ? conductor.data().valoracion : null;
+      })
+    )
+  }
 
-  updateVal(conductorId:string){
+  async addStar(conductorId:string, star: number){
     
   }
 
-
+    
 }
+
+
   

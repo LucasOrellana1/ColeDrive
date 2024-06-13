@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, user } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { Colegio, Conductor, Familia} from './user.interface';
+import { CentroPadres, Colegio, Conductor, Familia} from './user.interface';
 import { ProfileService } from './profile.service';
 
 @Injectable({
@@ -48,6 +48,19 @@ async registerDriver(conductor: Conductor, password: string){
   })
   }
 
+  async registerParentCenter(cData: CentroPadres, password: string){
+      await createUserWithEmailAndPassword(this.firebaseAuth, cData.email, password)
+    .then(response => {
+        updateProfile(response.user, {displayName:cData.nombre})
+        const uid = response.user.uid 
+        this.profService.createUser(cData, uid)
+      }).catch((error) => {
+        console.log("Error" , error) 
+        throw error
+    })
+    }
+  
+    // Posiblemente deprecada
   async registerSchool(sData: Colegio, password: string){
       await createUserWithEmailAndPassword(this.firebaseAuth, sData.email, password)
     .then(response => {
@@ -59,7 +72,7 @@ async registerDriver(conductor: Conductor, password: string){
         throw error
     })
     }
-    
+
 
   login(email:string, password: string){
     // la funcion final vacia es para que ts no caiga

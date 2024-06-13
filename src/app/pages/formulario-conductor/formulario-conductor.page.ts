@@ -33,7 +33,7 @@ export class FormularioConductorPage {
     private auth: authService
   ) {
 
-    this.datosConductor = {
+    /* this.datosConductor = {
       rut: '',
       nombre: '',
       apellido: '',
@@ -47,7 +47,7 @@ export class FormularioConductorPage {
       comuna: '', // Nuevo campo comuna
       tipoCuenta : 2
 
-    };
+    }; */
   }
 
   // Inicialización directa de formularioRegistro en la declaración
@@ -82,9 +82,10 @@ export class FormularioConductorPage {
       telefono: f.telefonoConductor,
       patenteVehiculo: f.patenteVehiculo,
       marcaVehiculo: f.marcaVehiculo,
-      nombreAsistente: f.nombreAsistente,
-      apellidoAsistente: f.apellidoAsistente,
-      rutAsistente: f.rutAsistente,
+      asistente: {
+        nombre: f.nombreAsistente,
+        rut: f.rutAsistente,
+      },
       comuna: f.comuna,
     };
 

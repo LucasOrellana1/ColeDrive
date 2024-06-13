@@ -11,10 +11,11 @@ export interface Conductor{
   patenteVehiculo: string,
   marcaVehiculo: string,
   
-  nombreAsistente: string,
-  apellidoAsistente: string,
-  rutAsistente: string,
-
+  asistente: {
+    nombre: string,
+    rut: string,
+  },
+ 
   activado?: false,
   colegioId?: null,
 
@@ -46,6 +47,13 @@ export interface Colegio{
   direccion: string,
   comuna: string,
   tipoCuenta? : 3
+}
+
+export interface CentroPadres{
+
+  nombre: string,
+  email: string,
+  tipoCuenta? : 4
 }
 
 

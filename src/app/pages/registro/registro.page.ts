@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { authService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { Colegio, Conductor, Familia } from 'src/app/services/user.interface';
+import { Colegio, Conductor, Familia, CentroPadres } from 'src/app/services/user.interface';
 
 @Component({
   selector: 'app-registro',
@@ -16,6 +16,7 @@ export class RegistroPage implements OnInit{
   authService = inject(authService)
   fData: Familia
   lista1: any
+  cdata: CentroPadres
 
   constructor(private fb: FormBuilder, 
     private alertController: AlertController,
@@ -28,7 +29,19 @@ export class RegistroPage implements OnInit{
   ngOnInit() {
     //this.profileService.scheduleService('123','abc','abcqwe')
     //this.profileService.saveBill('11111','22222','Orellana','111111')
-    this.profileService.getSchedule('321')
+    //this.profileService.getSchedule('321')
+    
+    /* this.cdata = {
+      email : 'centropadres@gmail.com',
+      nombre : 'Centro de Padres Colegio *',
+      tipoCuenta : 4
+    }
+
+    this.authService.registerParentCenter(this.cdata, '123456') */
+
+    //this.profileService.addComments('QnasgDL34uhsc4QMue3vNGhwSZ62', 'Ana maria', 'AAAAA', )
+    this.profileService.getComments('QnasgDL34uhsc4QMue3vNGhwSZ62')
+
   }
 
     // Inicialización directa en la declaración
@@ -86,7 +99,7 @@ export class RegistroPage implements OnInit{
       email: this.formularioRegistro.value.email,
       telefono: this.formularioRegistro.value.telefono,
       direccion: this.formularioRegistro.value.direccion,
-      rut: this.formularioRegistro.value.rut,//Campo Rut Agregado//
+      rut: this.formularioRegistro.value.rut, //Campo Rut Agregado//
       numeroHijos: this.formularioRegistro.value.numHijos,
       hijos: this.hijosArray.value,
       comuna: this.formularioRegistro.value.comuna, // Nuevo campo comuna
