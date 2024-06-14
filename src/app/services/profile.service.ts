@@ -234,17 +234,10 @@ constructor(
   
   // Devuelve un observable con el listado de comentarios.
   getComments(conductorId: string): Observable<any> {
-    return this.fire.collection('Usuarios').doc(conductorId).get().pipe(
-      map((doc) => {
-        if (doc.exists) {
-          const data = doc.data();
-          console.log(data)
-          return data;
-        } else {
-          console.log('El documento no existe');
-          return null;
-        }
-      })
+    return this.fire.collection('Usuarios').doc(conductorId).valueChanges().pipe(
+      map((conductor: any) => 
+        conductor ? conductor.comentarios : null
+      )
     );
   }
 
