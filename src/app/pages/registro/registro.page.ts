@@ -29,8 +29,12 @@ export class RegistroPage implements OnInit{
   ngOnInit() {
     //this.profileService.scheduleService('123','abc','abcqwe')
     //this.profileService.saveBill('11111','22222','Orellana','111111')
-    //this.profileService.getSchedule('321')
-    
+    /* this.profileService.getSchedule('321').subscribe(data => 
+      {
+        console.log(data)
+
+      })
+     */
     /* this.cdata = {
       email : 'centropadres@gmail.com',
       nombre : 'Centro de Padres Colegio *',
@@ -40,9 +44,11 @@ export class RegistroPage implements OnInit{
     this.authService.registerParentCenter(this.cdata, '123456') */
 
     //this.profileService.addComments('QnasgDL34uhsc4QMue3vNGhwSZ62', 'Ana maria', 'AAAAA', )
-    this.profileService.getComments('QnasgDL34uhsc4QMue3vNGhwSZ62').subscribe(data =>
+    /* this.profileService.getComments('QnasgDL34uhsc4QMue3vNGhwSZ62').subscribe(data =>
       console.log(data)
     )
+ */
+    //this.profileService.getBills('11111').subscribe(data => {console.log(data)})
 
   }
   //--------------------------------------------------------------------------------------------------------------------------//

@@ -59,11 +59,10 @@ export interface CentroPadres{
 
 export interface FacturaServicios {
   proveedor: {
-    nombre: 'ColeDrive';
-    direccion: 'Av. SiempreViva 742';
-    identificacion_fiscal: '42.297.827-3';
-    telefono: '9 9565 1999';
-    correo_electronico: 'coledrive@gmail.com';
+    nombre: string;
+    identificacion_fiscal: string;
+    telefono: string;
+    correo_electronico: string;
   };
 
   cliente: {
@@ -73,8 +72,8 @@ export interface FacturaServicios {
 
   factura: {
     numero?: '*';
-    fecha_emision: Date;
-    fecha_vencimiento: Date;
+    fecha_emision: string;
+    fecha_vencimiento: string;
   };
   descripcion?: 'Pago servicio de transporte escolar.',
   total?: 'Por definir'

@@ -18,7 +18,15 @@ constructor(
   ){}
   
   factura: FacturaServicios
-    
+  // ================== Fecha ========================
+  date = new Date();
+  day = this.date.getDate().toString().padStart(2, '0');
+  month = (this.date.getMonth() + 1).toString().padStart(2, '0');
+  proxmonth = (this.date.getMonth() + 2).toString().padStart(2, '0');
+  year = this.date.getFullYear();
+  formattedDate = `${this.day}/${ this.month}/${this.year}`; 
+  formattedDate_nextMonth = `${this.day}/${this.month}/${this.year}`; 
+
 // Simplificación en una sola funcion y tabla usuarios
   createUser(
     data: Familia | Colegio | Conductor | CentroPadres,
@@ -154,27 +162,24 @@ constructor(
 
   // ================ Agendado y pago =================
 
-  async saveBill(familiaId:string, conductorId: string, nombre:string, rutFamilia:string){
-    let today = new Date()
-    let prox_mont = new Date(today.setMonth(today.getMonth() + 1))
+  async saveBill(familiaId:string, conductor: Conductor, nombre:string, rutFamilia:string){
     try{
       await this.fire.collection('Facturas').doc(familiaId).set({
         facturas: arrayUnion(
           this.factura = {
             proveedor: {
-              nombre: 'ColeDrive',
-              direccion: 'Av. SiempreViva 742',
-              identificacion_fiscal: '42.297.827-3',
-              telefono: '9 9565 1999',
-              correo_electronico: 'coledrive@gmail.com',
+              nombre: conductor.nombre,
+              identificacion_fiscal: conductor.rut,
+              telefono: conductor.telefono,
+              correo_electronico: conductor.email,
             },
             cliente : {
               nombre:nombre,
               identificacion_fiscal: rutFamilia,
             },
             factura : {
-              fecha_emision: today,
-              fecha_vencimiento: prox_mont
+              fecha_emision: this.formattedDate,
+              fecha_vencimiento: this.formattedDate_nextMonth
             },
             descripcion: 'Pago servicio de transporte escolar.',
             total: 'Por definir'
@@ -188,13 +193,22 @@ constructor(
       }
   }
   
+  // Devuelve observable facturas array de cuentas:
+  getBills(FamiliaId: string){
+    return this.fire.collection('Facturas').doc(FamiliaId).valueChanges().pipe(
+      map((factura: any) => 
+        factura ? factura : null
+      )
+    )
+  }
   
   async scheduleService(familiaId:string, conductorId: string, hijo:string){
     try{
     await this.fire.collection('Agenda').doc(conductorId).set({
       viajes: arrayUnion({
         familiaId: familiaId,
-        hijo: hijo
+        hijo: hijo,
+        vigencia: this.formattedDate
       })}, {merge:true});
     
     console.log("Viaje a agregado a conductor: ", conductorId)
@@ -204,44 +218,45 @@ constructor(
     }
   }
 
-  // Retorna el [] de viajes de un conductor
+  // Retorna el observable de viajes de un conductor
   // ESTRUCTURA [{familiaId,hijo}]
-  getSchedule(conductorId: string){
-    this.fire.collection('Agenda').doc(conductorId)
-      .valueChanges().subscribe(data => {
-        console.log(data)
-        return data
-      });
-  }
+  getSchedule(conductorId: string):Observable<any>{
+    return this.fire.collection('Agenda').doc(conductorId)
+      .valueChanges()
+    };
+  
 
   async addComments(conductorId:string, puntuacion: number, familiaNombre: string, comentario:string){
-    const date = new Date();
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    const formattedDate = `${day}/${month}/${year}`;
+    
     
     this.fire.collection('Usuarios').doc(conductorId).set({
       comentarios: arrayUnion({
         Nombre: familiaNombre,
         Comentario: comentario,
         Estrellas: puntuacion,
-        Fecha: formattedDate
+        Fecha: this.formattedDate
       })
     }, {merge:true})
     console.log("Comentario añadido")
   }
   
-  // Devuelve un observable con el listado de comentarios.
-  getComments(conductorId: string): Observable<any> {
+  // Devuelve observable del listado de comentarios.
+  getComments(conductorId: string){
     return this.fire.collection('Usuarios').doc(conductorId).valueChanges().pipe(
       map((conductor: any) => 
         conductor ? conductor.comentarios : null
-      )
+    )
     );
   }
 
+  // Devuelve listado de conductores que se hayan contratado
 
+  /* getHiredDrivers(familiaId: string){
+    return this.getBills(familiaId).pipe(
+      map((b) )
+    )
+  }
+ */
     
 }
 
