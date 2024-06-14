@@ -39,4 +39,16 @@ export class ListaConductoresComponent implements OnInit {
       );
     }
   }
+
+  approveConductor(conductor: any) {
+    // Lógica para aprobar al conductor
+    console.log('Aprobado:', conductor);
+    // Aquí puedes agregar la lógica para actualizar el estado del conductor en tu base de datos
+  }
+
+  disapproveConductor(conductor: any) {
+    // Lógica para desaprobar al conductor
+    console.log('No Aprobado:', conductor);
+    // Aquí puedes agregar la lógica para actualizar el estado del conductor en tu base de datos
+  }
 }

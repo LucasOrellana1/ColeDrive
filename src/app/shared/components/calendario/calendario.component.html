@@ -1,0 +1,18 @@
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Selecciona una fecha</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-datetime displayFormat="DD/MM/YYYY" (ionChange)="onDateSelected($event)" [min]="minDate"></ion-datetime>
+      <ion-list>
+        <ion-item *ngFor="let date of selectedDates">
+          Fecha Seleccionada: {{ date | date: 'dd/MM/yyyy' }}
+        </ion-item>
+      </ion-list>
+      <ion-button (click)="confirmDate()" expand="block" mode="ios" class="submit" [disabled]="!selectedDate">
+        Confirmar Fecha
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

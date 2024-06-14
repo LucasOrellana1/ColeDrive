@@ -38,6 +38,10 @@ const routes: Routes = [
     path: 'valoracion',
     loadChildren: () => import('./pages/valoracion/valoracion.module').then( m => m.ValoracionPageModule)
   },
+  {
+    path: 'agendar',
+    loadChildren: () => import('./pages/agendar/agendar.module').then( m => m.AgendarPageModule)
+  },
 
 
 ];
