@@ -27,7 +27,7 @@ async registerFamily(fData: Familia, email: string, username: string, password: 
   .then(response => {
       updateProfile(response.user, {displayName:username})
       const uid = response.user.uid 
-      this.profService.createUser(fData, uid)
+      this.profService.createUser(fData, fData.rut)
       
   }).catch((error) => {
       console.log("Error" , error) 
@@ -41,7 +41,7 @@ async registerDriver(conductor: Conductor, password: string){
   .then(response => {
       updateProfile(response.user, {displayName:conductor.nombre})
       const uid = response.user.uid 
-      this.profService.createUser(conductor, uid)
+      this.profService.createUser(conductor, conductor.rut)
   }).catch((error) => {
       console.log("Error" , error) 
       throw error
