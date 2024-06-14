@@ -1,8 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
-
     <ion-buttons slot="start">
-      <ion-menu-button autoHide="false" (click)="openMenu()"></ion-menu-button>
+      <ion-menu-button *ngIf="showMenuButton" autoHide="false" (click)="openMenu()"></ion-menu-button>
     </ion-buttons>
 
     <ion-buttons slot="start">
@@ -14,8 +13,6 @@
         <ion-icon name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
-
-
 
     <ion-title>
       <strong>{{title}}</strong>

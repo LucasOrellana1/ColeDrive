@@ -33,6 +33,12 @@ export class PerfilPage{
         this.userType = user.tipoCuenta;
       }
     });
+
+    
+  }
+
+  navigateToBuscar() {
+    this.router.navigate(['/buscar']);
   }
 
   async signOut() {
