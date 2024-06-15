@@ -27,32 +27,7 @@ export class RegistroPage implements OnInit{
   
   // No quitar OnInit
   ngOnInit() {
-    this.profileService.scheduleService('','abc','Marcelo', '22/06/2024')
-    //this.profileService.saveBill('11111','22222','Orellana','111111')
-    /* this.profileService.getSchedule('321').subscribe(data => 
-      {
-        console.log(data)
-
-      })
-     */
-    this.cdata = {
-      email : 'centropadres@gmail.com',
-      nombre : 'Centro de Padres Colegio *',
-      colegio: 'Colegio 1', 
-      tipoCuenta : 4
-    }
-
-    this.authService.registerParentCenter(this.cdata, '123456') 
-
-    //this.profileService.addComments('QnasgDL34uhsc4QMue3vNGhwSZ62', 'Ana maria', 'AAAAA', 3)
-    
-   /*  this.profileService.getComments('QnasgDL34uhsc4QMue3vNGhwSZ62').subscribe(data =>
-      console.log(data)
-    ) */
-
-    //this.profileService.getBills('11111').subscribe(data => {console.log(data)})
-
-
+   
 
   }
   //--------------------------------------------------------------------------------------------------------------------------//
@@ -168,7 +143,7 @@ export class RegistroPage implements OnInit{
       tipoCuenta : 1
     };
 
-    //FUI A TOMAR 10+1 ESTA TODO PUSH
+    
 
     let usuarioString = JSON.stringify(fData);
 

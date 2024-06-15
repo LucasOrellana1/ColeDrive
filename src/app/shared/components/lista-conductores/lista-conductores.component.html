@@ -9,7 +9,7 @@
                 <h2>{{ conductor.nombreCompleto }}</h2>
                 <p>Patente: {{ conductor.patenteVehiculo }}</p>
                 <p>Marca: {{ conductor.marcaVehiculo }}</p>
-                <p>Asistente: {{ conductor.nombreAsistente }} {{ conductor.apellidoAsistente }}</p>
+                <p>Asistente: {{ conductor.asistente.nombre }} </p>
             </ion-label>
             <ion-buttons slot="end">
                 <ion-button color="success" (click)="approveConductor(conductor)">

@@ -7,46 +7,40 @@
         <ion-card-title class="card-title-styling">{{ userData.nombre }} {{ userData.apellido }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        
+
         <!-- Mostrar información adicional solo para los tipos de usuario 1 y 2 -->
         <ng-container *ngIf="userType === 1 || userType === 2">
           <p class="user-info"><strong>Email:</strong> {{ userData.email }}</p>
           <p class="user-info"><strong>Teléfono:</strong> {{ userData.telefono }}</p>
           <p class="user-info"><strong>RUT:</strong> {{ userData.rut }}</p>
           <p class="user-info"><strong>Comuna:</strong> {{ userData.comuna }}</p>
+
         </ng-container>
 
         <ng-container *ngIf="userType === 1">
           <p class="user-info"><strong>Dirección:</strong> {{ userData.direccion }}</p>
-          <p class="user-info"><strong>Colegio:</strong> {{ userData.colegio }}</p>
-
           <div *ngIf="userData.hijos && userData.hijos.length" class="children-section">
             <h2>Hijos:</h2>
             <ion-list>
               <ion-item *ngFor="let hijo of userData.hijos">
-                <p class="child-info"><strong>Nombre:</strong> {{ hijo.nombreHijo }} <br>Curso: {{ hijo.cursoHijo }}</p>
+                <p class="child-info"><strong>Nombre:</strong> {{ hijo }} </p>
               </ion-item>
             </ion-list>
-            
           </div>
-          <app-viajes-realizados></app-viajes-realizados>
-
-          
-            
-          
         </ng-container>
 
         <ng-container *ngIf="userType === 2">
           <p class="user-info"><strong>Vehículo:</strong> {{ userData.marcaVehiculo }} <br>
-            <strong>Patente:</strong>{{ userData.patenteVehiculo }}</p>
-          <p class="user-info"><strong>Nombre del Asistente:</strong> {{ userData.nombreAsistente }} {{
+            <strong>Patente:</strong>{{ userData.patenteVehiculo }}
+          </p>
+          <p class="user-info"><strong>Nombre del Asistente:</strong> {{ userData.asistente.nombre }} {{
             userData.apellidoAsistente }}</p>
           <p class="user-info"><strong>Email del Asistente:</strong> {{ userData.email }}</p>
           <p class="user-info"><strong>Teléfono del Asistente:</strong> {{ userData.telefono}}</p>
         </ng-container>
 
-        <ng-container *ngIf="userType === 4">
-          <p class="user-info"><strong>Nombre:</strong> {{ userData.nombre }}</p>
+        <ng-container *ngIf="userType === 3">
+          
           <ion-button (click)="navigateToBuscar()" expand="block" mode="ios" class="submit">
             Aprobar Conductores
             <ion-icon slot="end" name="shield-checkmark-outline"></ion-icon>
