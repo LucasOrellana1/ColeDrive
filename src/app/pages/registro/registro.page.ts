@@ -219,6 +219,8 @@ export class RegistroPage implements OnInit{
       
     };
 
+    //FUI A TOMAR 10+1 ESTA TODO PUSH
+
     let usuarioString = JSON.stringify(fData);
 
     localStorage.setItem('usuario', usuarioString);
