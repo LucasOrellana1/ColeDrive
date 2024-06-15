@@ -11,6 +11,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { ResultadoScanComponent } from './components/resultado-scan/resultado-scan.component'; // Import the component
 import { MenuComponent } from './components/menu/menu.component';
 import { ViajesRealizadosComponent } from './components/viajes-realizados/viajes-realizados.component';
+import { ConductoresAprobadosComponent } from './components/conductores-aprobados/conductores-aprobados.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ViajesRealizadosComponent } from './components/viajes-realizados/viajes
     LogoComponent,
     ResultadoScanComponent, // Declare the component
     MenuComponent,
-    ViajesRealizadosComponent
+    ViajesRealizadosComponent,
+    ConductoresAprobadosComponent
   ],
   exports: [
     HeaderComponent,
@@ -32,7 +34,8 @@ import { ViajesRealizadosComponent } from './components/viajes-realizados/viajes
     LogoComponent,
     ResultadoScanComponent, // Export the component
     MenuComponent,
-    ViajesRealizadosComponent
+    ViajesRealizadosComponent,
+    ConductoresAprobadosComponent
     
   ],
   imports: [
