@@ -104,7 +104,7 @@ export class RegistroPage implements OnInit{
 
     //this.profileService.getBills('11111').subscribe(data => {console.log(data)})
 
-
+    //this.profileService.getDriverListAct('Las Condes').subscribe(node => {console.log(node)})
 
   }
   //--------------------------------------------------------------------------------------------------------------------------//

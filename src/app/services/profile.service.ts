@@ -44,6 +44,7 @@ constructor(
   }
 
 
+
   //  Funciones de obtención de datos de usuario
   getUserData(uid: string): Observable<any> {
     return this.fire.collection('Usuarios').doc(uid).valueChanges();
@@ -121,15 +122,24 @@ constructor(
 
 
   // Query: trae el listado de conductores postulados para activar (Colegio)
-  getDriverListAct(comuna: string, colegioId: string) {
-    this.fire.collection('Usuarios', ref =>
+  getDriverListAct(comuna: string):Observable<any[]> {
+    return this.fire.collection('Usuarios', ref =>
       ref.where('tipoCuenta', '==', 2)
         .where('comuna', '==', comuna)
-        .where('colegio', '==', colegioId)
-    ).valueChanges().subscribe(data => {
-      return data
-    });
-
+    ).snapshotChanges()
+    .pipe(
+      map(actions => {
+        return actions.map(snapshot =>
+          {
+            const id = snapshot.payload.doc.id;
+            const data = snapshot.payload.doc.data();
+            console.log(id)
+            console.log(data)
+            return { id, data }
+          }
+        )
+      })
+    )
   }
 
  // Postular a colegio (Boton para seleccionar el colegio / Conductor ) 
