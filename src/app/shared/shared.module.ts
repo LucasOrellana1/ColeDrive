@@ -10,7 +10,9 @@ import { ListaPasajerosDosComponent } from './components/lista-pasajeros-dos/lis
 import { LogoComponent } from './components/logo/logo.component';
 import { ResultadoScanComponent } from './components/resultado-scan/resultado-scan.component'; // Import the component
 import { MenuComponent } from './components/menu/menu.component';
-import { CalendarioComponent } from './components/calendario/calendario.component';
+import { ViajesRealizadosComponent } from './components/viajes-realizados/viajes-realizados.component';
+import { ConductoresAprobadosComponent } from './components/conductores-aprobados/conductores-aprobados.component';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
     LogoComponent,
     ResultadoScanComponent, // Declare the component
     MenuComponent,
-    CalendarioComponent
+    ViajesRealizadosComponent,
+    ConductoresAprobadosComponent
   ],
   exports: [
     HeaderComponent,
@@ -31,7 +34,9 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
     LogoComponent,
     ResultadoScanComponent, // Export the component
     MenuComponent,
-    CalendarioComponent
+    ViajesRealizadosComponent,
+    ConductoresAprobadosComponent
+    
   ],
   imports: [
     CommonModule,

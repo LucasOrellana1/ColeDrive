@@ -6,6 +6,9 @@ export interface Conductor{
   apellido: string,
   email: string,
   telefono: string,
+  comuna: String, //campo comuna agreegado
+  ciudad: string;
+  
   comuna: string, //campo comuna agreegado
   ciudad : string,
 

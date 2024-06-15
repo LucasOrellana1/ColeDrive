@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CalendarioComponent } from './calendario.component';
+import { ConductoresAprobadosComponent } from './conductores-aprobados.component';
 
-describe('CalendarioComponent', () => {
-  let component: CalendarioComponent;
-  let fixture: ComponentFixture<CalendarioComponent>;
+describe('ConductoresAprobadosComponent', () => {
+  let component: ConductoresAprobadosComponent;
+  let fixture: ComponentFixture<ConductoresAprobadosComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarioComponent ],
+      declarations: [ ConductoresAprobadosComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CalendarioComponent);
+    fixture = TestBed.createComponent(ConductoresAprobadosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
