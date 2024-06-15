@@ -110,6 +110,7 @@ export class RegistroPage implements OnInit{
     direccion: ['', Validators.required],
     rut: ['', Validators.required, this.rutValidator], //Campo rut agregado//
     numHijos: [0, [Validators.required, Validators.min(1)]],
+    ciudad: ['', Validators.required],
     comuna: ['', Validators.required], // Nuevo campo comuna
     colegio: ['', Validators.required], // Nuevo campo colegio
     hijosArray: this.fb.array([])

@@ -104,6 +104,7 @@ export class FormularioConductorPage {
     nombreAsistente: ['', Validators.required],
     apellidoAsistente: ['', Validators.required],
     rutAsistente: ['', [Validators.required, this.rutValidator]], // Usar validador sincronico
+    ciudad: ['', Validators.required],
     comuna: ['', Validators.required], // Nuevo campo comuna
     telefonoConductor: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
   }, { validators: this.passwordMatchValidator } as AbstractControlOptions);
@@ -128,6 +129,7 @@ export class FormularioConductorPage {
         nombre: f.nombreAsistente,
         rut: f.rutAsistente,
       },
+      ciudad: f.ciudad,
       comuna: f.comuna,
     };
 
