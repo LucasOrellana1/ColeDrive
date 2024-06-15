@@ -62,6 +62,7 @@ constructor(
       })
     );
   }
+
   // Funcion para para obtener la lista de todos los hijos registrados
   getHijosList(): Observable<any[]> {
     return this.fire.collection('Usuarios', ref => ref.where('tipoCuenta', '==', 1))
@@ -121,11 +122,11 @@ constructor(
   }
 
 
-  // Query: trae el listado de conductores postulados para activar (Colegio)
-  getDriverListAct(comuna: string):Observable<any[]> {
+  // Query: trae el listado de conductores para activar (Colegio)
+  getDriverListAct():Observable<any[]> {
     return this.fire.collection('Usuarios', ref =>
       ref.where('tipoCuenta', '==', 2)
-        .where('comuna', '==', comuna)
+        
     ).snapshotChanges()
     .pipe(
       map(actions => {
@@ -142,28 +143,18 @@ constructor(
     )
   }
 
- // Postular a colegio (Boton para seleccionar el colegio / Conductor ) 
- // REVISAR SI ACTUALIZA SI NO CAMBIAR GET POR SET
- selectSchool(conductorId:string, colegioId:string){
-  this.fire.collection('Usuarios').doc(conductorId).set(
-    {
-      colegioId: colegioId
-    })
-  }
-
-  // Query: trae el listado de conductores disponibles 
+  
+  // Query: Observable de conductores validos de conductores disponibles 
   //(activados / vista familias)
 
   getDriverListDisp(comuna: string, colegioId: string) {
     this.fire.collection('Usuarios', ref =>
       ref.where('tipoCuenta', '==', 2)
         .where('comuna', '==', comuna)
-        .where('colegio', '==', colegioId)
         .where('activado', '==', true)
-    ).valueChanges().subscribe(data => {
-      return data
-    });
-  }
+    ).valueChanges()
+    };
+  
 
 
   // ================ Agendado y pago =================

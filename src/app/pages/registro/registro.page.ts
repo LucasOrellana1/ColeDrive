@@ -31,16 +31,16 @@ export class RegistroPage implements OnInit{
     // =========== POBLADO DE BD Familias ===============
 
     const familia1 : Familia = {
-      nombre: 'Pedro',
+      nombre: 'Patricio',
       apellido: 'Sánchez',
-      email: 'pedro.sanchez@example.com',
-      comuna: 'Ñuñoa',
+      email: 'patricio.sanchez@example.com',
+      comuna: 'Las Condes',
       ciudad: 'Santiago',
-      telefono: '+56923456789',
-      direccion: 'Calle Ñuñoa 789',
-      rut: '23.456.789-0',
+      telefono: '+56923456189',
+      direccion: 'Calle Condes 389',
+      rut: '23.456.739-0',
       numeroHijos: '1',
-      hijos: ['Luis'],
+      hijos: ['Luis', 'Diego'],
       tipoCuenta: 1
     }
 
@@ -104,7 +104,7 @@ export class RegistroPage implements OnInit{
 
     //this.profileService.getBills('11111').subscribe(data => {console.log(data)})
 
-    //this.profileService.getDriverListAct('Las Condes').subscribe(node => {console.log(node)})
+    //this.profileService.getDriverListAct().subscribe(node => {console.log(node)})
 
   }
   //--------------------------------------------------------------------------------------------------------------------------//
