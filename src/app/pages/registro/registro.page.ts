@@ -27,7 +27,59 @@ export class RegistroPage implements OnInit{
   
   // No quitar OnInit
   ngOnInit() {
-    this.profileService.scheduleService('','abc','Marcelo', '22/06/2024')
+    
+    // =========== POBLADO DE BD Familias ===============
+
+    const familia1 : Familia = {
+      nombre: 'Pedro',
+      apellido: 'Sánchez',
+      email: 'pedro.sanchez@example.com',
+      comuna: 'Ñuñoa',
+      ciudad: 'Santiago',
+      telefono: '+56923456789',
+      direccion: 'Calle Ñuñoa 789',
+      rut: '23.456.789-0',
+      numeroHijos: '1',
+      hijos: ['Luis'],
+      tipoCuenta: 1
+    }
+
+    //this.authService.registerFamily(familia1, '123456')
+    
+    const conductor1 : Conductor = {
+      rut: '98.765.432-1',
+      nombre: 'Anastasia',
+      apellido: 'González',
+      email: 'ana.gonzalez@example.com',
+      telefono: '+56987654321',
+      comuna: 'Las Condes',
+      ciudad: 'Santiago',
+    
+      patenteVehiculo: 'CD5678',
+      marcaVehiculo: 'Honda',
+    
+      asistente: {
+        nombre: 'Carlos',
+        rut: '99.887.776-5',
+      },
+      activado: false,
+      colegioId: null,
+      tipoCuenta: 2
+    }
+
+    //this.authService.registerDriver(conductor1, '123456'=
+
+    const centroPadres: CentroPadres = {
+      nombre: 'Asociación de Padres y Apoderados',
+      email: 'contacto@asociacionpadres.com',
+      colegio: 'Colegio San José',
+      tipoCuenta: 3
+    };
+
+    //this.authService.registerParentCenter(centroPadres, '123456')    
+
+
+    //this.profileService.scheduleService('','abc','Marcelo', '22/06/2024')
     //this.profileService.saveBill('11111','22222','Orellana','111111')
     /* this.profileService.getSchedule('321').subscribe(data => 
       {
@@ -35,14 +87,14 @@ export class RegistroPage implements OnInit{
 
       })
      */
-    this.cdata = {
+/*     this.cdata = {
       email : 'centropadres@gmail.com',
       nombre : 'Centro de Padres Colegio *',
       colegio: 'Colegio 1', 
       tipoCuenta : 4
     }
 
-    this.authService.registerParentCenter(this.cdata, '123456') 
+    this.authService.registerParentCenter(this.cdata, '123456')  */
 
     //this.profileService.addComments('QnasgDL34uhsc4QMue3vNGhwSZ62', 'Ana maria', 'AAAAA', 3)
     
@@ -164,9 +216,7 @@ export class RegistroPage implements OnInit{
       hijos: this.hijosArray.value,
       ciudad: this.formularioRegistro.value.cuidad,
       comuna: this.formularioRegistro.value.comuna, // Nuevo campo comuna
-      ciudad: '',
       
-      tipoCuenta : 1
     };
 
     let usuarioString = JSON.stringify(fData);
@@ -174,8 +224,7 @@ export class RegistroPage implements OnInit{
     localStorage.setItem('usuario', usuarioString);
     
     try{
-      await this.auth.registerFamily(fData, fData.email,
-        fData.nombre,
+      await this.auth.registerFamily(fData,
         this.formularioRegistro.value.password)
 
         console.log("TODO GUARDADO EN ORDEN")

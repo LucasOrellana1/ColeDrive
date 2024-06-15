@@ -22,12 +22,12 @@ register(email: string, username: string, password: string){
   return promise
 }
 
-async registerFamily(fData: Familia, email: string, username: string, password: string){
-  await createUserWithEmailAndPassword(this.firebaseAuth, email, password)
+async registerFamily(fData: Familia, password: string){
+  await createUserWithEmailAndPassword(this.firebaseAuth, fData.email, password)
   .then(response => {
-      updateProfile(response.user, {displayName:username})
+      updateProfile(response.user, {displayName:fData.nombre + ' ' + fData.apellido})
       const uid = response.user.uid 
-      this.profService.createUser(fData, fData.rut)
+      this.profService.createUser(fData, uid)
       
   }).catch((error) => {
       console.log("Error" , error) 
@@ -41,7 +41,7 @@ async registerDriver(conductor: Conductor, password: string){
   .then(response => {
       updateProfile(response.user, {displayName:conductor.nombre})
       const uid = response.user.uid 
-      this.profService.createUser(conductor, conductor.rut)
+      this.profService.createUser(conductor, uid)
   }).catch((error) => {
       console.log("Error" , error) 
       throw error

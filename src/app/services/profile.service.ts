@@ -105,13 +105,15 @@ constructor(
         if (data && data.activado == false) {
           this.fire.collection('Usuarios').doc(conductorId).update(
             {
-              activado: true
+              activado: true,
+              colegioId: colegioId
             })
         }
         else {
           this.fire.collection('Usuarios').doc(conductorId).update(
             {
-              activado: false
+              activado: false,
+              colegioId: null
             })
         }
       })
@@ -153,12 +155,6 @@ constructor(
     });
   }
 
-  //Query: Listado de colegios (Conductor)
-  getSchoolList(): Observable<any> {
-    return this.fire.collection('Usuarios', ref =>
-      ref.where('tipoCuenta', '==', 3)
-    ).valueChanges()
-  }
 
   // ================ Agendado y pago =================
 

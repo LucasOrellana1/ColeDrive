@@ -131,7 +131,7 @@ export class FormularioConductorPage {
       },
       ciudad: f.ciudad,
       comuna: f.comuna,
-      ciudad: ''
+      tipoCuenta:2
     };
 
     if (this.formularioRegistro.invalid) {

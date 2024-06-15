@@ -39,7 +39,8 @@ export interface Familia{
   rut: string,//Campo Rut Agregado//
   numeroHijos: string,
   hijos: Array<string>,
-  tipoCuenta? : number
+  tipoCuenta? : 1,
+  
 }
 
 export interface Colegio{
@@ -57,7 +58,7 @@ export interface CentroPadres{
   nombre: string,
   email: string,
   colegio: string,
-  tipoCuenta? : 4
+  tipoCuenta? : 3
 }
 
 
