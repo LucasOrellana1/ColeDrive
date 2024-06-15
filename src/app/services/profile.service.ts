@@ -122,10 +122,10 @@ constructor(
 
 
   // Query: trae el listado de conductores postulados para activar (Colegio)
-  getDriverListAct(comuna: string):Observable<any[]> {
+  getDriverListAct():Observable<any[]> {
     return this.fire.collection('Usuarios', ref =>
       ref.where('tipoCuenta', '==', 2)
-        .where('comuna', '==', comuna)
+        
     ).snapshotChanges()
     .pipe(
       map(actions => {
