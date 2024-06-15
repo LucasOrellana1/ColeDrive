@@ -47,7 +47,7 @@ constructor(
 
   //  Funciones de obtención de datos de usuario
   getUserData(uid: string): Observable<any> {
-    return this.fire.collection('Usuarios').doc(uid).valueChanges();
+    return this.fire.collection('Usuarios').doc(uid).valueChanges().pipe(take(1));
   }
 
   // Obtiene un observable con los datos de la sesión actual
@@ -101,7 +101,7 @@ constructor(
   // Funcion para activar o desactivar conductor (Colegio)
 
   async changeStateDriver(conductorId: string, colegioId: string) {
-    this.getUserData(conductorId).subscribe(
+    return this.getUserData(conductorId).subscribe(
       data => {
         if (data && data.activado == false) {
           this.fire.collection('Usuarios').doc(conductorId).update(

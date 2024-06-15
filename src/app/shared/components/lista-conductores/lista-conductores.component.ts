@@ -61,7 +61,7 @@ export class ListaConductoresComponent implements OnInit {
     console.log('Aprobado:', conductor);
 
     const conductorId = conductor.id; 
-    const colegioId = this.userData; 
+    const colegioId = this.userData.colegio; 
 
     try {
       await this.profileService.changeStateDriver(conductorId, colegioId);
