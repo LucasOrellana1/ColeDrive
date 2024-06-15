@@ -129,6 +129,7 @@ export class FormularioConductorPage {
         rut: f.rutAsistente,
       },
       comuna: f.comuna,
+      ciudad: ''
     };
 
     if (this.formularioRegistro.invalid) {

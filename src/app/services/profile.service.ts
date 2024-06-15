@@ -202,16 +202,18 @@ constructor(
     )
   }
   
-  async scheduleService(familiaId:string, conductorId: string, hijo:string){
+  async scheduleService(familiaId:string, conductorId: string, hijo:string, fecha: string){
     try{
-    await this.fire.collection('Agenda').doc(conductorId).set({
-      viajes: arrayUnion({
-        familiaId: familiaId,
-        hijo: hijo,
-        vigencia: this.formattedDate
-      })}, {merge:true});
-    
-    console.log("Viaje a agregado a conductor: ", conductorId)
+      // Comprobacion agendado capacidad del vehiculo
+      let viajes =  {
+        [fecha] : { 
+          [familiaId] : hijo
+      }}
+
+      await this.fire.collection('Agenda').doc(conductorId).set({
+        viajes}, { merge: true})
+      
+        console.log("Viaje a agregado a conductor: ", conductorId)
     }
     catch(error){
       console.log("ERROR: ", error)
@@ -219,15 +221,13 @@ constructor(
   }
 
   // Retorna el observable de viajes de un conductor
-  // ESTRUCTURA [{familiaId,hijo}]
   getSchedule(conductorId: string):Observable<any>{
     return this.fire.collection('Agenda').doc(conductorId)
       .valueChanges()
     };
   
 
-  async addComments(conductorId:string, puntuacion: number, familiaNombre: string, comentario:string){
-    
+  async addComments(conductorId:string, familiaNombre: string, comentario:string, puntuacion: number,){
     
     this.fire.collection('Usuarios').doc(conductorId).set({
       comentarios: arrayUnion({
