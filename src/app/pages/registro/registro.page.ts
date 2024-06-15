@@ -164,8 +164,7 @@ export class RegistroPage implements OnInit{
       hijos: this.hijosArray.value,
       ciudad: this.formularioRegistro.value.cuidad,
       comuna: this.formularioRegistro.value.comuna, // Nuevo campo comuna
-      ciudad: '',
-      
+         
       tipoCuenta : 1
     };
 
