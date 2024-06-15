@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-lista-conductores',
@@ -12,9 +13,24 @@ export class ListaConductoresComponent implements OnInit {
   searchTerm: string = '';
 
   constructor(private profileService: ProfileService) {}
+  
+  user$: Observable<any>;
+  userData: any;
+  userType: number | null = null;
 
   ngOnInit() {
-    this.profileService.getConductoresList().subscribe(
+    this.user$ = this.profileService.getCurrentUser();
+    this.user$.subscribe(data => {
+      this.userData = data;
+      console.log(this.userData);
+      
+    });
+
+    this.loadConductoresList();
+  }
+
+  loadConductoresList() {
+    this.profileService.getDriverListAct().subscribe(
       data => {
         this.conductoresList = data;
         this.filteredConductoresList = data;
@@ -24,6 +40,7 @@ export class ListaConductoresComponent implements OnInit {
       }
     );
   }
+  
 
   filterConductores() {
     if (!this.searchTerm) {
@@ -40,10 +57,20 @@ export class ListaConductoresComponent implements OnInit {
     }
   }
 
-  approveConductor(conductor: any) {
-    // Lógica para aprobar al conductor
+  async approveConductor(conductor: any) {
     console.log('Aprobado:', conductor);
-    // Aquí puedes agregar la lógica para actualizar el estado del conductor en tu base de datos
+
+    const conductorId = conductor.id; 
+    const colegioId = this.userData; 
+
+    try {
+      await this.profileService.changeStateDriver(conductorId, colegioId);
+      console.log('Estado del conductor actualizado correctamente.');
+      
+    } catch (error) {
+      console.error('Error al actualizar el estado del conductor:', error);
+      
+    }
   }
 
   disapproveConductor(conductor: any) {
