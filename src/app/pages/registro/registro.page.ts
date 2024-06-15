@@ -158,6 +158,7 @@ export class RegistroPage implements OnInit{
       rut: this.formularioRegistro.value.rut, //Campo Rut Agregado//
       numeroHijos: this.formularioRegistro.value.numHijos,
       hijos: this.hijosArray.value,
+      ciudad: this.formularioRegistro.value.cuidad,
       comuna: this.formularioRegistro.value.comuna, // Nuevo campo comuna
       colegio: this.formularioRegistro.value.colegio, // Nuevo campo colegio
       tipoCuenta : 1
