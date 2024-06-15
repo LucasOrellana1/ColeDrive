@@ -9,8 +9,6 @@ export interface Conductor{
   comuna: String, //campo comuna agreegado
   ciudad: string;
   
-  comuna: string, //campo comuna agreegado
-  ciudad : string,
 
   //Vehiculo
   patenteVehiculo: string,
