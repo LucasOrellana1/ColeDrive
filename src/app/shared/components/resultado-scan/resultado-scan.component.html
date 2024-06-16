@@ -10,5 +10,10 @@
         <li *ngFor="let name of names">{{ name }}</li>
       </ul>
     </ion-item>
+    <ion-item *ngIf="antecedentes">Resultado Antecedentes: {{ antecedentes }}</ion-item>
+    <ion-item *ngIf="folioAnte">Numero de Folio: {{ folioAnte }}</ion-item>
+    <ion-item *ngIf="antecedentes2">Resultado Antecedentes: {{ antecedentes2 }}</ion-item>
+    <ion-item *ngIf="folioAnte2">Numero de Folio: {{ folioAnte2 }}</ion-item>
+    <ion-item *ngIf="licenciaType">Tipo de Licencia: {{ licenciaType }}</ion-item>
   </ion-list>
 </ion-content>

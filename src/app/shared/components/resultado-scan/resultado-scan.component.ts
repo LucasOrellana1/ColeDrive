@@ -10,6 +10,11 @@ export class ResultadoScanComponent {
   @Input() rut: string;
   @Input() numDoc: string;
   @Input() names: string[];
+  @Input() antecedentes: string;
+  @Input() folioAnte: string;
+  @Input() antecedentes2: string;
+  @Input() folioAnte2: string;
+  @Input() licenciaType: string;
 
   constructor(private modalController: ModalController) { }
 

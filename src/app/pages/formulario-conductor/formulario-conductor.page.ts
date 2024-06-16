@@ -200,6 +200,18 @@ export class FormularioConductorPage {
     });
   };
 
+  async scanAntecedentes() {
+    await this.ocr.recognizeImage('Conductor');
+  };
+
+  async scanAntecedentes2() {
+    await this.ocr.recognizeImage('Asistente');
+  };
+
+  async scanLicencia() {
+    await this.ocr.recognizeImageLicencia();
+  };
+
   async invocarApi(patente: string): Promise<boolean> {
     try {
       const resultado = await this.RequestApi.buscarPatente(patente).toPromise();
