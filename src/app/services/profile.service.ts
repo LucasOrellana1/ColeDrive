@@ -122,11 +122,10 @@ constructor(
   }
 
 
-  // Query: trae el listado de conductores para activar (Colegio)
+  // Query: trae el listado de conductores para activar (Centro de padres / Por activar)
   getDriverListAct():Observable<any[]> {
     return this.fire.collection('Usuarios', ref =>
-      ref.where('tipoCuenta', '==', 2)
-        
+      ref.where('tipoCuenta', '==', 2).where('activado', '==', false )
     ).snapshotChanges()
     .pipe(
       map(actions => {
@@ -134,8 +133,7 @@ constructor(
           {
             const id = snapshot.payload.doc.id;
             const data = snapshot.payload.doc.data();
-            console.log(id)
-            console.log(data)
+           
             return { id, data }
           }
         )
@@ -143,6 +141,25 @@ constructor(
     )
   }
 
+  //Query: trae el listado de conductores para desactivar (Centro de padres / Para desactivar)
+  //Le entregas el colegio del centro de padres y te traera todos los que tienen ya activados, con el objetivo de desactivarlos
+  getDriverListDesc(colegio: string):Observable<any[]>{
+    return this.fire.collection('Usuarios', ref =>
+      ref.where('tipoCuenta', '==', 2).where('activado', '==', true).where('colegio', '==', colegio)
+    ).snapshotChanges()
+    .pipe(
+      map(actions => {
+        return actions.map(snapshot =>
+          {
+            const id = snapshot.payload.doc.id;
+            const data = snapshot.payload.doc.data();
+           
+            return { id, data }
+          }
+        )
+      })
+    )
+  }
   
   // Query: Observable de conductores validos de conductores disponibles 
   //(activados / vista familias)
@@ -152,8 +169,7 @@ constructor(
       ref.where('tipoCuenta', '==', 2)
         .where('comuna', '==', comuna)
         .where('activado', '==', true)
-    ).valueChanges()
-    };
+    ).valueChanges()};
   
 
 
