@@ -63,12 +63,12 @@
     <!-- Botón para Certificado de Antecedentes -->
         <ion-item>
           <ion-label>Certificado de Antecedentes</ion-label>
-          <ion-button slot="end" >Seleccionar</ion-button>
+          <ion-button slot="end" (click)="scanAntecedentes()">Escanear</ion-button>
         </ion-item>
     <!-- Botón para Licencia de Conducir Profesional A3 -->
        <ion-item>
          <ion-label>Licencia de Conducir Profesional A3</ion-label>
-         <ion-button slot="end" >Seleccionar</ion-button>
+        <ion-button slot="end" (click)="scanLicencia()">Escanear</ion-button>
       </ion-item>
       </ion-card-content>
     </ion-card>
@@ -94,26 +94,6 @@
         <ion-item>
           <ion-label position="floating">Marca</ion-label>
           <ion-input formControlName="marcaVehiculo" type="text"></ion-input>
-        </ion-item>
-            <!-- Botón para Revisión Técnica del Vehículo -->
-        <ion-item>
-         <ion-label>Revisión Técnica del Vehículo</ion-label>
-         <ion-button slot="end" >Seleccionar</ion-button>
-        </ion-item>
-    <!-- Botón para Certificado de Emisión del Vehículo -->
-       <ion-item>
-         <ion-label>Certificado de Emisión del Vehículo</ion-label>
-         <ion-button slot="end" >Seleccionar</ion-button>
-       </ion-item>
-    <!-- Botón para Seguro del Vehículo -->
-       <ion-item>
-         <ion-label>Seguro del Vehículo</ion-label>
-         <ion-button slot="end" >Seleccionar</ion-button>
-       </ion-item>
-    <!-- Botón para Permiso de Circulación del Vehículo -->
-       <ion-item>
-         <ion-label>Permiso de Circulación del Vehículo</ion-label>
-         <ion-button slot="end" >Seleccionar</ion-button>
         </ion-item>
       </ion-card-content>
     </ion-card>
@@ -144,7 +124,7 @@
             <!-- Botón para Papel de Antecedentes del Asistente -->
         <ion-item>
           <ion-label>Certificado de Antecedentes</ion-label>
-          <ion-button slot="end" >Seleccionar</ion-button>
+          <ion-button slot="end" (click)="scanAntecedentes2()">Escanear</ion-button>
         </ion-item>
       </ion-card-content>
     </ion-card>

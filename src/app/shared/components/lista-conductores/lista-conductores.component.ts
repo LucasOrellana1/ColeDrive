@@ -12,8 +12,8 @@ export class ListaConductoresComponent implements OnInit {
   filteredConductoresList: any[] = [];
   searchTerm: string = '';
 
-  constructor(private profileService: ProfileService) {}
-  
+  constructor(private profileService: ProfileService) { }
+
   user$: Observable<any>;
   userData: any;
   userType: number | null = null;
@@ -23,7 +23,7 @@ export class ListaConductoresComponent implements OnInit {
     this.user$.subscribe(data => {
       this.userData = data;
       console.log(this.userData);
-      
+
     });
 
     this.loadConductoresList();
@@ -40,7 +40,7 @@ export class ListaConductoresComponent implements OnInit {
       }
     );
   }
-  
+
 
   filterConductores() {
     if (!this.searchTerm) {
@@ -60,22 +60,32 @@ export class ListaConductoresComponent implements OnInit {
   async approveConductor(conductor: any) {
     console.log('Aprobado:', conductor);
 
-    const conductorId = conductor.id; 
-    const colegioId = this.userData.colegio; 
+    const conductorId = conductor.id;
+    const colegioId = this.userData.colegio;
 
     try {
       await this.profileService.changeStateDriver(conductorId, colegioId);
       console.log('Estado del conductor actualizado correctamente.');
-      
+
     } catch (error) {
       console.error('Error al actualizar el estado del conductor:', error);
-      
+
     }
   }
 
-  disapproveConductor(conductor: any) {
-    // Lógica para desaprobar al conductor
+  async disapproveConductor(conductor: any) {
+
     console.log('No Aprobado:', conductor);
-    // Aquí puedes agregar la lógica para actualizar el estado del conductor en tu base de datos
+    const conductorId = conductor.id;
+    const colegioId = this.userData.colegio;
+
+    try {
+      await this.profileService.changeStateDriver(conductorId, colegioId);
+      console.log('Estado del conductor actualizado correctamente.');
+
+    } catch (error) {
+      console.error('Error al actualizar el estado del conductor:', error);
+
+    }
   }
 }
