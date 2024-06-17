@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class AgendarPage implements OnInit {
 
+
   user$: Observable<any>;
   userData: any;
   selectedDate: string | null = null;
@@ -18,21 +19,25 @@ export class AgendarPage implements OnInit {
   minDate: string = new Date().toISOString();
   conductor: any;
   familiaId: any;
+  @Input() selectHijos: any[] = [];
+  selectedHijo: any;
   
 
   constructor(private alertController: AlertController, private router: Router,private profileService: ProfileService) { }
 
   ngOnInit() {
+    
     const navigation = this.router.getCurrentNavigation();
     if (navigation && navigation.extras.state) {
       this.conductor = navigation.extras.state['conductor'];
       console.log('Conductor recibido:', this.conductor);
     }
-    
+
     this.user$ = this.profileService.getCurrentUser();
     this.user$.subscribe(data => {
       this.userData = data;
       console.log(this.userData);
+      this.selectHijos = data.hijos.map((nombre: string) => ({ nombre: nombre }));
       
     });
   }
@@ -75,6 +80,11 @@ export class AgendarPage implements OnInit {
     if (index >= 0 && index < this.selectedDates.length) {
       this.selectedDates.splice(index, 1);
     }
+  }
+
+  onSelectChange(event: any) {
+    this.selectedHijo = event.detail.value;
+    console.log('Hijo seleccionado:', this.selectedHijo);
   }
 }
 
