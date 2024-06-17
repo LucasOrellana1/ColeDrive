@@ -54,7 +54,7 @@ export class AgendarPage implements OnInit {
       
       try {
         this.familiaId = await this.profileService.getCurrentUserId();
-        await this.profileService.scheduleService(this.familiaId, this.conductor.id, this.userData.hijos, this.selectedDate);
+        await this.profileService.scheduleService(this.familiaId, this.conductor.id, this.selectedHijo, this.selectedDate);
         this.selectedDates.push(this.selectedDate);
         console.log(this.userData.hijos);
       } catch (error) {
