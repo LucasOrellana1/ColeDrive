@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./agendar.page.scss'],
 })
 export class AgendarPage implements OnInit {
+  
   user$: Observable<any>;
   userData: any;
   selectedDate: string | null = null;
