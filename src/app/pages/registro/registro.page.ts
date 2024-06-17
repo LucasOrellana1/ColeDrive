@@ -67,7 +67,7 @@ export class RegistroPage implements OnInit{
       tipoCuenta: 2
     }
 
-    //this.authService.registerDriver(conductor1, '123456'=
+    //this.authService.registerDriver(conductor1, '123456')
 
     const centroPadres: CentroPadres = {
       nombre: 'Asociación de Padres y Apoderados',
@@ -78,9 +78,12 @@ export class RegistroPage implements OnInit{
 
     //this.authService.registerParentCenter(centroPadres, '123456')    
 
+    //this.profileService.get
 
     //this.profileService.scheduleService('','abc','Marcelo', '22/06/2024')
-    //this.profileService.saveBill('11111','22222','Orellana','111111')
+    this.profileService.saveBill('7HoPKzA9RlZhM1oNgex87vO6ctB3', conductor1 ,'Patricio','23.456.739-0')
+    //this.profileService.getLenght('7HoPKzA9RlZhM1oNgex87vO6ctB3').subscribe(cant => {console.log(cant.length)})
+    //this.profileService.getDriverListDesc('Colegio San José').subscribe(con => console.log(con))
     /* this.profileService.getSchedule('321').subscribe(data => 
       {
         console.log(data)

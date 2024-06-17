@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, arrayUnion } from '@angular/fire/firestore';
-import { CollectionReference, addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { Observable, finalize, from, map, switchMap, take } from 'rxjs';
+import { CollectionReference, addDoc, collection, doc, getDoc, setDoc, updateDoc, where } from 'firebase/firestore';
+import { Observable, finalize, firstValueFrom, from, map, switchMap, take } from 'rxjs';
 import { Colegio, Conductor, Familia, FacturaServicios, CentroPadres } from './user.interface';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -25,7 +25,7 @@ constructor(
   proxmonth = (this.date.getMonth() + 2).toString().padStart(2, '0');
   year = this.date.getFullYear();
   formattedDate = `${this.day}/${ this.month}/${this.year}`; 
-  formattedDate_nextMonth = `${this.day}/${this.month}/${this.year}`; 
+  formattedDate_nextMonth = `${this.day}/${this.proxmonth}/${this.year}`; 
 
 // Simplificación en una sola funcion y tabla usuarios
   createUser(
@@ -43,6 +43,17 @@ constructor(
     return this.fire.collection('Usuarios').doc(uid).set(data);
   }
 
+
+  getCurrentUserId(){
+    return this.auth.authState.pipe(
+      map(user => {
+        if (user) {
+          return user.uid; // Devuelve el UID del usuario
+        } else {
+          return null; // El usuario no está autenticado
+        }
+      })
+  )}
 
 
   //  Funciones de obtención de datos de usuario
@@ -141,6 +152,7 @@ constructor(
     )
   }
 
+
   //Query: trae el listado de conductores para desactivar (Centro de padres / Para desactivar)
   //Le entregas el colegio del centro de padres y te traera todos los que tienen ya activados, con el objetivo de desactivarlos
   getDriverListDesc(colegio: string):Observable<any[]>{
@@ -160,7 +172,8 @@ constructor(
       })
     )
   }
-  
+
+
   // Query: Observable de conductores validos de conductores disponibles 
   //(activados / vista familias)
 
@@ -172,11 +185,33 @@ constructor(
     ).valueChanges()};
   
 
+  
+
 
   // ================ Agendado y pago =================
 
+  getLenght(familiaId:string){
+    const field = 'facturas' 
+    return this.fire.collection('Facturas').doc(familiaId).valueChanges().pipe(
+      map(
+        doc => {
+          if (doc && doc[field]){
+            return doc[field].length;
+          }
+          else{
+            return 0;
+          }
+          })
+    )
+  }
+
   async saveBill(familiaId:string, conductor: Conductor, nombre:string, rutFamilia:string){
     try{
+   
+      let numFactura = await firstValueFrom(this.getLenght(familiaId))
+
+      console.log(numFactura)
+
       await this.fire.collection('Facturas').doc(familiaId).set({
         facturas: arrayUnion(
           this.factura = {
@@ -194,11 +229,14 @@ constructor(
               fecha_emision: this.formattedDate,
               fecha_vencimiento: this.formattedDate_nextMonth
             },
+            numFactura: numFactura,
             descripcion: 'Pago servicio de transporte escolar.',
             total: 'Por definir'
           }
         )}, {merge:true});
-      
+
+      this.fire.collection('Usuarios').doc(familiaId)
+
       console.log("Factura guardada")
       }
       catch(error){
@@ -208,12 +246,13 @@ constructor(
   
   // Devuelve observable facturas array de cuentas:
   getBills(FamiliaId: string){
-    return this.fire.collection('Facturas').doc(FamiliaId).valueChanges().pipe(
-      map((factura: any) => 
-        factura ? factura : null
-      )
-    )
+    return this.fire.collection('Facturas').doc(FamiliaId).valueChanges()
   }
+
+
+
+
+
   
   async scheduleService(familiaId:string, conductorId: string, hijo:string, fecha: string){
     try{

@@ -79,7 +79,8 @@ export interface FacturaServicios {
     numero?: '*';
     fecha_emision: string;
     fecha_vencimiento: string;
-  };
+  },
+  numFactura : number,
   descripcion?: 'Pago servicio de transporte escolar.',
   total?: 'Por definir'
 }
