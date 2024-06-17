@@ -42,6 +42,10 @@ const routes: Routes = [
     path: 'agendar',
     loadChildren: () => import('./pages/agendar/agendar.module').then( m => m.AgendarPageModule)
   },
+  {
+    path: 'desactivar',
+    loadChildren: () => import('./pages/desactivar/desactivar.module').then( m => m.DesactivarPageModule)
+  },
 
 
 ];

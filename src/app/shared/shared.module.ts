@@ -11,7 +11,9 @@ import { LogoComponent } from './components/logo/logo.component';
 import { ResultadoScanComponent } from './components/resultado-scan/resultado-scan.component'; // Import the component
 import { MenuComponent } from './components/menu/menu.component';
 import { ViajesRealizadosComponent } from './components/viajes-realizados/viajes-realizados.component';
-import { ConductoresAprobadosComponent } from './components/conductores-aprobados/conductores-aprobados.component';
+
+import { AprobadosComponent } from './components/aprobados/aprobados.component';
+import { NoAprobarComponent } from './components/no-aprobar/no-aprobar.component';
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { ConductoresAprobadosComponent } from './components/conductores-aprobado
     ResultadoScanComponent, // Declare the component
     MenuComponent,
     ViajesRealizadosComponent,
-    ConductoresAprobadosComponent
+    AprobadosComponent,
+    NoAprobarComponent
   ],
   exports: [
     HeaderComponent,
@@ -35,7 +38,8 @@ import { ConductoresAprobadosComponent } from './components/conductores-aprobado
     ResultadoScanComponent, // Export the component
     MenuComponent,
     ViajesRealizadosComponent,
-    ConductoresAprobadosComponent
+    AprobadosComponent,
+    NoAprobarComponent
     
   ],
   imports: [

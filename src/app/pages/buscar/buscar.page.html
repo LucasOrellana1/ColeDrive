@@ -1,8 +1,7 @@
 <ion-content>
-
-
     <ng-container *ngIf="userType !== null">
         <app-lista-pasajeros *ngIf="userType === 2"></app-lista-pasajeros>
         <app-lista-conductores *ngIf="userType === 3"></app-lista-conductores>
+        <app-aprobados *ngIf="userType === 1"></app-aprobados>
     </ng-container>
 </ion-content>

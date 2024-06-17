@@ -157,7 +157,7 @@ constructor(
   //Le entregas el colegio del centro de padres y te traera todos los que tienen ya activados, con el objetivo de desactivarlos
   getDriverListDesc(colegio: string):Observable<any[]>{
     return this.fire.collection('Usuarios', ref =>
-      ref.where('tipoCuenta', '==', 2).where('activado', '==', true).where('colegio', '==', colegio)
+      ref.where('tipoCuenta', '==', 2).where('activado', '==', true).where('colegioId', '==', colegio)
     ).snapshotChanges()
     .pipe(
       map(actions => {
@@ -177,12 +177,14 @@ constructor(
   // Query: Observable de conductores validos de conductores disponibles 
   //(activados / vista familias)
 
-  getDriverListDisp(comuna: string, colegioId: string) {
-    this.fire.collection('Usuarios', ref =>
+  getDriverListDisp(comuna: string, colegioId: string): Observable<any[]> {
+    return this.fire.collection('Usuarios', ref =>
       ref.where('tipoCuenta', '==', 2)
         .where('comuna', '==', comuna)
         .where('activado', '==', true)
-    ).valueChanges()};
+    ).valueChanges();
+  }
+
   
 
   
