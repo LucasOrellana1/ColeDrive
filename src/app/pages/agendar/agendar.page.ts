@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agendar',
@@ -10,12 +11,21 @@ export class AgendarPage implements OnInit {
   selectedDate: string | null = null;
   selectedDates: string[] = [];
   minDate: string = new Date().toISOString();
+  conductor: any;
 
+
+
+  constructor(private alertController: AlertController, private router: Router) { }
+
+  ngOnInit() {
+
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation && navigation.extras.state) {
+      this.conductor = navigation.extras.state['conductor'];
+      console.log('Conductor recibido:', this.conductor);
+    }
+  }
   
-
-  constructor(private alertController: AlertController) { }
-
-  ngOnInit() {  }
 
   onDateSelected(event: any) {
     this.selectedDate = event.detail.value;
@@ -32,7 +42,7 @@ export class AgendarPage implements OnInit {
   isDateEnabled = (dateIsoString: string) => {
     const date = new Date(dateIsoString);
     const day = date.getUTCDay();
-    // deshabilitado Sabado (dia 6) and Domingo (dia 0)
+    // deshabilitado Sabado (dia 6) y Domingo (dia 0)
     return day !== 0 && day !== 6;
   }
 

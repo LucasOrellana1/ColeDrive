@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-aprobados',
@@ -9,18 +10,19 @@ import { Observable } from 'rxjs';
 })
 
 export class AprobadosComponent implements OnInit {
+
   conductoresList: any[] = [];
   filteredConductoresList: any[] = [];
   searchTerm: string = '';
-  
 
-  constructor(private profileService: ProfileService) { }
-  
+
+  constructor(private profileService: ProfileService,private router: Router) { }
+
   user$: Observable<any>;
   userData: any;
-  comuna: string; 
-  colegioId:string;
-  
+  comuna: string;
+  colegioId: string;
+
 
   ngOnInit() {
 
@@ -33,7 +35,7 @@ export class AprobadosComponent implements OnInit {
     });
 
 
-    
+
   }
 
   loadConductoresList() {
@@ -60,5 +62,9 @@ export class AprobadosComponent implements OnInit {
         conductor.telefono.toLowerCase().includes(searchTermLower)
       );
     }
+  }
+
+  navigateToAgendar(conductor: any) {
+    this.router.navigate(['/agendar'], { state: { conductor } });
   }
 }

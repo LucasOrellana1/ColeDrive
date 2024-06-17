@@ -7,32 +7,32 @@ import { Observable } from 'rxjs';
   templateUrl: './no-aprobar.component.html',
   styleUrls: ['./no-aprobar.component.scss'],
 })
-export class NoAprobarComponent  implements OnInit {
+export class NoAprobarComponent implements OnInit {
+
   conductoresList: any[] = [];
   filteredConductoresList: any[] = [];
   searchTerm: string = '';
-  
+
 
   constructor(private profileService: ProfileService) { }
-  
+
   user$: Observable<any>;
   userData: any;
-  
-  colegioId:string;
-  
+  colegioId: string;
+
 
   ngOnInit() {
 
     this.user$ = this.profileService.getCurrentUser();
     this.user$.subscribe(data => {
       this.userData = data;
-      
+
       this.colegioId = this.userData.colegio; // Reemplaza con el colegioId deseado
       this.loadConductoresList();
     });
 
 
-    
+
   }
 
   loadConductoresList() {
@@ -40,6 +40,7 @@ export class NoAprobarComponent  implements OnInit {
       data => {
         this.conductoresList = data;
         this.filteredConductoresList = data;
+        console.log(data)
       },
       error => {
         console.error('Error al obtener la lista de conductores:', error);
@@ -60,7 +61,7 @@ export class NoAprobarComponent  implements OnInit {
       );
     }
   }
-  
+
   async disapproveConductor(conductor: any) {
 
     console.log('No Aprobado:', conductor);

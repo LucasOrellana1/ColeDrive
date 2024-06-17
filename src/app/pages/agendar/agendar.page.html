@@ -7,8 +7,16 @@
                 <ion-card-title>Selecciona una fecha</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-                <ion-datetime presentation="date" (ionChange)="onDateSelected($event)" [min]="minDate"
-                    [isDateEnabled]="isDateEnabled">
+                <ion-list>
+                    <ion-item>
+                        <ion-label>
+                            <h2>{{ conductor?.nombre }} {{ conductor?.apellido }}</h2>
+                            <p>{{ conductor?.email }}</p>
+                            <p>{{ conductor?.telefono }}</p>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+                <ion-datetime presentation="date" (ionChange)="onDateSelected($event)" [min]="minDate" [isDateEnabled]="isDateEnabled">
                 </ion-datetime>
                 <ion-list>
                     <ion-item *ngFor="let date of selectedDates">

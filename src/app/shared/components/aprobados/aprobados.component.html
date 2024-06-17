@@ -11,7 +11,10 @@
                 <p>{{ conductor.email }}</p>
                 <p>{{ conductor.telefono }}</p>
             </ion-label>
+            <ion-button color="primary" (click)="navigateToAgendar(conductor)">
+                <ion-icon name="calendar" slot="start"></ion-icon>
+                Agendar
+            </ion-button>
         </ion-item>
     </ion-list>
 </ion-content>
-
