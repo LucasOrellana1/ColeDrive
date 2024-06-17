@@ -14,6 +14,7 @@ import { ViajesRealizadosComponent } from './components/viajes-realizados/viajes
 
 import { AprobadosComponent } from './components/aprobados/aprobados.component';
 import { NoAprobarComponent } from './components/no-aprobar/no-aprobar.component';
+import { FacturaComponent } from './components/factura/factura.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { NoAprobarComponent } from './components/no-aprobar/no-aprobar.component
     MenuComponent,
     ViajesRealizadosComponent,
     AprobadosComponent,
-    NoAprobarComponent
+    NoAprobarComponent,
+    FacturaComponent
   ],
   exports: [
     HeaderComponent,
@@ -39,7 +41,8 @@ import { NoAprobarComponent } from './components/no-aprobar/no-aprobar.component
     MenuComponent,
     ViajesRealizadosComponent,
     AprobadosComponent,
-    NoAprobarComponent
+    NoAprobarComponent,
+    FacturaComponent
     
   ],
   imports: [

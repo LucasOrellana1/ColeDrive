@@ -46,6 +46,10 @@ const routes: Routes = [
     path: 'desactivar',
     loadChildren: () => import('./pages/desactivar/desactivar.module').then( m => m.DesactivarPageModule)
   },
+  {
+    path: 'pago',
+    loadChildren: () => import('./pages/pago/pago.module').then( m => m.PagoPageModule)
+  },
 
 
 ];
