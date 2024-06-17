@@ -27,6 +27,10 @@
               </ion-item>
             </ion-list>
           </div>
+          <ion-button (click)="navigateToBuscar()" expand="block" mode="ios" class="submit">
+            Buscar Conductor
+            <ion-icon slot="end" name="search-outline"></ion-icon>
+          </ion-button>
         </ng-container>
 
         <ng-container *ngIf="userType === 2">

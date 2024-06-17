@@ -164,12 +164,14 @@ constructor(
   // Query: Observable de conductores validos de conductores disponibles 
   //(activados / vista familias)
 
-  getDriverListDisp(comuna: string, colegioId: string) {
-    this.fire.collection('Usuarios', ref =>
+  getDriverListDisp(comuna: string, colegioId: string): Observable<any[]> {
+    return this.fire.collection('Usuarios', ref =>
       ref.where('tipoCuenta', '==', 2)
         .where('comuna', '==', comuna)
         .where('activado', '==', true)
-    ).valueChanges()};
+    ).valueChanges();
+  }
+
   
 
 
