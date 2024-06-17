@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./agendar.page.scss'],
 })
 export class AgendarPage implements OnInit {
-  
+
   user$: Observable<any>;
   userData: any;
   selectedDate: string | null = null;
@@ -28,6 +28,7 @@ export class AgendarPage implements OnInit {
       this.conductor = navigation.extras.state['conductor'];
       console.log('Conductor recibido:', this.conductor);
     }
+    
     this.user$ = this.profileService.getCurrentUser();
     this.user$.subscribe(data => {
       this.userData = data;
