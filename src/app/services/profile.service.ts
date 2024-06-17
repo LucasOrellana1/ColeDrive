@@ -261,8 +261,10 @@ constructor(
       // Comprobacion agendado capacidad del vehiculo
       let viajes =  {
         [fecha] : { 
-          [familiaId] : hijo
+          nombre: hijo
+          
       }}
+      console.log(viajes);
 
       await this.fire.collection('Agenda').doc(conductorId).set({
         viajes}, { merge: true})

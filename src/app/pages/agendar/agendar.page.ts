@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-agendar',
@@ -9,11 +10,14 @@ import { ProfileService } from 'src/app/services/profile.service';
   styleUrls: ['./agendar.page.scss'],
 })
 export class AgendarPage implements OnInit {
+  user$: Observable<any>;
+  userData: any;
   selectedDate: string | null = null;
   selectedDates: string[] = [];
   minDate: string = new Date().toISOString();
   conductor: any;
-  familiaId: string = '';
+  familiaId: any;
+  
 
   constructor(private alertController: AlertController, private router: Router,private profileService: ProfileService) { }
 
@@ -23,18 +27,29 @@ export class AgendarPage implements OnInit {
       this.conductor = navigation.extras.state['conductor'];
       console.log('Conductor recibido:', this.conductor);
     }
+    this.user$ = this.profileService.getCurrentUser();
+    this.user$.subscribe(data => {
+      this.userData = data;
+      console.log(this.userData);
+      
+    });
   }
 
   onDateSelected(event: any) {
-    this.selectedDate = event.detail.value;
+    // Obtener la fecha sin la hora
+    const dateWithoutTime = event.detail.value.split('T')[0];
+    this.selectedDate = dateWithoutTime;
+    console.log(this.selectedDate);
   }
 
   async confirmDate() {
     if (this.selectedDate && !this.selectedDates.includes(this.selectedDate)) {
+      
       try {
-        await this.profileService.scheduleService(this.familiaId, this.conductor.id, this.conductor.hijo, this.selectedDate);
+        this.familiaId = await this.profileService.getCurrentUserId();
+        await this.profileService.scheduleService(this.familiaId, this.conductor.id, this.userData.hijos, this.selectedDate);
         this.selectedDates.push(this.selectedDate);
-        this.selectedDate = null;
+        console.log(this.userData.hijos);
       } catch (error) {
         console.error('Error al agendar el servicio:', error);
       }
