@@ -86,6 +86,17 @@ export class AgendarPage implements OnInit {
     this.selectedHijo = event.detail.value;
     console.log('Hijo seleccionado:', this.selectedHijo);
   }
+
+  goToFacturaPage() {
+    this.router.navigate(['pago'], {
+      state: {
+        conductor: this.conductor,
+        selectedDates: this.selectedDates,
+        selectedHijo: this.selectedHijo,
+        userData: this.userData
+      }
+    });
+  }
 }
 
 

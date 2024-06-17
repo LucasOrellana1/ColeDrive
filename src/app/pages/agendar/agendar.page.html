@@ -39,7 +39,7 @@
             Confirmar Fecha
             <ion-icon name="checkmark-done-outline"></ion-icon>
           </ion-button>
-          <ion-button  expand="block" mode="ios" class="submit" >
+          <ion-button (click)="goToFacturaPage()" expand="block" mode="ios" class="submit" [disabled]="selectedDates.length === 0">
             Proceder con el pago
             <ion-icon name="cash-outline"></ion-icon>
           </ion-button>
