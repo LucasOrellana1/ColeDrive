@@ -182,13 +182,20 @@ constructor(
       ref.where('tipoCuenta', '==', 2)
         .where('comuna', '==', comuna)
         .where('activado', '==', true)
-    ).valueChanges();
+    ).snapshotChanges()
+    .pipe(
+      map(actions => {
+        return actions.map(snapshot =>
+          {
+            const id = snapshot.payload.doc.id;
+            const data = snapshot.payload.doc.data();
+           
+            return { id, data }
+          }
+        )
+      })
+    )
   }
-
-  
-
-  
-
 
   // ================ Agendado y pago =================
 
@@ -206,6 +213,7 @@ constructor(
           })
     )
   }
+
 
   async saveBill(familiaId:string, conductor: Conductor, nombre:string, rutFamilia:string){
     try{
@@ -237,7 +245,9 @@ constructor(
           }
         )}, {merge:true});
 
-      this.fire.collection('Usuarios').doc(familiaId)
+      this.fire.collection('Usuarios').doc(familiaId).update({
+        conductores: arrayUnion(conductor.rut)
+      })
 
       console.log("Factura guardada")
       }
@@ -252,16 +262,13 @@ constructor(
   }
 
 
-
-
-
   
   async scheduleService(familiaId:string, conductorId: string, hijo:string, fecha: string){
     try{
       // Comprobacion agendado capacidad del vehiculo
       let viajes =  {
         [fecha] : { 
-          [familiaId] : hijo
+          nombre : hijo
       }}
 
       await this.fire.collection('Agenda').doc(conductorId).set({
@@ -305,12 +312,13 @@ constructor(
 
   // Devuelve listado de conductores que se hayan contratado
 
-  /* getHiredDrivers(familiaId: string){
-    return this.getBills(familiaId).pipe(
-      map((b) )
-    )
+  async getHiredDrivers(familiaId: string){
+    let info = await firstValueFrom(this.getCurrentUser())
+    console.log(info)
+    return this.fire.collection('Usuarios', ref => ref.where('conductores', 'array-contains-any', info.conductores)
+  ).doc(familiaId).valueChanges()
+      
   }
- */
     
 }
 

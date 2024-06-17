@@ -80,8 +80,8 @@ export class RegistroPage implements OnInit{
 
     //this.profileService.get
 
-    //this.profileService.scheduleService('','abc','Marcelo', '22/06/2024')
-    this.profileService.saveBill('7HoPKzA9RlZhM1oNgex87vO6ctB3', conductor1 ,'Patricio','23.456.739-0')
+    //this.profileService.scheduleService('7HoPKzA9RlZhM1oNgex87vO6ctB3','pedro.sanchez@example.com','Marcelo', '22/06/2024')
+    //this.profileService.saveBill('7HoPKzA9RlZhM1oNgex87vO6ctB3', conductor1 ,'Patricio','23.456.739-0')
     //this.profileService.getLenght('7HoPKzA9RlZhM1oNgex87vO6ctB3').subscribe(cant => {console.log(cant.length)})
     //this.profileService.getDriverListDesc('Colegio San José').subscribe(con => console.log(con))
     /* this.profileService.getSchedule('321').subscribe(data => 
@@ -108,6 +108,9 @@ export class RegistroPage implements OnInit{
     //this.profileService.getBills('11111').subscribe(data => {console.log(data)})
 
     //this.profileService.getDriverListAct().subscribe(node => {console.log(node)})
+
+    //this.auth.signOut()
+    //console.log(this.profileService.getHiredDrivers('7HoPKzA9RlZhM1oNgex87vO6ctB3'))
 
   }
   //--------------------------------------------------------------------------------------------------------------------------//

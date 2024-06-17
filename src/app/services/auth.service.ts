@@ -3,6 +3,7 @@ import { Auth, createUserWithEmailAndPassword, user } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { CentroPadres, Colegio, Conductor, Familia} from './user.interface';
 import { ProfileService } from './profile.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,11 @@ import { ProfileService } from './profile.service';
 
 export class authService {
 
-  
+  router =  inject(Router);
+
   constructor(private profService: ProfileService, 
     
-    private firebaseAuth : Auth){}
+  private firebaseAuth : Auth){}
 
 register(email: string, username: string, password: string){
   const promise = createUserWithEmailAndPassword(this.firebaseAuth, email, password)
@@ -81,5 +83,19 @@ async registerDriver(conductor: Conductor, password: string){
     return promise
   }
 
+
+  async signOut() {
+    try {
+      await this.firebaseAuth.signOut();
+      // Redirige a la página de inicio de sesión o a la página de bienvenida después del cierre de sesión
+      this.router.navigate(['/inicio']); // Reemplaza '/login' con la ruta de tu página de inicio de sesión
+    } catch (error) {
+      // Maneja el error aquí
+      console.error('Error al cerrar sesión:', error);
+    }
+  }
+
+
 }
+
   
