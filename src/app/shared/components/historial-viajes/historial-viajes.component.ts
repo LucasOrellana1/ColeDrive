@@ -30,7 +30,7 @@ export class HistorialViajesComponent implements OnInit {
   navigateToValoracionPage(bills: any) {
     this.router.navigate(['/valoracion'], {
       state: { // Pasa los datos como estado del navegador
-        conductorId: bills.data.nombre,
+        conductorId: bills.id,
         familiaNombre: bills.data.nombre, // Ajusta según cómo obtengas este dato en tu app
         
       }

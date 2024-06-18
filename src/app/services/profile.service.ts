@@ -12,11 +12,11 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 
 export class ProfileService {
-constructor(
-  private firestore: Firestore,
-  private fire: AngularFirestore, private auth: AngularFireAuth
-  ){}
-  
+  constructor(
+    private firestore: Firestore,
+    private fire: AngularFirestore, private auth: AngularFireAuth
+  ) { }
+
   factura: FacturaServicios
   // ================== Fecha ========================
   date = new Date();
@@ -24,10 +24,10 @@ constructor(
   month = (this.date.getMonth() + 1).toString().padStart(2, '0');
   proxmonth = (this.date.getMonth() + 2).toString().padStart(2, '0');
   year = this.date.getFullYear();
-  formattedDate = `${this.day}/${ this.month}/${this.year}`; 
-  formattedDate_nextMonth = `${this.day}/${this.proxmonth}/${this.year}`; 
+  formattedDate = `${this.day}/${this.month}/${this.year}`;
+  formattedDate_nextMonth = `${this.day}/${this.proxmonth}/${this.year}`;
 
-// Simplificación en una sola funcion y tabla usuarios
+  // Simplificación en una sola funcion y tabla usuarios
   createUser(
     data: Familia | Colegio | Conductor | CentroPadres,
     uid: string
@@ -44,7 +44,7 @@ constructor(
   }
 
 
-  getCurrentUserId(){
+  getCurrentUserId() {
     return this.auth.authState.pipe(
       map(user => {
         if (user) {
@@ -53,7 +53,8 @@ constructor(
           return null; // El usuario no está autenticado
         }
       })
-  )}
+    )
+  }
 
 
   //  Funciones de obtención de datos de usuario
@@ -134,43 +135,41 @@ constructor(
 
 
   // Query: trae el listado de conductores para activar (Centro de padres / Por activar)
-  getDriverListAct():Observable<any[]> {
+  getDriverListAct(): Observable<any[]> {
     return this.fire.collection('Usuarios', ref =>
-      ref.where('tipoCuenta', '==', 2).where('activado', '==', false )
+      ref.where('tipoCuenta', '==', 2).where('activado', '==', false)
     ).snapshotChanges()
-    .pipe(
-      map(actions => {
-        return actions.map(snapshot =>
-          {
+      .pipe(
+        map(actions => {
+          return actions.map(snapshot => {
             const id = snapshot.payload.doc.id;
             const data = snapshot.payload.doc.data();
-           
+
             return { id, data }
           }
-        )
-      })
-    )
+          )
+        })
+      )
   }
 
 
   //Query: trae el listado de conductores para desactivar (Centro de padres / Para desactivar)
   //Le entregas el colegio del centro de padres y te traera todos los que tienen ya activados, con el objetivo de desactivarlos
-  getDriverListDesc(colegio: string):Observable<any[]>{
+  getDriverListDesc(colegio: string): Observable<any[]> {
     return this.fire.collection('Usuarios', ref =>
       ref.where('tipoCuenta', '==', 2).where('activado', '==', true).where('colegioId', '==', colegio)
     ).snapshotChanges()
-    .pipe(
-      map(actions => {
-        return actions.map(snapshot =>
-          {
+      .pipe(
+        map(actions => {
+          return actions.map(snapshot => {
             const id = snapshot.payload.doc.id;
             const data = snapshot.payload.doc.data();
-           
+
             return { id, data }
           }
-        )
-      })
-    )
+          )
+        })
+      )
   }
 
 
@@ -183,41 +182,40 @@ constructor(
         .where('comuna', '==', comuna)
         .where('activado', '==', true)
     ).snapshotChanges()
-    .pipe(
-      map(actions => {
-        return actions.map(snapshot =>
-          {
+      .pipe(
+        map(actions => {
+          return actions.map(snapshot => {
             const id = snapshot.payload.doc.id;
             const data = snapshot.payload.doc.data();
-           
+
             return { id, data }
           }
-        )
-      })
-    )
+          )
+        })
+      )
   }
 
   // ================ Agendado y pago =================
 
-  getLenght(familiaId:string){
-    const field = 'facturas' 
+  getLenght(familiaId: string) {
+    const field = 'facturas'
     return this.fire.collection('Facturas').doc(familiaId).valueChanges().pipe(
       map(
         doc => {
-          if (doc && doc[field]){
+          if (doc && doc[field]) {
             return doc[field].length;
           }
-          else{
+          else {
             return 0;
           }
-          })
+        })
     )
   }
 
 
-  async saveBill(familiaId:string, conductor: Conductor, nombre:string, rutFamilia:string, total:number ){
-    try{
-   
+  async saveBill(familiaId: string, conductor: Conductor, nombre: string, rutFamilia: string, total: number) {
+    try {
+
       let numFactura = await firstValueFrom(this.getLenght(familiaId))
 
       console.log(numFactura)
@@ -231,11 +229,11 @@ constructor(
               telefono: conductor.telefono,
               correo_electronico: conductor.email,
             },
-            cliente : {
-              nombre:nombre,
+            cliente: {
+              nombre: nombre,
               identificacion_fiscal: rutFamilia,
             },
-            factura : {
+            factura: {
               fecha_emision: this.formattedDate,
               fecha_vencimiento: this.formattedDate_nextMonth
             },
@@ -243,61 +241,64 @@ constructor(
             descripcion: 'Pago servicio de transporte escolar.',
             total: total
           }
-          
-        )}, {merge:true}
-        
-      );
-      
 
-        
+        )
+      }, { merge: true }
+
+      );
+
+
+
 
       this.fire.collection('Usuarios').doc(familiaId).update({
         conductores: arrayUnion(conductor.rut)
       })
 
       console.log("Factura guardada")
-      }
-      catch(error){
-        console.log("ERROR: ", error)
-      }
+    }
+    catch (error) {
+      console.log("ERROR: ", error)
+    }
   }
-  
+
   // Devuelve observable facturas array de cuentas:
-  getBills(FamiliaId: string){
+  getBills(FamiliaId: string) {
     return this.fire.collection('Facturas').doc(FamiliaId).valueChanges()
   }
 
 
-  
-  async scheduleService(familiaId:string, conductorId: string, hijo:string, fecha: string){
-    try{
+
+  async scheduleService(familiaId: string, conductorId: string, hijo: string, fecha: string) {
+    try {
       // Comprobacion agendado capacidad del vehiculo
-      let viajes =  {
-        [fecha] : { 
+      let viajes = {
+        [fecha]: {
           nombre: hijo
-          
-      }}
+
+        }
+      }
       console.log(viajes);
 
       await this.fire.collection('Agenda').doc(conductorId).set({
-        viajes}, { merge: true})
-      
-        console.log("Viaje a agregado a conductor: ", conductorId)
+        viajes
+      }, { merge: true })
+
+      console.log("Viaje a agregado a conductor: ", conductorId)
     }
-    catch(error){
+    catch (error) {
       console.log("ERROR: ", error)
     }
   }
 
   // Retorna el observable de viajes de un conductor
-  getSchedule(conductorId: string):Observable<any>{
+  getSchedule(conductorId: string): Observable<any> {
     return this.fire.collection('Agenda').doc(conductorId)
       .valueChanges()
-    };
-  
+  };
 
-  async addComments(conductorId:string, familiaNombre: string, comentario:string, puntuacion: number,){
-    
+
+  async addComments(conductorId: string, familiaNombre: string, comentario: string, puntuacion: number,) {
+
     this.fire.collection('Usuarios').doc(conductorId).set({
       comentarios: arrayUnion({
         Nombre: familiaNombre,
@@ -305,16 +306,16 @@ constructor(
         Estrellas: puntuacion,
         Fecha: this.formattedDate
       })
-    }, {merge:true})
+    }, { merge: true })
     console.log("Comentario añadido")
   }
-  
+
   // Devuelve observable del listado de comentarios.
-  getComments(conductorId: string){
+  getComments(conductorId: string) {
     return this.fire.collection('Usuarios').doc(conductorId).valueChanges().pipe(
-      map((conductor: any) => 
+      map((conductor: any) =>
         conductor ? conductor.comentarios : null
-    )
+      )
     );
   }
 
@@ -330,24 +331,23 @@ constructor(
         const conductores = info.conductores
 
         return this.fire.collection('Usuarios', ref => ref
-        .where('tipoCuenta', '==', 2)
-        .where('rut', 'in', conductores)).snapshotChanges().pipe(
-          map(actions => actions.map(a => 
-            {
+          .where('tipoCuenta', '==', 2)
+          .where('rut', 'in', conductores)).snapshotChanges().pipe(
+            map(actions => actions.map(a => {
               const id = a.payload.doc.id;
               const data = a.payload.doc.data();
-             
-              return { id, data }            
+
+              return { id, data }
             }
-          ))
-        )
+            ))
+          )
       }
-    ))
-}
+      ))
+  }
 
 
 
 
 }
 
-  
+
