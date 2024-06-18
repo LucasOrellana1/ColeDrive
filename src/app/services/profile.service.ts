@@ -314,15 +314,23 @@ constructor(
 
   // Devuelve listado de conductores que se hayan contratado
 
-  async getHiredDrivers(familiaId: string){
-    let info = await firstValueFrom(this.getCurrentUser())
-    console.log(info)
-    return this.fire.collection('Usuarios', ref => ref.where('conductores', 'array-contains-any', info.conductores)
-  ).doc(familiaId).valueChanges()
-      
-  }
-    
-}
 
+  getHiredDrivers(familiaId: string):Observable<any>{
+    return this.getCurrentUser().pipe(
+      switchMap(info => {
+        if(!info){
+          throw new Error('No hay viajes previos')
+        }
+        const conductores = info.conductores
+        
+        return this.fire.collection('Usuarios', ref => ref
+        .where('tipoCuenta', '==', 2)
+        .where('rut', 'in', conductores)).snapshotChanges().pipe(
+          map(actions => actions.map(a => a.payload.doc.data()))
+        )
+      }
+    ))
+}
+}
 
   
