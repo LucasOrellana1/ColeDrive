@@ -32,6 +32,10 @@
             Buscar Conductor
             <ion-icon slot="end" name="search-outline"></ion-icon>
           </ion-button>
+          <ion-button (click)="navigateToHistorial()" expand="block" mode="ios" class="submit">
+            Historial de Viajes
+            <ion-icon name="rocket-outline"></ion-icon>
+          </ion-button>
         </ng-container>
 
         <ng-container *ngIf="userType === 2">
