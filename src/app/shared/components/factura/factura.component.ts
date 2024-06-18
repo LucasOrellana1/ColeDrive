@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -7,13 +7,14 @@ import { ProfileService } from 'src/app/services/profile.service';
   templateUrl: './factura.component.html',
   styleUrls: ['./factura.component.scss'],
 })
-export class FacturaComponent  implements OnInit {
+export class FacturaComponent implements OnInit {
 
-  conductor: any;
-  selectedDates: string[];
+  @Input() conductor: any;
+  @Input() selectedDates: string[] = [];
   userData: any;
   selectedHijo: any;
   familiaId: string;
+  total: number = 0;
 
   constructor(private router: Router, private profileService: ProfileService) { }
 
@@ -24,10 +25,16 @@ export class FacturaComponent  implements OnInit {
       this.selectedDates = navigation.extras.state['selectedDates'];
       this.userData = navigation.extras.state['userData'];
       this.selectedHijo = navigation.extras.state['selectedHijo'];
+      this.calculateTotal();
     }
     this.profileService.getCurrentUserId().subscribe(familiaId => {
       this.familiaId = familiaId;
     });
+  }
+
+  calculateTotal() {
+    const costPerDate = 5000; // Valor por fecha
+    this.total = this.selectedDates.length * costPerDate;
   }
 
   async confirmPayment() {
@@ -42,12 +49,8 @@ export class FacturaComponent  implements OnInit {
       console.log(this.userData.nombre);
       console.log(this.userData.rut);
       console.log(this.profileService.saveBill);
-
-      
     } catch (error) {
       console.error('Error al guardar la factura:', error);
     }
   }
-
-
 }
