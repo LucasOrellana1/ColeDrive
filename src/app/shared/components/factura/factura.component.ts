@@ -41,14 +41,11 @@ export class FacturaComponent implements OnInit {
     try {
       await this.profileService.saveBill(
         this.familiaId,
-        this.conductor,
+        this.conductor.data,
         this.userData.nombre,
         this.userData.rut
       );
-      console.log(this.conductor);
-      console.log(this.userData.nombre);
-      console.log(this.userData.rut);
-      console.log(this.profileService.saveBill);
+      
     } catch (error) {
       console.error('Error al guardar la factura:', error);
     }

@@ -215,7 +215,7 @@ constructor(
   }
 
 
-  async saveBill(familiaId:string, conductor: Conductor, nombre:string, rutFamilia:string){
+  async saveBill(familiaId:string, conductor: Conductor, nombre:string, rutFamilia:string ){
     try{
    
       let numFactura = await firstValueFrom(this.getLenght(familiaId))
