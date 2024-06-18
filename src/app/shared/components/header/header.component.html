@@ -14,6 +14,13 @@
       </ion-button>
     </ion-buttons>
 
+    <!-- Botón para cerrar sesión -->
+    <ion-buttons slot="end" *ngIf="isPerfilPage()">
+      <ion-button (click)="signOut()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
     <ion-title>
       <strong>{{title}}</strong>
       <div class="admin">C o l e D r i v e</div>

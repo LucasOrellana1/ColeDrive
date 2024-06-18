@@ -4,7 +4,7 @@
     <ion-list>
         <ion-item *ngFor="let bill of bills">
             <ion-label>
-                <h2>{{ bill.conductor.nombre }} {{ bill.conductor.apellido }}</h2>
+                <h2>{{ bill.conductor.data.nombre }} {{ bill.conductor.data.apellido }}</h2>
                 <p>RUT: {{ bill.conductor.rut }}</p>
                 <p>Teléfono: {{ bill.conductor.telefono }}</p>
                 <p>Email: {{ bill.conductor.email }}</p>
