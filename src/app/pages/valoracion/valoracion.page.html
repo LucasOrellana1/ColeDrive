@@ -1,4 +1,4 @@
-<app-header title="Califica tu Viaje"></app-header>
+<app-header title="Califica tu Viaje" backButton="/historial"></app-header>
 
 
 
@@ -21,7 +21,7 @@
       <ion-icon name="{{ hoveredStar >= 5 || ratedStar >= 5 ? 'star' : 'star-outline' }}" (mouseenter)="hoveredStar = 5"
         (mouseleave)="resetHoveredStar()" (click)="rateService(5)"></ion-icon>
     </div>
-    <textarea rows="4" placeholder="Escribe tu comentario aquí"></textarea>
-    <ion-button expand="block" color="primary" click="submitRating()">Enviar</ion-button>
+    <textarea rows="4" placeholder="Escribe tu comentario aquí" [(ngModel)]="comentario"></textarea>
+    <ion-button expand="block" color="primary" (click)="submitRating()">Enviar</ion-button>
   </div>
 </ion-content>

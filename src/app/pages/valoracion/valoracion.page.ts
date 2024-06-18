@@ -34,6 +34,7 @@ export class ValoracionPage implements OnInit {
   }
 
   async submitRating() {
+    
     if (this.conductorId && this.conductorNombre && this.comentario && this.ratedStar) {
       try {
         await this.profileService.addComments(
@@ -42,13 +43,18 @@ export class ValoracionPage implements OnInit {
           this.comentario,
           this.ratedStar
         );
+       
         console.log('Valoración y comentario enviados correctamente');
+        this.comentario = ''; // Limpiar el comentario
+        this.ratedStar = 0;   // Restablecer la valoración  // Restablecer la valoración
+        this.router.navigate(['/perfil']);
         // Puedes agregar cualquier lógica adicional después de enviar la valoración y comentario
       } catch (error) {
         console.error('Error al enviar la valoración y comentario:', error);
         // Manejar el error según sea necesario
       }
     } else {
+      
       console.error('Faltan datos requeridos para enviar la valoración y comentario.');
       // Puedes mostrar un mensaje de error o tomar otra acción si faltan datos
     }
