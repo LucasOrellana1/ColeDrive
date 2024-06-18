@@ -243,7 +243,13 @@ constructor(
             descripcion: 'Pago servicio de transporte escolar.',
             total: 'Por definir'
           }
-        )}, {merge:true});
+          
+        )}, {merge:true}
+        
+      );
+      
+
+        
 
       this.fire.collection('Usuarios').doc(familiaId).update({
         conductores: arrayUnion(conductor.rut)
