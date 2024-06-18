@@ -43,7 +43,8 @@ export class FacturaComponent implements OnInit {
         this.familiaId,
         this.conductor.data,
         this.userData.nombre,
-        this.userData.rut
+        this.userData.rut,
+        this.total
       );
       
     } catch (error) {
