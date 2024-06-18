@@ -5,6 +5,10 @@
 <ion-content>
   <div class="rating-container">
     <h2>Valorar el servicio</h2>
+    <p>Conductor: {{ conductorNombre }}</p>
+    <p>RUT: {{ conductorRut }}</p>
+    <p>Teléfono: {{ conductorTelefono }}</p>
+    <p>Email: {{ conductorEmail }}</p>
     <div class="stars">
       <ion-icon name="{{ hoveredStar >= 1 || ratedStar >= 1 ? 'star' : 'star-outline' }}" (mouseenter)="hoveredStar = 1"
         (mouseleave)="resetHoveredStar()" (click)="rateService(1)"></ion-icon>
