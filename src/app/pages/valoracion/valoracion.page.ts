@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-valoracion',
   templateUrl: './valoracion.page.html',
@@ -9,6 +10,7 @@ export class ValoracionPage implements OnInit {
 
   hoveredStar: number = 0; // Variable para controlar la estrella sobre la cual se pasa el cursor
   ratedStar: number = 0; // Variable para controlar la estrella seleccionada
+  comentario: string = ''; // Variable para almacenar el comentario del usuario
 
   constructor() { }
 

@@ -2,18 +2,16 @@
 
 <ion-content>
     <ion-list>
-        <ion-item *ngFor="let bill of bills">
+        <ion-item *ngFor="let bill of bills" >
             <ion-label>
-                <h2>{{ bill.nombre }} </h2>
-                <p>RUT: {{ bill.rut }}</p>
-                <p>Teléfono: {{ bill.telefono }}</p>
-                <p>Email: {{ bill.email }}</p>
+                <h2>{{ bill.data.nombre }} </h2>
+                <p>RUT: {{ bill.data.rut }}</p>
+                <p>Teléfono: {{ bill.data.telefono }}</p>
+                <p>Email: {{ bill.data.email }}</p>
                 
-                <ul>
-                    <li *ngFor="let date of bill.fechas">{{ date | date: 'dd/MM/yyyy' }}</li>
-                </ul>
                 
-                <ion-button expand="block" color="primary" (click)="navigateToValoracionPage()">Ir a Valoración</ion-button>
+                
+                <ion-button expand="block" color="primary" (click)="navigateToValoracionPage(bill)">Ir a Valoración</ion-button>
             </ion-label>
         </ion-item>
     </ion-list>

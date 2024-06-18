@@ -11,6 +11,8 @@ export class HistorialViajesComponent implements OnInit {
 
   familiaId: string;
   bills: any[] = [];
+  conductor: any;
+  familiaNombre:any;
 
   constructor(private profileService: ProfileService , private router: Router) { }
 
@@ -21,11 +23,18 @@ export class HistorialViajesComponent implements OnInit {
     (await this.profileService.getHiredDrivers(this.familiaId)).subscribe((bills: any[]) => {
       this.bills = bills;
     });
-    console.log(this.bills)
+    
+    
   }
 
-  navigateToValoracionPage() {
-    this.router.navigate(['/valoracion']); // Reemplaza '/valoracion' con la ruta correcta hacia tu página de valoración
+  navigateToValoracionPage(bills: any) {
+    this.router.navigate(['/valoracion'], {
+      state: { // Pasa los datos como estado del navegador
+        conductorId: bills.data.nombre,
+        familiaNombre: bills.data.nombre, // Ajusta según cómo obtengas este dato en tu app
+        
+      }
+    });
   }
 
 }
