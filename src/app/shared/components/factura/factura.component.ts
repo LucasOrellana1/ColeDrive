@@ -45,7 +45,9 @@ export class FacturaComponent implements OnInit {
         this.userData.nombre,
         this.userData.rut,
         this.total
+        
       );
+      this.router.navigate(['/buscar']);
       
     } catch (error) {
       console.error('Error al guardar la factura:', error);
