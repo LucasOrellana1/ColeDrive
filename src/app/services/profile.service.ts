@@ -332,11 +332,22 @@ constructor(
         return this.fire.collection('Usuarios', ref => ref
         .where('tipoCuenta', '==', 2)
         .where('rut', 'in', conductores)).snapshotChanges().pipe(
-          map(actions => actions.map(a => a.payload.doc.data()))
+          map(actions => actions.map(a => 
+            {
+              const id = a.payload.doc.id;
+              const data = a.payload.doc.data();
+             
+              return { id, data }            
+            }
+          ))
         )
       }
     ))
 }
+
+
+
+
 }
 
   
