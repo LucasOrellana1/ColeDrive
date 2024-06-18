@@ -82,5 +82,5 @@ export interface FacturaServicios {
   },
   numFactura : number,
   descripcion?: 'Pago servicio de transporte escolar.',
-  total?: 'Por definir'
+  total?: number;
 }

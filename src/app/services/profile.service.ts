@@ -215,7 +215,7 @@ constructor(
   }
 
 
-  async saveBill(familiaId:string, conductor: Conductor, nombre:string, rutFamilia:string){
+  async saveBill(familiaId:string, conductor: Conductor, nombre:string, rutFamilia:string, total:number ){
     try{
    
       let numFactura = await firstValueFrom(this.getLenght(familiaId))
@@ -241,9 +241,15 @@ constructor(
             },
             numFactura: numFactura,
             descripcion: 'Pago servicio de transporte escolar.',
-            total: 'Por definir'
+            total: total
           }
-        )}, {merge:true});
+          
+        )}, {merge:true}
+        
+      );
+      
+
+        
 
       this.fire.collection('Usuarios').doc(familiaId).update({
         conductores: arrayUnion(conductor.rut)

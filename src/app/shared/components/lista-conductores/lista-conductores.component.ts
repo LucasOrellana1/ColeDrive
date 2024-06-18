@@ -73,19 +73,5 @@ export class ListaConductoresComponent implements OnInit {
     }
   }
 
-  async disapproveConductor(conductor: any) {
-
-    console.log('No Aprobado:', conductor);
-    const conductorId = conductor.id;
-    const colegioId = this.userData.colegio;
-
-    try {
-      await this.profileService.changeStateDriver(conductorId, colegioId);
-      console.log('Estado del conductor actualizado correctamente.');
-
-    } catch (error) {
-      console.error('Error al actualizar el estado del conductor:', error);
-
-    }
-  }
+  
 }

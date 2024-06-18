@@ -9,23 +9,23 @@ import { Observable } from 'rxjs';
   templateUrl: './perfil.page.html',
   styleUrls: ['./perfil.page.scss'],
 })
-export class PerfilPage{
+export class PerfilPage {
 
   firebaseAuth = inject(Auth);
-  router =  inject(Router);
+  router = inject(Router);
   profileService = inject(ProfileService);
 
   user$: Observable<any>;
   userData: any;
   userType: number | null = null;
 
-  
+
   ngOnInit() {
     this.user$ = this.profileService.getCurrentUser();
     this.user$.subscribe(data => {
       this.userData = data;
       console.log(this.userData);
-      
+
     });
 
     this.profileService.getCurrentUser().subscribe(user => {
@@ -34,11 +34,15 @@ export class PerfilPage{
       }
     });
 
-    
+
   }
 
   navigateToBuscar() {
     this.router.navigate(['/buscar']);
+  }
+
+  navigateToHistorial() {
+    this.router.navigate(['/historial']);
   }
 
   async signOut() {

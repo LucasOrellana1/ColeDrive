@@ -1,35 +1,49 @@
-.user-info, .child-info {
-    color: rgb(117, 112, 112);
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
-  .children-section h2 {
-    color: rgb(117, 112, 112);
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 10px;
-  }
-  
-  .loading-text {
-    color: rgb(117, 112, 112);
-    font-weight: bold;
-    font-size: 16px;
-  }
-  .loading-card {
-    max-width: 300px; /* Ajusta el ancho según tus preferencias */
-    margin: auto;
-    text-align: center;
-  }
-  
-  .loading-card ion-spinner {
-    margin-bottom: 10px;
-  }
+.user-info,
+.child-info {
+  color: rgb(117, 112, 112);
+  font-weight: bold;
+  font-size: 16px;
+}
 
-  .card-title-styling {
-    /* Agrega tus estilos personalizados aquí */
-    color: rgb(117, 112, 112);/* Cambia el color del texto a rojo, por ejemplo */
-    font-size: 24px; /* Ajusta el tamaño de fuente */
-    font-weight: bold; /* Haz que el texto sea negrita */
-    text-align: center; /* Centra el texto */
-  }
+.children-section h2 {
+  color: rgb(117, 112, 112);
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.loading-text {
+  color: rgb(117, 112, 112);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.loading-card {
+  max-width: 300px;
+  /* Ajusta el ancho según tus preferencias */
+  margin: auto;
+  text-align: center;
+}
+
+.loading-card ion-spinner {
+  margin-bottom: 10px;
+}
+
+.card-title-styling {
+  /* Agrega tus estilos personalizados aquí */
+  color: rgb(117, 112, 112);
+  /* Cambia el color del texto a rojo, por ejemplo */
+  font-size: 24px;
+  /* Ajusta el tamaño de fuente */
+  font-weight: bold;
+  /* Haz que el texto sea negrita */
+  text-align: center;
+  /* Centra el texto */
+}
+
+.profile-image {
+  padding-top: 20%;
+  padding-bottom: 5%;
+  padding-left: 30%;
+  padding-right: 30%;
+}

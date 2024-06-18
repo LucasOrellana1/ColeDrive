@@ -4,6 +4,7 @@
   <div *ngIf="userData; else loadingData">
     <ion-card>
       <ion-card-header>
+        <img src="assets/perfil.png" class="profile-image" alt="userp">
         <ion-card-title class="card-title-styling">{{ userData.nombre }} {{ userData.apellido }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
@@ -31,6 +32,10 @@
             Buscar Conductor
             <ion-icon slot="end" name="search-outline"></ion-icon>
           </ion-button>
+          <ion-button (click)="navigateToHistorial()" expand="block" mode="ios" class="submit">
+            Historial de Viajes
+            <ion-icon name="rocket-outline"></ion-icon>
+          </ion-button>
         </ng-container>
 
         <ng-container *ngIf="userType === 2">
@@ -44,7 +49,7 @@
         </ng-container>
 
         <ng-container *ngIf="userType === 3">
-          
+
           <ion-button (click)="navigateToBuscar()" expand="block" mode="ios" class="submit">
             Aprobar Conductores
             <ion-icon slot="end" name="shield-checkmark-outline"></ion-icon>

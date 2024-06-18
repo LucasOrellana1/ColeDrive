@@ -1,0 +1,20 @@
+<app-header title="Historial de Viajes"></app-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let bill of bills">
+            <ion-label>
+                <h2>{{ bill.conductor.data.nombre }} {{ bill.conductor.data.apellido }}</h2>
+                <p>RUT: {{ bill.conductor.rut }}</p>
+                <p>Teléfono: {{ bill.conductor.telefono }}</p>
+                <p>Email: {{ bill.conductor.email }}</p>
+                <p>Fechas:
+                <ul>
+                    <li *ngFor="let date of bill.fechas">{{ date | date: 'dd/MM/yyyy' }}</li>
+                </ul>
+                
+                <p>Total Pagado: {{ bill.total | currency:'CLP':'symbol':'1.0-0' }}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>
