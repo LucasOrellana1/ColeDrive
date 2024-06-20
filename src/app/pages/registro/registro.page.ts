@@ -112,8 +112,8 @@ export class RegistroPage implements OnInit{
     //this.auth.signOut()
     //console.log(this.profileService.getHiredDrivers('7HoPKzA9RlZhM1oNgex87vO6ctB3'))
     
-   this.profileService.getHiredDrivers('7HoPKzA9RlZhM1oNgex87vO6ctB3').subscribe(a => {console.log(a)})
-
+   //this.profileService.getHiredDrivers('7HoPKzA9RlZhM1oNgex87vO6ctB3').subscribe(a => {console.log(a)})
+    this.profileService.getTrips().subscribe(a => {console.log(a)})
   }
   //--------------------------------------------------------------------------------------------------------------------------//
   validarRut(rut: string): boolean {
