@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-lista-pasajeros',
@@ -11,14 +12,20 @@ export class ListaPasajerosComponent implements OnInit {
   filteredHijosList: any[] = [];
   searchTerm: string = '';
   errorMessage: string = '';
+  todayNames: string[] = [];
+  todayDate: string; 
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService) { 
+    this.todayDate = formatDate(new Date(), 'dd/MM/yyyy', 'en');
+  }
 
   ngOnInit() {
     this.profileService.getTrips().subscribe(
       data => {
-        this.hijosList = data;
-        this.filteredHijosList = data;
+        // Ensure data is an array
+        this.hijosList = Array.isArray(data) ? data : Object.values(data);
+        this.filteredHijosList = this.hijosList;
+        this.getNamesForToday(this.hijosList);
       },
       error => {
         console.error('Error al obtener la lista de hijos:', error);
@@ -39,5 +46,21 @@ export class ListaPasajerosComponent implements OnInit {
         (hijo.familiaApellido && hijo.familiaApellido.toLowerCase().includes(searchTermLower))
       );
     }
+  }
+
+  getNamesForToday(data: any[]) {
+    const today = new Date().toISOString().split('T')[0];
+    this.todayNames = [];
+
+    data.forEach(item => {
+      if (item[today] && item[today].nombre) {
+        const names = item[today].nombre;
+        if (Array.isArray(names)) {
+          this.todayNames.push(...names);
+        } else {
+          this.todayNames.push(names);
+        }
+      }
+    });
   }
 }

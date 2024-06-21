@@ -1,6 +1,5 @@
 :host {
     display: block;
-    width: 100%;
     height: 100%;
 }
 
@@ -9,4 +8,44 @@ ion-content {
     --padding-end: 16px;
     --padding-top: 16px;
     --padding-bottom: 16px;
+}
+
+ion-searchbar {
+    margin-bottom: 16px;
+}
+
+ion-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+}
+
+ion-button {
+    margin-top: 8px;
+}
+
+.custom-card {
+    margin: 10px;
+    /* Margen alrededor de cada tarjeta */
+    padding: 10px;
+    /* Relleno dentro de cada tarjeta */
+}
+
+.custom-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nombre {
+    font-size: 18px;
+    /* Tamaño de fuente del nombre */
+    margin-right: 10px;
+    /* Espacio a la derecha del nombre */
+}
+
+.llamar-btn {
+    font-size: 14px;
+    /* Tamaño de fuente del botón */
+    padding: 8px 16px;
+    /* Relleno interno del botón */
 }
