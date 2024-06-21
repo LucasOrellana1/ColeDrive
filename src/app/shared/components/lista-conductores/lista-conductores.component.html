@@ -6,7 +6,7 @@
     <ion-list>
         <ion-item *ngFor="let conductor of filteredConductoresList">
             <ion-label>
-                <h2>{{ conductor.data.nombre }}   {{ conductor.data.apellido }}</h2>
+                <h2>{{ conductor.data.nombre }} {{ conductor.data.apellido }}</h2>
                 <p>Patente: {{ conductor.data.patenteVehiculo }}</p>
                 <p>Marca: {{ conductor.data.marcaVehiculo }}</p>
                 <p>Asistente: {{ conductor.data.asistente.nombre}} </p>
@@ -16,7 +16,7 @@
                     <ion-icon name="checkmark" slot="start"></ion-icon>
                     Aprobado
                 </ion-button>
-                
+
             </ion-buttons>
         </ion-item>
     </ion-list>
