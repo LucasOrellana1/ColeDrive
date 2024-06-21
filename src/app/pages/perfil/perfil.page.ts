@@ -24,7 +24,7 @@ export class PerfilPage {
     this.user$ = this.profileService.getCurrentUser();
     this.user$.subscribe(data => {
       this.userData = data;
-      console.log(this.userData);
+      //console.log(this.userData);
 
     });
 

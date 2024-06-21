@@ -6,6 +6,7 @@ import { Colegio, Conductor, Familia, FacturaServicios, CentroPadres } from './u
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 @Injectable({
   providedIn: 'root'
@@ -260,11 +261,8 @@ export class ProfileService {
       console.log("ERROR: ", error)
     }
   }
-
-  // Devuelve observable facturas array de cuentas:
-  getBills(FamiliaId: string) {
-    return this.fire.collection('Facturas').doc(FamiliaId).valueChanges()
-  }
+  
+ 
 
 
 
@@ -346,7 +344,30 @@ export class ProfileService {
   }
 
 
+// ===== Papitas ======
 
+  getTrips():Observable<any>{
+    console.log("A")
+    return this.getCurrentUserId().pipe(
+      switchMap(id => 
+        {
+          return this.fire.collection('Agenda').doc(id).valueChanges()
+        
+        }
+      )
+    );
+  } 
+   // Devuelve observable facturas array de cuentas:
+   getBills(){    
+    return this.getCurrentUserId().pipe(
+      switchMap(id => 
+        {
+          return this.fire.collection('Facturas').doc(id).valueChanges()
+        
+        }
+      )
+    );
+  }
 
 }
 
