@@ -12,10 +12,10 @@ export class ListaPasajerosComponent implements OnInit {
   searchTerm: string = '';
   errorMessage: string = '';
 
-  constructor(private profileService: ProfileService) {}
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
-    this.profileService.getHijosList().subscribe(
+    this.profileService.getTrips().subscribe(
       data => {
         this.hijosList = data;
         this.filteredHijosList = data;
@@ -33,10 +33,10 @@ export class ListaPasajerosComponent implements OnInit {
     } else {
       const searchTermLower = this.searchTerm.toLowerCase();
       this.filteredHijosList = this.hijosList.filter(hijo =>
-        hijo.nombreHijo.toLowerCase().includes(searchTermLower) ||
-        hijo.cursoHijo.toLowerCase().includes(searchTermLower) ||
-        hijo.familiaNombre.toLowerCase().includes(searchTermLower) ||
-        hijo.familiaApellido.toLowerCase().includes(searchTermLower)
+        (hijo.nombreHijo && hijo.nombreHijo.toLowerCase().includes(searchTermLower)) ||
+        (hijo.cursoHijo && hijo.cursoHijo.toLowerCase().includes(searchTermLower)) ||
+        (hijo.familiaNombre && hijo.familiaNombre.toLowerCase().includes(searchTermLower)) ||
+        (hijo.familiaApellido && hijo.familiaApellido.toLowerCase().includes(searchTermLower))
       );
     }
   }

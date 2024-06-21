@@ -46,6 +46,11 @@
             userData.apellidoAsistente }}</p>
           <p class="user-info"><strong>Email del Asistente:</strong> {{ userData.email }}</p>
           <p class="user-info"><strong>Teléfono del Asistente:</strong> {{ userData.telefono}}</p>
+          <ion-button (click)="navigateToBuscar()" expand="block" mode="ios" class="submit">
+            Buscar Viajes
+            <ion-icon slot="end" name="search-outline"></ion-icon>
+            
+          </ion-button>
         </ng-container>
 
         <ng-container *ngIf="userType === 3">
