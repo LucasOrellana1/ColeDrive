@@ -40,6 +40,9 @@ export class PerfilPage {
   navigateToBuscar() {
     this.router.navigate(['/buscar']);
   }
+  navigateToDesactivar() {
+    this.router.navigate(['/desactivar']);
+  }
 
   navigateToHistorial() {
     this.router.navigate(['/historial']);
