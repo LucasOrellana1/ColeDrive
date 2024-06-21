@@ -54,8 +54,8 @@ export class NoAprobarComponent implements OnInit {
     } else {
       const searchTermLower = this.searchTerm.toLowerCase();
       this.filteredConductoresList = this.conductoresList.filter(conductor =>
-        (conductor.nombre && conductor.nombre.toLowerCase().includes(searchTermLower)) ||
-        (conductor.apellido && conductor.apellido.toLowerCase().includes(searchTermLower)) ||
+        (conductor.data.nombre && conductor.data.nombre.toLowerCase().includes(searchTermLower)) ||
+        (conductor.data.apellido && conductor.data.apellido.toLowerCase().includes(searchTermLower)) ||
         (conductor.email && conductor.email.toLowerCase().includes(searchTermLower)) ||
         (conductor.telefono && conductor.telefono.toLowerCase().includes(searchTermLower))
       );

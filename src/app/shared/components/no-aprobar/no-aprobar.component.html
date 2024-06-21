@@ -7,9 +7,9 @@
     <ion-list>
         <ion-item *ngFor="let conductor of filteredConductoresList">
             <ion-label>
-                <h2>{{ conductor.nombre }} {{ conductor.apellido }}</h2>
-                <p>{{ conductor.email }}</p>
-                <p>{{ conductor.telefono }}</p>
+                <h2>{{ conductor.data.nombre }} {{ conductor.data.apellido }}</h2>
+                <p>{{ conductor.data.email }}</p>
+                <p>{{ conductor.data.telefono }}</p>
             </ion-label>
             <ion-button color="danger" (click)="disapproveConductor(conductor)">
                 <ion-icon name="close" slot="start"></ion-icon>

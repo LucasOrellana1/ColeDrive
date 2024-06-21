@@ -30,7 +30,8 @@ const routes: Routes = [
   {
     path: 'ocr',
     loadChildren: () => import('./pages/ocr/ocr.module').then( m => m.OcrPageModule)
-  },  {
+  },
+  {
     path: 'buscar',
     loadChildren: () => import('./pages/buscar/buscar.module').then( m => m.BuscarPageModule)
   },
