@@ -1,0 +1,17 @@
+<app-header title="Comentarios de Conductor" backButton="/buscar"></app-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let comentario of conductor?.data?.comentarios">
+      <ion-label>
+        <h2>{{ comentario.Nombre }}</h2>
+        <p>{{ comentario.Fecha }}</p>
+        <div class="stars">
+          <ion-icon *ngFor="let star of [1, 2, 3, 4, 5]" 
+                    [name]="star <= comentario.Estrellas ? 'star' : 'star-outline'"></ion-icon>
+        </div>
+        <p>{{ comentario.Comentario }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

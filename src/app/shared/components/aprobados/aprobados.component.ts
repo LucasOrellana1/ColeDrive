@@ -67,4 +67,8 @@ export class AprobadosComponent implements OnInit {
   navigateToAgendar(conductor: any) {
     this.router.navigate(['/agendar'], { state: { conductor } });
   }
+
+  navigateToComentarios(conductor: any) {
+    this.router.navigate(['/comentarios'], { state: { conductor } });
+  }
 }

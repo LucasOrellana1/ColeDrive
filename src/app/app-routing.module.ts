@@ -54,7 +54,11 @@ const routes: Routes = [
   {
     path: 'historial',
     loadChildren: () => import('./pages/historial/historial.module').then( m => m.HistorialPageModule)
+  },  {
+    path: 'comentarios',
+    loadChildren: () => import('./pages/comentarios/comentarios.module').then( m => m.ComentariosPageModule)
   },
+
 
 
 ];

@@ -6,7 +6,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Esto es opcional, depende de si quieres que el contenedor ocupe toda la altura de la ventana */
+    height: 100vh;
+    /* Esto es opcional, depende de si quieres que el contenedor ocupe toda la altura de la ventana */
 }
 
 .stars {
@@ -15,22 +16,30 @@
 
 .stars ion-icon {
     font-size: 36px;
-    color: #4eac6a; /* Color de las estrellas */
+    color: #4eac6a;
+    /* Color de las estrellas */
     cursor: pointer;
 }
 
 .stars ion-icon:hover {
-    color: #4eac6a; /* Color cuando se pasa el mouse sobre la estrella */
+    color: #4eac6a;
+    /* Color cuando se pasa el mouse sobre la estrella */
 }
 
 textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #080808;
     border-radius: 5px;
+    background-color: #d6d6d6;
 }
 
 ion-button {
     margin-top: 10px;
+}
+
+.nombre {
+    font-size: 18px;
+    margin-right: 10px;
 }
