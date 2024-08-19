@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+
+// PROBANDO COSAS GITHUB
 const routes: Routes = [
   {
     path: 'inicio',
@@ -54,7 +56,8 @@ const routes: Routes = [
   {
     path: 'historial',
     loadChildren: () => import('./pages/historial/historial.module').then( m => m.HistorialPageModule)
-  },  {
+  },
+  {
     path: 'comentarios',
     loadChildren: () => import('./pages/comentarios/comentarios.module').then( m => m.ComentariosPageModule)
   },
